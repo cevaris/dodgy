@@ -36,6 +36,8 @@ data State = State {
   shine'  :: IORef Int,
   move'   :: IORef Bool,
 
+  mpPos   :: IORef Float,
+
   textures :: Textures,
    
   info    :: IORef (String,String)
@@ -49,7 +51,7 @@ makeState = do
   th <- newIORef 0 --(-30)
   gr <- newIORef 0
   zh <- newIORef 90
-  fv <- newIORef 65
+  fv <- newIORef 100 --65
   as <- newIORef 1
   di <- newIORef 2
   --di <- newIORef 0.5
@@ -64,6 +66,9 @@ makeState = do
   li <- newIORef True
   sh <- newIORef 5
   mv <- newIORef True
+
+  mpPos' <- newIORef 0
+
   tx <- makeTextures
 
   i  <- newIORef ("","")
@@ -71,6 +76,7 @@ makeState = do
     frames = f, t0 = t, ph' = ph, th' = th, gr' = gr, zh' = zh, asp = as, fov = fv, dim = di, 
     ylight' = yl, rlight' = rl, emiss' = em, diff' = df, amb' = am, spec' = sp, smooth' = sm, light' = li, shine' = sh,
     move' = mv,
+    mpPos = mpPos',
     textures = tx,
     info = i
   }

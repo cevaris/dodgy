@@ -18,39 +18,48 @@ keyboard state (SpecialKey KeyRight)_ _ _ = modRotate state KeyRight
 keyboard state (Char 'z')           Up _ _ = modDim state Decrease
 keyboard state (Char 'Z')           Up _ _ = modDim state Increase
 
-keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
-keyboard state (Char ']')           Up _ _ = modLightHeight state Increase
+keyboard state (Char 'a')           _ _ _ = modMainPlayer state LeftDirection
+keyboard state (Char 'd')           _ _ _ = modMainPlayer state RightDirection
 
-keyboard state (Char 'r')           Up _ _ = modLightRadius state Decrease
-keyboard state (Char 'R')           Up _ _ = modLightRadius state Increase
 
-keyboard state (Char 's')           Up _ _ = modSpecular state Decrease
-keyboard state (Char 'S')           Up _ _ = modSpecular state Increase
+--keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
+--keyboard state (Char ']')           Up _ _ = modLightHeight state Increase
 
-keyboard state (Char 'd')           Up _ _ = modDiffusion state Decrease
-keyboard state (Char 'D')           Up _ _ = modDiffusion state Increase
+--keyboard state (Char 'r')           Up _ _ = modLightRadius state Decrease
+--keyboard state (Char 'R')           Up _ _ = modLightRadius state Increase
 
-keyboard state (Char 'a')           Up _ _ = modAmbience state Decrease
-keyboard state (Char 'A')           Up _ _ = modAmbience state Increase
+--keyboard state (Char 's')           Up _ _ = modSpecular state Decrease
+--keyboard state (Char 'S')           Up _ _ = modSpecular state Increase
 
-keyboard state (Char 'n')           Up _ _ = modShininess state Decrease
-keyboard state (Char 'N')           Up _ _ = modShininess state Increase
+--keyboard state (Char 'd')           Up _ _ = modDiffusion state Decrease
+--keyboard state (Char 'D')           Up _ _ = modDiffusion state Increase
 
-keyboard state (Char 'e')           Up _ _ = modEmission state Decrease
-keyboard state (Char 'E')           Up _ _ = modEmission state Increase
+--keyboard state (Char 'a')           Up _ _ = modAmbience state Decrease
+--keyboard state (Char 'A')           Up _ _ = modAmbience state Increase
 
-keyboard state (Char 'm')           keyState _ _ = toggleLightMovement state keyState
-keyboard state (Char 'M')           keyState _ _ = toggleLightMovement state keyState
+--keyboard state (Char 'n')           Up _ _ = modShininess state Decrease
+--keyboard state (Char 'N')           Up _ _ = modShininess state Increase
 
-keyboard state (Char 'l')           keyState _ _ = toggleLight state keyState
-keyboard state (Char 'L')           keyState _ _ = toggleLight state keyState
+--keyboard state (Char 'e')           Up _ _ = modEmission state Decrease
+--keyboard state (Char 'E')           Up _ _ = modEmission state Increase
 
-keyboard state (Char 'h')           keyState _ _ = toggleShading state keyState
-keyboard state (Char 'H')           keyState _ _ = toggleShading state keyState
+--keyboard state (Char 'm')           keyState _ _ = toggleLightMovement state keyState
+--keyboard state (Char 'M')           keyState _ _ = toggleLightMovement state keyState
+
+--keyboard state (Char 'l')           keyState _ _ = toggleLight state keyState
+--keyboard state (Char 'L')           keyState _ _ = toggleLight state keyState
+
+--keyboard state (Char 'h')           keyState _ _ = toggleShading state keyState
+--keyboard state (Char 'H')           keyState _ _ = toggleShading state keyState
 
 keyboard _     (Char '\27')         _ _ _ = exitWith ExitSuccess
 keyboard _     _                    _ _ _ = return ()
 
+modMainPlayer :: State -> Direction -> IO ()
+modMainPlayer state LeftDirection = do
+  mpPos state $~! (subtract 0.05)
+modMainPlayer state RightDirection  = do
+  mpPos state $~! (+0.05) 
 
 toggleLightMovement :: State -> KeyState -> IO ()
 toggleLightMovement state  Up = do

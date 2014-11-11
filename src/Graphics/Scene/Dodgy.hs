@@ -3,6 +3,7 @@ import Control.Applicative
 
 import Graphics.UI.GLUT
 import Graphics.GLUtil
+import Graphics.UI.GLUT.Window
 
 import Data.State
 import Binding.Input
@@ -69,6 +70,8 @@ draw state = do
   diffusion <- get (diff' state)
   specularizion <- get (spec' state)
   emission <- get (emiss' state)
+
+  mpPos <- get (mpPos state)
   
   shineVal   <- get (shine' state)
   let shine = shineVal^2
@@ -137,7 +140,7 @@ draw state = do
     rotation   = Nothing,
     scaleSize  = Just 0.25,
     paint      = Just white,
-    location   = Just (0, 0, 2.15),
+    location   = Just (mpPos, 0, 2.15),
     noseVector = Just (0, 0, 1),
     upVector   = Just (0,1,0),
     ambience4  = Just white,
@@ -168,10 +171,12 @@ draw state = do
   drawGrid 5
 
   preservingMatrix $ do
-    glWindowPos 5 30
-    renderString Helvetica18 $ (fst info)
-    glWindowPos 5 5
-    renderString Helvetica18 $ (snd info)
+    preservingAttrib [AllServerAttributes] $ do
+      color3f 0 0 0
+      glWindowPos 5 30
+      renderString Helvetica18 $ (fst info)
+      glWindowPos 5 5
+      renderString Helvetica18 $ (snd info)
 
   swapBuffers
   updateInfo state
@@ -180,19 +185,24 @@ draw state = do
 
 myInit :: [String] -> State -> IO ()
 myInit args state = do
-  --clearColor $= Color4 1 1 1 0
-  clearColor $= Color4 (0/255) (0/255) (0/255) 0
+  clearColor $= Color4 1 1 1 0
+  --clearColor $= Color4 (0/255) (0/255) (0/255) 0
   depthFunc $= Just Less  
 
 
 main :: IO ()
 main = do
-    initialWindowSize $= Size 800 800
+
     (_progName, args) <- getArgsAndInitialize
     initialDisplayMode $= [ RGBMode, WithDepthBuffer, DoubleBuffered ]
+
+    size <- get screenSize
+    case size of
+      (Size x y) -> initialWindowSize $= Size (x `div` 2) y
     
-    --initialWindowPosition $= Position 500 500
     _window <- createWindow "Dodgy - Adam Cardenas"
+
+    
 
     state <- makeState
     myInit args state
