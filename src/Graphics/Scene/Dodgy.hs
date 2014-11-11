@@ -56,8 +56,8 @@ draw state = do
 
   clear [ ColorBuffer, DepthBuffer ]
 
-  --ph <- get (ph' state)
-  --th <- get (th' state)
+  ph <- get (ph' state)
+  th <- get (th' state)
   gr <- get (gr' state)
   zh  <- get (zh' state)
   dim <- get (dim state)
@@ -80,7 +80,10 @@ draw state = do
 
   loadIdentity
 
-  setLookAt (0,0,1) (0,0,0) (0,1,0)
+  let ex = (-2)*dim*sin(toDeg(th))*cos(toDeg(ph))
+      ey =    2*dim               *sin(toDeg(ph))
+      ez =    2*dim*cos(toDeg(th))*cos(toDeg(ph))
+  setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
 
 
 
@@ -132,10 +135,10 @@ draw state = do
 
   drawCube state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = Just 0.5,
+    scaleSize  = Just 0.25,
     paint      = Just white,
-    location   = Just (0, 1, 1),
-    noseVector = Just (0, (-1), 1),
+    location   = Just (0, 0, 2.15),
+    noseVector = Just (0, 0, 1),
     upVector   = Just (0,1,0),
     ambience4  = Just white,
     diffuse4   = Just yellow,
