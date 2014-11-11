@@ -11,15 +11,8 @@ import Graphics.Scene.Reshape
 import Graphics.Scene.Visibility
 import Graphics.Scene.Timers
 
-import Graphics.Object.Cube
-import Graphics.Object.BorgCube
-import Graphics.Object.Star
 import Graphics.Object.Grid
-import Graphics.Object.StarCluster
 import Graphics.Object.SteelFighter
-import Graphics.Object.Pyramid
-import Graphics.Object.Station
-import Graphics.Object.Sphere
 import Graphics.Object.AlienSphere
 import Graphics.Object.StarSphere
 
@@ -149,6 +142,20 @@ draw state = do
     diffuse4   = Nothing,
     specular4  = Just yellow,
     emission4  = Just emiss,
+    shininess  = Just shine
+  }
+
+  drawStarSphere state $ ObjectAttributes {
+    rotation   = Nothing,
+    scaleSize  = (Just 0.25),
+    paint      = Just $ (Point4 255 255 0 0),
+    location   = (Just loc3),
+    noseVector = Nothing,
+    upVector   = Nothing,
+    ambience4  = Nothing,
+    diffuse4   = Just yellow,
+    specular4  = Just yellow,
+    emission4  = Just yellow,
     shininess  = Just shine
   }
 
