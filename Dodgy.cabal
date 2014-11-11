@@ -1,0 +1,28 @@
+name:              Dodgy
+Build-Type:        Simple
+cabal-version:     >= 1.2
+version:           0.1
+author:            Adam Cardenas
+maintainer:        cevaris@gmail.com
+category:          Graphics
+
+extra-source-files:  readme.md
+
+data-dir:   resources/textures
+data-files: steel.jpg
+
+executable Dodgy
+    hs-source-dirs:  src
+                     src/Graphics/Object
+                     src/Graphics/Util
+                     src/Graphics/Scene
+                     src/Binding/
+    main-is:         Dodgy.hs
+    build-depends:   base,
+                     GLUT,
+                     OpenGLRaw,
+                     GLUtil,
+                     --gloss,
+                     --tga,
+                     split,
+                     random

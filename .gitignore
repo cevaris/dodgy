@@ -1,0 +1,8 @@
+dist/
+*.c
+*.o
+*.eventlog
+.cabal-sandbox
+
+*.pdf
+Dodgy
