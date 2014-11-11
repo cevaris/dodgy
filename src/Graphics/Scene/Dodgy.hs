@@ -12,6 +12,7 @@ import Graphics.Scene.Visibility
 import Graphics.Scene.Timers
 
 import Graphics.Object.Grid
+import Graphics.Object.Cube
 import Graphics.Object.SteelFighter
 import Graphics.Object.AlienSphere
 import Graphics.Object.StarSphere
@@ -55,8 +56,8 @@ draw state = do
 
   clear [ ColorBuffer, DepthBuffer ]
 
-  ph <- get (ph' state)
-  th <- get (th' state)
+  --ph <- get (ph' state)
+  --th <- get (th' state)
   gr <- get (gr' state)
   zh  <- get (zh' state)
   dim <- get (dim state)
@@ -79,10 +80,8 @@ draw state = do
 
   loadIdentity
 
-  let ex = (-2)*dim*sin(toDeg(th))*cos(toDeg(ph))
-      ey =    2*dim               *sin(toDeg(ph))
-      ez =    2*dim*cos(toDeg(th))*cos(toDeg(ph))
-  setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
+  setLookAt (0,0,1) (0,0,0) (0,1,0)
+
 
 
   ------------------------------------
@@ -131,15 +130,15 @@ draw state = do
     shininess  = Just shine
   }
 
-  drawAlienSphere state $ ObjectAttributes {
+  drawCube state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = (Just 0.5),
-    paint      = Just $ (Point4 1 1 1 1),
-    location   = (Just (0, 0, 0)),
-    noseVector = Nothing,
-    upVector   = Nothing,
-    ambience4  = Nothing,
-    diffuse4   = Nothing,
+    scaleSize  = Just 0.5,
+    paint      = Just white,
+    location   = Just (0, 1, 1),
+    noseVector = Just (0, (-1), 1),
+    upVector   = Just (0,1,0),
+    ambience4  = Just white,
+    diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just emiss,
     shininess  = Just shine
@@ -178,8 +177,8 @@ draw state = do
 
 myInit :: [String] -> State -> IO ()
 myInit args state = do
-  clearColor $= Color4 1 1 1 0
-  --clearColor $= Color4 (0/255) (0/255) (0/255) 0
+  --clearColor $= Color4 1 1 1 0
+  clearColor $= Color4 (0/255) (0/255) (0/255) 0
   depthFunc $= Just Less  
 
 
@@ -190,7 +189,7 @@ main = do
     initialDisplayMode $= [ RGBMode, WithDepthBuffer, DoubleBuffered ]
     
     --initialWindowPosition $= Position 500 500
-    _window <- createWindow "Space Scene Projection - Adam Cardenas"
+    _window <- createWindow "Dodgy - Adam Cardenas"
 
     state <- makeState
     myInit args state
