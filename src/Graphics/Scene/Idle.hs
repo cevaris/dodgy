@@ -16,6 +16,7 @@ idle state = do
   gr  <- get (gr' state)
   zh  <- get (zh' state)
   dim' <- get (dim state)
+  mpPos' <- get (mpPos state)
   fov' <- get (fov state)
 
   spec <- get (spec' state)
@@ -26,6 +27,18 @@ idle state = do
   lightStatus <- get (light' state)
   moveStatus <- get (move' state)
 
+
+  if mpPos' > 1.0
+    then mpPos state $~! (\x -> (-0.99))
+    else postRedisplay Nothing  
+
+  if mpPos' < (-1.0)
+    then mpPos state $~! (\x -> 0.99)
+    else postRedisplay Nothing  
+
+  ---------------------------------------
+
+  
   if moveStatus
     then do 
       t <- get elapsedTime
@@ -33,55 +46,59 @@ idle state = do
       zh' state $~! (\x -> mod' (90*seconds) 360)
     else postRedisplay Nothing
 
-  if fov' < 55
-    then fov state $~! (\x -> 55)
-    else postRedisplay Nothing
+  --if fov' < 55
+  --  then fov state $~! (\x -> 55)
+  --  else postRedisplay Nothing  
 
-  if dim' < 1
-    then dim state $~! (\x -> 1)
-    else postRedisplay Nothing
+  --if fov' < 55
+  --  then fov state $~! (\x -> 55)
+  --  else postRedisplay Nothing
 
-  if gr > 360
-    then gr' state $~! (\x -> 0)
-    else gr' state $~! (+2)
+  --if dim' < 1
+  --  then dim state $~! (\x -> 1)
+  --  else postRedisplay Nothing
+
+  --if gr > 360
+  --  then gr' state $~! (\x -> 0)
+  --  else gr' state $~! (+2)
   
-  if ((-360) > ph || ph > 360)
-    then ph' state $~! (\x -> 0)
-    else postRedisplay Nothing
+  --if ((-360) > ph || ph > 360)
+  --  then ph' state $~! (\x -> 0)
+  --  else postRedisplay Nothing
 
-  if ((-360) > th || th > 360)
-    then th' state $~! (\x -> 0)
-    else postRedisplay Nothing
+  --if ((-360) > th || th > 360)
+  --  then th' state $~! (\x -> 0)
+  --  else postRedisplay Nothing
 
-  if spec > 100
-    then spec' state $~! (\x -> 100)
-    else if spec < 0
-      then spec' state $~! (\x -> 0)
-      else postRedisplay Nothing
+  --if spec > 100
+  --  then spec' state $~! (\x -> 100)
+  --  else if spec < 0
+  --    then spec' state $~! (\x -> 0)
+  --    else postRedisplay Nothing
 
-  if diff > 100
-    then diff' state $~! (\x -> 100)
-    else if diff < 0
-      then diff' state $~! (\x -> 0)
-      else postRedisplay Nothing
+  --if diff > 100
+  --  then diff' state $~! (\x -> 100)
+  --  else if diff < 0
+  --    then diff' state $~! (\x -> 0)
+  --    else postRedisplay Nothing
 
-  if amb > 100
-    then amb' state $~! (\x -> 100)
-    else if amb < 0
-      then amb' state $~! (\x -> 0)
-      else postRedisplay Nothing
+  --if amb > 100
+  --  then amb' state $~! (\x -> 100)
+  --  else if amb < 0
+  --    then amb' state $~! (\x -> 0)
+  --    else postRedisplay Nothing
 
-  if shine > 100
-    then shine' state $~! (\x -> 100)
-    else if shine < 0
-      then shine' state $~! (\x -> 0)
-      else postRedisplay Nothing
+  --if shine > 100
+  --  then shine' state $~! (\x -> 100)
+  --  else if shine < 0
+  --    then shine' state $~! (\x -> 0)
+  --    else postRedisplay Nothing
 
-  if emiss > 100
-    then emiss' state $~! (\x -> 100)
-    else if emiss < 0
-      then emiss' state $~! (\x -> 0)
-      else postRedisplay Nothing
+  --if emiss > 100
+  --  then emiss' state $~! (\x -> 100)
+  --  else if emiss < 0
+  --    then emiss' state $~! (\x -> 0)
+  --    else postRedisplay Nothing
 
 
   postRedisplay Nothing
