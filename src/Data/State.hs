@@ -10,6 +10,8 @@ import Graphics.Util.Textures
 -- Global State
 data ChangeDirection = Increase | Decrease deriving (Show)
 
+data Difficulty = Hard | Medium | Easy deriving (Show, Eq)
+
 data ProjectionView = PerspectiveView | OrthogonalView | FirstPersonView deriving (Show, Eq)
 
 data Direction = UpDirection | DownDirection | LeftDirection | RightDirection deriving (Show, Eq)
@@ -37,6 +39,7 @@ data State = State {
   move'   :: IORef Bool,
 
   mpPos   :: IORef Float,
+  mode    :: IORef Difficulty,
 
   textures :: Textures,
    
@@ -68,6 +71,7 @@ makeState = do
   mv <- newIORef True
 
   mpPos' <- newIORef 0
+  mode'  <- newIORef Medium
 
   tx <- makeTextures
 
@@ -77,6 +81,7 @@ makeState = do
     ylight' = yl, rlight' = rl, emiss' = em, diff' = df, amb' = am, spec' = sp, smooth' = sm, light' = li, shine' = sh,
     move' = mv,
     mpPos = mpPos',
+    mode  = mode',
     textures = tx,
     info = i
   }

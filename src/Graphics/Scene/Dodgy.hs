@@ -35,6 +35,7 @@ updateInfo state = do
     fov <- get (fov state)
     dim <- get (dim state)
     mpPos <- get (mpPos state)
+    mode <- get (mode state)
     
     spec <- get (spec' state)
     amb <- get (amb' state)
@@ -46,7 +47,7 @@ updateInfo state = do
 
     let seconds = fromIntegral (t - t0') / 1000 :: GLfloat
         fps = fromIntegral f / seconds
-        result = ("[mpPos " ++ show mpPos ++ "]",
+        result = ("[mpPos " ++ show mpPos ++ "] [mode "++ show mode ++ "]",
                   "")
         --result = ("[ph " ++ round2 ph ++ "] [th " ++ round2 th ++ "] [zh " ++ round2 zh ++ "] [zoom " ++ show dim ++ "] [lightStatus " ++ show lightStatus ++  "] [shading " ++ show shadStatus ++  "] ",
         --          "[specular " ++ show spec ++  "] [ambience " ++ show amb ++  "] [diffuse " ++ show diff ++  "] [shininess " ++ show shine ++  "] [emission " ++ show emiss ++  "] ")
