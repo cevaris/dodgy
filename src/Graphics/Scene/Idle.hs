@@ -16,7 +16,6 @@ idle state = do
   gr  <- get (gr' state)
   zh  <- get (zh' state)
   dim' <- get (dim state)
-  mpPos' <- get (mpPos state)
   fov' <- get (fov state)
 
   spec <- get (spec' state)
@@ -27,14 +26,25 @@ idle state = do
   lightStatus <- get (light' state)
   moveStatus <- get (move' state)
 
+  mpPosX' <- get (mpPosX state)
+  mpPosY' <- get (mpPosY state)
 
-  if mpPos' > 1.0
-    then mpPos state $~! (\x -> (-0.99))
+
+  if mpPosX' > 1.0
+    then mpPosX state $~! (\x -> (-0.99))
     else postRedisplay Nothing  
 
-  if mpPos' < (-1.0)
-    then mpPos state $~! (\x -> 0.99)
-    else postRedisplay Nothing  
+  if mpPosX' < (-1.0)
+    then mpPosX state $~! (\x -> 0.99)
+    else postRedisplay Nothing
+
+  if mpPosY' > 1.0
+    then mpPosY state $~! (\x -> (-0.99))
+    else postRedisplay Nothing
+
+  if mpPosY' < (-1.0)
+    then mpPosY state $~! (\x -> 0.99)
+    else postRedisplay Nothing
 
   ---------------------------------------
 

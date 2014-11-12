@@ -34,7 +34,8 @@ updateInfo state = do
     asp <- get (asp state)
     fov <- get (fov state)
     dim <- get (dim state)
-    mpPos <- get (mpPos state)
+    mpPosX <- get (mpPosX state)
+    mpPosY <- get (mpPosY state)
     mode <- get (mode state)
     
     spec <- get (spec' state)
@@ -47,7 +48,7 @@ updateInfo state = do
 
     let seconds = fromIntegral (t - t0') / 1000 :: GLfloat
         fps = fromIntegral f / seconds
-        result = ("[mpPos " ++ show mpPos ++ "] [mode "++ show mode ++ "]",
+        result = ("[mpPosX " ++ show mpPosX ++ "] [mpPosY " ++ show mpPosY ++ "] [mode "++ show mode ++ "]",
                   "")
         --result = ("[ph " ++ round2 ph ++ "] [th " ++ round2 th ++ "] [zh " ++ round2 zh ++ "] [zoom " ++ show dim ++ "] [lightStatus " ++ show lightStatus ++  "] [shading " ++ show shadStatus ++  "] ",
         --          "[specular " ++ show spec ++  "] [ambience " ++ show amb ++  "] [diffuse " ++ show diff ++  "] [shininess " ++ show shine ++  "] [emission " ++ show emiss ++  "] ")
@@ -75,7 +76,8 @@ draw state = do
   specularizion <- get (spec' state)
   emission <- get (emiss' state)
 
-  mpPos <- get (mpPos state)
+  mpPosX <- get (mpPosX state)
+  mpPosY <- get (mpPosY state)
   
   shineVal   <- get (shine' state)
   let shine = shineVal^2
@@ -144,7 +146,7 @@ draw state = do
     rotation   = Nothing,
     scaleSize  = Just 0.25,
     paint      = Just white,
-    location   = Just (mpPos, 0, 2.75),
+    location   = Just (mpPosX, mpPosY, 2.75),
     noseVector = Just (0, 0, 1),
     upVector   = Just (0,1,0),
     ambience4  = Just white,

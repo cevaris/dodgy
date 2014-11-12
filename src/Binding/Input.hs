@@ -59,10 +59,14 @@ keyboard _     (Char '\27')         _ _ _ = exitWith ExitSuccess
 keyboard _     _                    _ _ _ = return ()
 
 modMainPlayer :: State -> Direction -> IO ()
-modMainPlayer state LeftDirection = do
-  mpPos state $~! (subtract 0.05)
-modMainPlayer state RightDirection  = do
-  mpPos state $~! (+0.05) 
+modMainPlayer state LeftDirection  = do
+  mpPosX state $~! (subtract 0.05)
+modMainPlayer state RightDirection = do
+  mpPosX state $~! (+0.05) 
+modMainPlayer state DownDirection  = do
+  mpPosY state $~! (subtract 0.05)
+modMainPlayer state UpDirection    = do
+  mpPosY state $~! (+0.05) 
 
 toggleLightMovement :: State -> KeyState -> IO ()
 toggleLightMovement state  Up = do
