@@ -138,6 +138,8 @@ type Emission4  = Maybe Point4
 type Shininess  = Maybe Int
 
 
+endGameTime=30
+
 
 --type ObjectAttributes = (Scale, Paint, Location, NoseVector, UpVector, Ambience4, Diffuse4, Specular4, Shininess)
 data ObjectAttributes = ObjectAttributes {

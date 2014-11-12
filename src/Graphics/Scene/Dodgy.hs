@@ -168,6 +168,20 @@ draw state = do
     shininess  = Just shine
   }
 
+  --let bricks = replicate 5 $ ObjectAttributes {
+  --    rotation   = Nothing,
+  --    scaleSize  = Just 0.25,
+  --    paint      = Just white,
+  --    location   = Just (0, 0, (-2)),
+  --    noseVector = Just (1, 0, 0),
+  --    upVector   = Just (0,1,0),
+  --    ambience4  = Just white,
+  --    diffuse4   = Just yellow,
+  --    specular4  = Just yellow,
+  --    emission4  = Just emiss,
+  --    shininess  = Just shine
+  --  }
+  --mapM_ (putStrLn . show) bricks
 
   lighting $= Disabled
   ------------------------------------

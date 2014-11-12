@@ -18,8 +18,11 @@ keyboard state (SpecialKey KeyRight)_ _ _ = modRotate state KeyRight
 keyboard state (Char 'z')           Up _ _ = modDim state Decrease
 keyboard state (Char 'Z')           Up _ _ = modDim state Increase
 
-keyboard state (Char 'a')           _ _ _ = modMainPlayer state LeftDirection
-keyboard state (Char 'd')           _ _ _ = modMainPlayer state RightDirection
+keyboard state (Char 'j')           _ _ _ = modMainPlayer state LeftDirection
+keyboard state (Char 'l')           _ _ _ = modMainPlayer state RightDirection
+
+keyboard state (Char 'i')           _ _ _ = modMainPlayer state UpDirection
+keyboard state (Char 'k')           _ _ _ = modMainPlayer state DownDirection
 
 
 --keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
