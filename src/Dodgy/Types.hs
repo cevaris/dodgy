@@ -5,6 +5,8 @@ import Data.IORef ( IORef, newIORef )
 import Graphics.UI.GLUT
 
 import Dodgy.Objects.Types
+import Dodgy.Map
+
 
 data ChangeDirection = Increase | Decrease deriving (Show)
 
@@ -41,7 +43,8 @@ data State = State {
   mpPosX  :: IORef Float,
   mpPosY  :: IORef Float,
   mode    :: IORef Difficulty,
-  bricks  :: IORef [Brick],
+
+  level   :: IORef Map,
 
   textures :: Textures,
    

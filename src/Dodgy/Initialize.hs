@@ -1,13 +1,16 @@
 module Dodgy.Initialize where
 
+import Control.Monad
 import Data.IORef ( IORef, newIORef )
 
 import Graphics.UI.GLUT
 
+import Dodgy.Random
 import Dodgy.GLUtils
 import Dodgy.Textures
 import Dodgy.Types
 import Dodgy.Objects.Types
+import Dodgy.Map
 
 import Dodgy.Draw
 import Dodgy.Input
@@ -39,15 +42,17 @@ initDodgy args = do
 
   mainLoop
 
+makeBrick :: Point3 -> BrickType -> Brick
+makeBrick l k = Brick {
+  loc   = l,
+  kind  = k   
+}
 
---makeBricks :: [Brick]
---makeBricks = do
---  let points = boundedXY3f (-1) 1 (-5) 5
---  forM points $ \loc' -> Brick {
---      speed = 1.0,
---      loc   = loc',
---      kind  = UnitBrick   
---    }
+makeBricks :: [Brick]
+makeBricks = do
+  let points = boundedXY3f (-1) 1 (-5) 5
+  (flip map) points (\l -> makeBrick l UnitBrick)
+
 
 makeState :: IO State
 makeState = do
@@ -76,7 +81,8 @@ makeState = do
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
   mode'   <- newIORef Medium
-  bricks' <- newIORef []
+
+  level'  <- newIORef makeMapOne
 
   tx <- makeTextures
 
@@ -87,7 +93,7 @@ makeState = do
     move' = mv,
     mpPosX = mpPosX', mpPosY = mpPosY',
     mode  = mode',
-    bricks = bricks',
+    level = level',
     textures = tx,
     info = i
   }

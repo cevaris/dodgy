@@ -1,9 +1,9 @@
 SHELL := /bin/bash
 UNAME_S := $(shell uname -s)
 
-all: test configure
+all: clean test configure
 	cabal build
-	mkdir bin
+	mkdir -p bin
 	cp dist/build/Dodgy/Dodgy bin/Dodgy
 test:
 

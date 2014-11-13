@@ -2,7 +2,6 @@ module Dodgy.Objects.StarCluster (drawStarCluster) where
 
 import System.Random
 import Control.Applicative
---import Control.Monad.State
 
  
 import Graphics.UI.GLUT

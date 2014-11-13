@@ -4,6 +4,7 @@ import Graphics.UI.GLUT
 import Graphics.GLUtil
 import Graphics.UI.GLUT.Window
 
+import Dodgy.Map
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.GLUtils
@@ -34,6 +35,7 @@ draw state = do
   diffusion <- get (diff' state)
   specularizion <- get (spec' state)
   emission <- get (emiss' state)
+  level <- get (level state)
 
   mpPosX <- get (mpPosX state)
   mpPosY <- get (mpPosY state)
@@ -103,12 +105,12 @@ draw state = do
 
   drawCube state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = Just 0.25,
-    paint      = Just white,
+    scaleSize  = Just 0.1,
+    paint      = Just darkGray,
     location   = Just (mpPosX, mpPosY, 2.75),
     noseVector = Just (0, 0, 1),
     upVector   = Just (0,1,0),
-    ambience4  = Just white,
+    ambience4  = Just darkGray,
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just emiss,
@@ -128,6 +130,22 @@ draw state = do
     emission4  = Just yellow,
     shininess  = Just shine
   }
+
+  --mapM_ (putStrLn . show) (brickMap level)
+
+  (flip mapM) (brickMap level) (\brick -> drawCube state $ ObjectAttributes {
+    rotation   = Nothing,
+    scaleSize  = Just 0.25,
+    paint      = Just darkGray,
+    location   = Just (loc brick),
+    noseVector = Just (0, 0, 1),
+    upVector   = Just (0,1,0),
+    ambience4  = Just darkGray,
+    diffuse4   = Just yellow,
+    specular4  = Just yellow,
+    emission4  = Just emiss,
+    shininess  = Just shine
+  })
 
   --let bricks = replicate 5 $ ObjectAttributes {
   --    rotation   = Nothing,

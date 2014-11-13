@@ -20,7 +20,6 @@ data Point4 = Point4 Float Float Float Float deriving (Show, Eq)
 data BrickType = WideBrick |  LongBrick | UnitBrick deriving (Show, Eq)
 
 data Brick = Brick {
-  speed    :: Float,
   loc      :: Point3,
   kind     :: BrickType
 } deriving (Show, Eq)
