@@ -2,7 +2,7 @@ module Graphics.Object.Pyramid (drawPyramid) where
  
 import Graphics.UI.GLUT
 
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Data.State
 
 -- Draw solid pyramid

@@ -2,7 +2,7 @@ module Graphics.Object.SteelFighter (drawSteelFighter) where
  
 import Graphics.UI.GLUT
 
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Data.State
 
 

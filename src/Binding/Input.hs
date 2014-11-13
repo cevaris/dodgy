@@ -4,7 +4,7 @@ import System.Exit ( exitWith, ExitCode(ExitSuccess), exitFailure )
 
 import Graphics.UI.GLUT
 
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Data.State
 
 ----------------------------------------------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import Data.Fixed
 
 import Graphics.UI.GLUT
 
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Data.State
 
 

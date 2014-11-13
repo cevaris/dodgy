@@ -7,7 +7,7 @@ import System.Random
 import Graphics.UI.GLUT
 import Graphics.GLUtil
 
-import Graphics.Util.Textures
+import Dodgy.Textures
 import Data.Random
 
 ----------------------------------------------------------------------------------------------------------------

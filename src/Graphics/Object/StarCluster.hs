@@ -9,7 +9,7 @@ import Graphics.UI.GLUT
 import Graphics.UI.GLUT.Objects
 
 import Graphics.Object.Sphere
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Data.State
 
 clusterPoints :: (RandomGen a, RandomGen b, RandomGen c) => Int -> a -> b -> c-> [(Float,Float,Float)]

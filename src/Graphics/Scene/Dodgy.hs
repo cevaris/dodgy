@@ -7,7 +7,7 @@ import Graphics.UI.GLUT.Window
 
 import Data.State
 import Binding.Input
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Graphics.Scene.Reshape
 import Graphics.Scene.Visibility
 import Graphics.Scene.Timers

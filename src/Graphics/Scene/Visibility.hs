@@ -2,7 +2,7 @@ module Graphics.Scene.Visibility (visible, idle) where
 
 import Graphics.UI.GLUT
 
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 import Data.State
 import Graphics.Scene.Idle
 

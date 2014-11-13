@@ -2,7 +2,7 @@ module Graphics.Object.Grid (drawGrid) where
  
 import Graphics.UI.GLUT
 
-import Graphics.Util.GLUtils
+import Dodgy.GLUtils
 
 
 ----------------------------------------------------------------------------------------------------------------
