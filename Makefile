@@ -5,7 +5,8 @@ UNAME_S := $(shell uname -s)
 
 all: test configure
 	cabal build
-	cp dist/build/Dodgy/Dodgy .
+	mkdir bin
+	cp dist/build/Dodgy/Dodgy bin/Dodgy
 test:
 
 ifeq (${UNAME_S}, Linux)
@@ -27,5 +28,5 @@ endif
 	cabal configure
 clean: test
 	cabal clean
-	- rm -fr Dodgy dist
+	- rm -fr Dodgy dist bin
 	
