@@ -6,7 +6,6 @@ import Graphics.UI.GLUT.Window
 
 import Dodgy.Types
 import Dodgy.Objects.Types
---import Dodgy.Initialize
 import Dodgy.GLUtils
 import Dodgy.HUD
 

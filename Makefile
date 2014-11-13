@@ -1,7 +1,5 @@
 SHELL := /bin/bash
 UNAME_S := $(shell uname -s)
-# export PATH := "~/.cabal/bin:$$PATH"
-
 
 all: test configure
 	cabal build

@@ -8,7 +8,7 @@ A Haskell OpenGL/GLUT dodging game
     # Build/Compile project
     make
     # Execute application
-    ./Dodgy
+    ./bin/Dodgy
 
   
 ### Key Bindings
