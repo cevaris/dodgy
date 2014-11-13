@@ -1,10 +1,14 @@
 module Data.State where
+
 import Data.IORef ( IORef, newIORef )
+import Control.Monad
+import System.Random
 
 import Graphics.UI.GLUT
 import Graphics.GLUtil
 
 import Graphics.Util.Textures
+import Data.Random
 
 ----------------------------------------------------------------------------------------------------------------
 -- Global State
@@ -15,6 +19,8 @@ data Difficulty = Hard | Medium | Easy deriving (Show, Eq)
 data ProjectionView = PerspectiveView | OrthogonalView | FirstPersonView deriving (Show, Eq)
 
 data Direction = UpDirection | DownDirection | LeftDirection | RightDirection deriving (Show, Eq)
+
+data BrickType = WideBrick |  LongBrick | UnitBrick deriving (Show, Eq)
 
 data State = State {
   frames  :: IORef Int,
@@ -41,6 +47,7 @@ data State = State {
   mpPosX  :: IORef Float,
   mpPosY  :: IORef Float,
   mode    :: IORef Difficulty,
+  bricks  :: IORef [Brick],
 
   textures :: Textures,
    
@@ -73,7 +80,8 @@ makeState = do
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
-  mode'  <- newIORef Medium
+  mode'   <- newIORef Medium
+  bricks' <- newIORef []
 
   tx <- makeTextures
 
@@ -84,6 +92,7 @@ makeState = do
     move' = mv,
     mpPosX = mpPosX', mpPosY = mpPosY',
     mode  = mode',
+    bricks = bricks',
     textures = tx,
     info = i
   }
@@ -124,6 +133,13 @@ makeTextures = do
   }
 
 
+data Brick = Brick {
+  speed    :: Float,
+  loc      :: Point3,
+  kind     :: BrickType
+} deriving (Show, Eq)
+
+
 type Point3 = (Float, Float, Float)
 data Point4 = Point4 Float Float Float Float deriving (Show, Eq)
 
@@ -138,9 +154,6 @@ type Diffuse4   = Maybe Point4
 type Specular4  = Maybe Point4
 type Emission4  = Maybe Point4
 type Shininess  = Maybe Int
-
-
-endGameTime=30
 
 
 --type ObjectAttributes = (Scale, Paint, Location, NoseVector, UpVector, Ambience4, Diffuse4, Specular4, Shininess)

@@ -113,33 +113,6 @@ sphereTh:: Float -> [Float]
 sphereTh d = [th | th <- [0.0..360.0], (mod' th d) == 0]
 
 
-
-
-boundedPoints2f :: Float -> Float -> Int -> [(Float,Float)]
-boundedPoints2f lower upper n = do 
-
-  let t = take n 
-      r = randomRs (lower,upper)
-      x = t . r . mkStdGen $ n*10
-      y = t . r . mkStdGen $ n*100
-
-  zip x y
-
-boundedXY3f :: Float -> Float -> Float -> Int -> [Point3]
-boundedXY3f lower upper z n = map (\(x,y) -> (x,y,z)) $ boundedPoints2f lower upper n
-
-boundedPoints3f :: Float -> Float -> Int -> [(Float,Float,Float)]
-boundedPoints3f lower upper n = do 
-
-  let t = take n 
-      r = randomRs (lower,upper)
-      x = t . r . mkStdGen $ n*10
-      y = t . r . mkStdGen $ n*100
-      z = t . r . mkStdGen $ n*100
-
-  zip3 x y z
-
-
 drawLatBand :: Float -> (Float,Float) -> IO ()
 drawLatBand d (ph, th) =  do
 

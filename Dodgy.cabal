@@ -13,6 +13,7 @@ data-files: steel.jpg
 
 executable Dodgy
     hs-source-dirs:  src
+                     src/Dodgy
                      src/Graphics/Object
                      src/Graphics/Util
                      src/Graphics/Scene
