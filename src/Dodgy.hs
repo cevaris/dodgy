@@ -1,23 +1,26 @@
 import Control.Monad ( when )
 import Control.Applicative
 
+
 import Graphics.UI.GLUT
 import Graphics.GLUtil
 import Graphics.UI.GLUT.Window
 
-import Binding.Input
-import Dodgy.GLUtils
-import Dodgy.Reshape
-import Dodgy.Visibility
-import Dodgy.Timers
+
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Initialize
+import Dodgy.GLUtils
 
-import Graphics.Object.Grid
-import Graphics.Object.Cube
-import Graphics.Object.Fighter
-import Graphics.Object.Sphere
+import Dodgy.Input
+import Dodgy.Reshape
+import Dodgy.Visibility
+import Dodgy.Timers
+
+import Dodgy.Objects.Grid
+import Dodgy.Objects.Cube
+import Dodgy.Objects.Fighter
+import Dodgy.Objects.Sphere
 
 ----------------------------------------------------------------------------------------------------------------
 -- Debug info
