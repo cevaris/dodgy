@@ -5,18 +5,19 @@ import Graphics.UI.GLUT
 import Graphics.GLUtil
 import Graphics.UI.GLUT.Window
 
-import Data.State
 import Binding.Input
 import Dodgy.GLUtils
-import Graphics.Scene.Reshape
-import Graphics.Scene.Visibility
-import Graphics.Scene.Timers
+import Dodgy.Reshape
+import Dodgy.Visibility
+import Dodgy.Timers
+import Dodgy.Types
+import Dodgy.Objects.Types
+import Dodgy.Initialize
 
 import Graphics.Object.Grid
 import Graphics.Object.Cube
-import Graphics.Object.SteelFighter
-import Graphics.Object.AlienSphere
-import Graphics.Object.StarSphere
+import Graphics.Object.Fighter
+import Graphics.Object.Sphere
 
 ----------------------------------------------------------------------------------------------------------------
 -- Debug info

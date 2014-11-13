@@ -10,7 +10,7 @@ import Graphics.UI.GLUT.Objects
 
 import Graphics.Object.Sphere
 import Dodgy.GLUtils
-import Data.State
+import 
 
 clusterPoints :: (RandomGen a, RandomGen b, RandomGen c) => Int -> a -> b -> c-> [(Float,Float,Float)]
 clusterPoints n a b c = zip3 (take n (randomRs ((-1),1) a)) (take n (randomRs ((-1),1) b)) (take n (randomRs ((-1),1) c))

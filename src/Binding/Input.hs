@@ -5,7 +5,8 @@ import System.Exit ( exitWith, ExitCode(ExitSuccess), exitFailure )
 import Graphics.UI.GLUT
 
 import Dodgy.GLUtils
-import Data.State
+import Dodgy.Types
+import Dodgy.Objects.Types
 
 ----------------------------------------------------------------------------------------------------------------
 -- Key Binding
