@@ -26,7 +26,7 @@ data Brick = Brick {
 
 -- Speed of moving objects
 speed :: Float
-speed = 0.005
+speed = 0.00075
 
 updateBrickLoc :: Int -> Brick -> Brick
 updateBrickLoc i b = do

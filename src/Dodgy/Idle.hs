@@ -30,7 +30,7 @@ idle state = do
   moveStatus <- get (move' state)
 
   f <- get (frames state)
-  level <- get (level state)
+  lv <- get (level state)
 
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
@@ -38,8 +38,8 @@ idle state = do
   --putStrLn $ show (brickMap level)
 
 
-  let brickMap' = updateBrickLocations (brickMap level) f
-      level'    = updateBrickMap brickMap' level
+  let brickMap' = updateBrickLocations (brickMap lv) f
+      level'    = updateBrickMap brickMap' lv
   
   --putStrLn $ show (brickMap level')
 
@@ -51,7 +51,7 @@ idle state = do
 
   --level state $~! (MapOne [])
 
-  --level state $~! (\x -> x)
+  level state $~! (\x -> level')
 
 
 
