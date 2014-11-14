@@ -129,3 +129,12 @@ drawLightingEffects object@(ObjectAttributes rotation scaleSize paint location n
     (Just point4) -> do 
       materialEmission FrontAndBack $= pointToColor4f point4
     _ -> postRedisplay Nothing
+
+
+
+
+
+
+
+
+

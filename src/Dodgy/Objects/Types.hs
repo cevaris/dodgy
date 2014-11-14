@@ -24,6 +24,22 @@ data Brick = Brick {
   kind     :: BrickType
 } deriving (Show, Eq)
 
+-- Speed of moving objects
+speed :: Float
+speed = 0.005
+
+updateBrickLoc :: Int -> Brick -> Brick
+updateBrickLoc i b = do
+  let (x,y,z) = loc b
+      loc'    = ((fromIntegral i)::Float) * speed + z
+  
+  b { loc = (x, y, loc' ) }
+
+updateBrickLocations :: [Brick] -> Int -> [Brick]
+updateBrickLocations bricks interval = do
+  let update = updateBrickLoc interval
+  map (update) bricks
+
 
 data Textures = Textures {
   steel :: TextureObject,

@@ -1,5 +1,6 @@
 module Dodgy.Idle where
 
+import Data.IORef
 import Data.Fixed
 
 import Graphics.UI.GLUT
@@ -7,6 +8,7 @@ import Graphics.UI.GLUT
 import Dodgy.GLUtils
 import Dodgy.Types
 import Dodgy.Objects.Types
+import Dodgy.Map
 
 
 idle :: State -> IdleCallback
@@ -27,8 +29,30 @@ idle state = do
   lightStatus <- get (light' state)
   moveStatus <- get (move' state)
 
+  f <- get (frames state)
+  level <- get (level state)
+
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
+
+  --putStrLn $ show (brickMap level)
+
+
+  let brickMap' = updateBrickLocations (brickMap level) f
+      level'    = updateBrickMap brickMap' level
+  
+  --putStrLn $ show (brickMap level')
+
+  --putStrLn $ show level'
+
+  --level state $~! (\x -> newIORef level')
+  --level state (\x -> MapTwo { brickMap = [] })
+  --level state $~ level'
+
+  --level state $~! (MapOne [])
+
+  --level state $~! (\x -> x)
+
 
 
   if mpPosX' > 1.0

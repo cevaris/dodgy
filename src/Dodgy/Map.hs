@@ -7,6 +7,10 @@ data Map
   | MapTwo { brickMap :: [Brick]} deriving (Show, Eq)
 
 
+updateBrickMap :: [Brick] -> Map -> Map
+updateBrickMap bm l = l { brickMap = bm }
+
+
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [

@@ -4,13 +4,12 @@ import Graphics.UI.GLUT
 import Graphics.GLUtil
 import Graphics.UI.GLUT.Window
 
+import Dodgy.Utils
 import Dodgy.Map
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.GLUtils
 import Dodgy.HUD
-
-
 import Dodgy.Objects.Grid
 import Dodgy.Objects.Cube
 import Dodgy.Objects.Fighter
@@ -131,9 +130,7 @@ draw state = do
     shininess  = Just shine
   }
 
-  --mapM_ (putStrLn . show) (brickMap level)
-
-  (flip mapM) (brickMap level) (\brick -> drawCube state $ ObjectAttributes {
+  mapMR (brickMap level) (\brick -> drawCube state $ ObjectAttributes {
     rotation   = Nothing,
     scaleSize  = Just 0.25,
     paint      = Just darkGray,

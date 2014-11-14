@@ -24,4 +24,5 @@ executable Dodgy
                      --gloss,
                      --tga,
                      split,
-                     random
+                     random,
+                     fclabels
