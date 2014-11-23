@@ -103,7 +103,7 @@ listf :: [Float] -> [GLfloat]
 listf ls = map (\x -> ((realToFrac x)::GLfloat)) ls
 
 drawLightingEffects :: ObjectAttributes -> IO ()
-drawLightingEffects object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess) = do
+drawLightingEffects object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess collider) = do
   
   case shininess of 
       (Just sh) -> do 

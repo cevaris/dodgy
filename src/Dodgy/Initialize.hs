@@ -45,7 +45,8 @@ initDodgy args = do
 makeBrick :: Point3 -> BrickType -> Brick
 makeBrick l k = Brick {
   loc   = l,
-  kind  = k   
+  kind  = k,
+  isDrawn = Enabled
 }
 
 makeBricks :: [Brick]
@@ -58,7 +59,7 @@ makeState :: IO State
 makeState = do
   f  <- newIORef 0
   t  <- newIORef 0
-  ph <- newIORef 0 -- 20
+  ph <- newIORef 5 -- 20
   th <- newIORef 0 --(-30)
   gr <- newIORef 0
   zh <- newIORef 90

@@ -26,5 +26,7 @@ A Haskell OpenGL/GLUT dodging game
 ## Assignment Length
 ~ hours
 
-    
+
 ### Sources
+
+- [devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/](Bounding Box Collision Detection)

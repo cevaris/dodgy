@@ -1,5 +1,7 @@
 module Dodgy.Map where
 
+import Graphics.UI.GLUT
+
 import Dodgy.Objects.Types
 
 data Map 
@@ -14,9 +16,9 @@ updateBrickMap bm l = l { brickMap = bm }
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-      Brick { loc = (0,0,(-3)), kind = UnitBrick },
-      Brick { loc = (0,1,(-4)), kind = UnitBrick },
-      Brick { loc = (1,1,(-4)), kind = UnitBrick }
+      Brick { loc = (0,0,(-3)), kind = UnitBrick, isDrawn = Enabled },
+      Brick { loc = (0,1,(-4)), kind = UnitBrick, isDrawn = Enabled },
+      Brick { loc = (1,1,(-4)), kind = UnitBrick, isDrawn = Enabled }
     ]
 }
 
@@ -24,8 +26,8 @@ makeMapOne = MapOne {
 makeMapTwo :: Map
 makeMapTwo = MapTwo {
   brickMap = [
-      Brick { loc = (0,0,(-4)), kind = UnitBrick },
-      Brick { loc = (0,4,(-4)), kind = UnitBrick },
-      Brick { loc = (1,3,(-3)), kind = UnitBrick }
+      Brick { loc = (0,0,(-4)), kind = UnitBrick, isDrawn = Enabled },
+      Brick { loc = (0,4,(-4)), kind = UnitBrick, isDrawn = Enabled },
+      Brick { loc = (1,3,(-3)), kind = UnitBrick, isDrawn = Enabled }
     ]
 }

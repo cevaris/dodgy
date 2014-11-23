@@ -99,7 +99,8 @@ draw state = do
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just emiss,
-    shininess  = Just shine
+    shininess  = Just shine,
+    collider   = Nothing
   }
 
   drawCube state $ ObjectAttributes {
@@ -113,7 +114,8 @@ draw state = do
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just emiss,
-    shininess  = Just shine
+    shininess  = Just shine,
+    collider   = Nothing
   }
 
   drawStarSphere state $ ObjectAttributes {
@@ -127,7 +129,8 @@ draw state = do
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just yellow,
-    shininess  = Just shine
+    shininess  = Just shine,
+    collider   = Nothing
   }
 
   mapMR (brickMap level) (\brick -> drawCube state $ ObjectAttributes {
@@ -141,7 +144,8 @@ draw state = do
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just emiss,
-    shininess  = Just shine
+    shininess  = Just shine,
+    collider   = Nothing
   })
 
   --let bricks = replicate 5 $ ObjectAttributes {

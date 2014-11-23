@@ -29,7 +29,7 @@ drawLatBand d (ph, th) =  do
 
 --Draw solid sphere
 drawSphere :: State -> ObjectAttributes -> IO ()
-drawSphere state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess) = do
+drawSphere state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess collider) = do
 
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
@@ -57,7 +57,7 @@ drawSphere state object@(ObjectAttributes rotation scaleSize paint location nose
 
 
 drawStarSphere :: State -> ObjectAttributes -> IO ()
-drawStarSphere state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess) = do
+drawStarSphere state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess collider) = do
 
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
@@ -93,7 +93,7 @@ drawStarSphere state object@(ObjectAttributes rotation scaleSize paint location 
 
 
 drawAlienSphere :: State -> ObjectAttributes -> IO ()
-drawAlienSphere state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess) = do
+drawAlienSphere state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess collider) = do
 
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do

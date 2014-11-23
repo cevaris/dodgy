@@ -1,3 +1,7 @@
+
+
+
+
 module Dodgy.Objects.Fighter (drawFighter, drawSteelFighter) where 
  
 import Graphics.UI.GLUT
@@ -14,7 +18,7 @@ import Dodgy.Objects.Types
 --  nose towards (dx,dy,dz)
 --  up towards (ux,uy,uz)
 drawFighter :: State -> ObjectAttributes -> IO ()
-drawFighter state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _) = do
+drawFighter state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
   
 
   case (location, noseVector, upVector, scaleSize, paint) of
@@ -181,7 +185,7 @@ drawFighter state object@(ObjectAttributes rotation scaleSize paint location nos
 --  nose towards (dx,dy,dz)
 --  up towards (ux,uy,uz)
 drawSteelFighter :: State -> ObjectAttributes -> IO ()
-drawSteelFighter state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _) = do
+drawSteelFighter state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
   
 
   case (location, noseVector, upVector, scaleSize, paint) of

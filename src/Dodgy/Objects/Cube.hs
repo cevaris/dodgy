@@ -8,7 +8,7 @@ import Dodgy.Objects.Types
 
 
 drawCube :: State -> ObjectAttributes -> IO ()
-drawCube state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _) = do
+drawCube state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
 
   let w = 1.0
 

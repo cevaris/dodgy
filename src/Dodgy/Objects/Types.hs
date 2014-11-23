@@ -17,29 +17,43 @@ type Shininess  = Maybe Int
 type Point3 = (Float, Float, Float)
 data Point4 = Point4 Float Float Float Float deriving (Show, Eq)
 
-data BrickType = WideBrick |  LongBrick | UnitBrick deriving (Show, Eq)
+data BrickType   = WideBrick |  LongBrick | UnitBrick deriving (Show, Eq)
 
 data Brick = Brick {
   loc      :: Point3,
-  kind     :: BrickType
+  kind     :: BrickType,
+  isDrawn  :: Capability
 } deriving (Show, Eq)
 
 -- Speed of moving objects
 speed :: Float
-speed = 0.00075
+speed = 0.0075
 
 updateBrickLoc :: Int -> Brick -> Brick
 updateBrickLoc i b = do
   let (x,y,z) = loc b
-      loc'    = ((fromIntegral i)::Float) * speed + z
+      -- loc'    = ((fromIntegral i)::Float) * speed + z
+      loc'    = ((fromIntegral (i `mod` 5))::Float) * speed + z      
   
   b { loc = (x, y, loc' ) }
+
+updateBrickIsDrawn :: Capability -> Brick -> Brick
+updateBrickIsDrawn c b = b { isDrawn = c }
 
 updateBrickLocations :: [Brick] -> Int -> [Brick]
 updateBrickLocations bricks interval = do
   let update = updateBrickLoc interval
   map (update) bricks
 
+
+data Collider = BoxCollider {
+  top :: Float,
+  bottom :: Float,
+  left :: Float,
+  right :: Float,
+  front :: Float,
+  back :: Float
+} deriving(Show, Eq)
 
 data Textures = Textures {
   steel :: TextureObject,
@@ -63,5 +77,6 @@ data ObjectAttributes = ObjectAttributes {
   diffuse4   :: Diffuse4,
   specular4  :: Specular4,
   emission4  :: Emission4,
-  shininess  :: Shininess
+  shininess  :: Shininess,
+  collider   :: Maybe Collider
 } deriving (Show, Eq)
