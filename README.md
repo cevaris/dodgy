@@ -29,4 +29,4 @@ A Haskell OpenGL/GLUT dodging game
 
 ### Sources
 
-- [devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/](Bounding Box Collision Detection)
+- [Bounding Box Collision Detection](devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/)
