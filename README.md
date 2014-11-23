@@ -30,3 +30,4 @@ A Haskell OpenGL/GLUT dodging game
 ### Sources
 
 - [Bounding Box Collision Detection](http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/)
+- [Haskell Im/Exporting](http://en.wikibooks.org/wiki/Haskell/Modules#Exporting)
