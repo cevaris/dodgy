@@ -1,4 +1,15 @@
 module Dodgy.Objects.Types where
+-- ( Brick,
+--   loc,
+  
+--   BrickType,
+--   Point3,
+--   Point4,
+--   Collider,
+--   CollisionState,
+--   Textures,
+--   ObjectAttributes
+--   ) where
 
 import Graphics.UI.GLUT
 
@@ -45,7 +56,7 @@ updateBrickLocations bricks interval = do
   let update = updateBrickLoc interval
   map (update) bricks
 
-
+data CollisionState = Collision | Miss deriving (Show, Eq)
 data Collider = BoxCollider {
   top :: Float,
   bottom :: Float,

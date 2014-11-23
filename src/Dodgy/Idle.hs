@@ -9,7 +9,7 @@ import Dodgy.GLUtils
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Map
-
+import Dodgy.Collision
 
 idle :: State -> IdleCallback
 idle state = do
