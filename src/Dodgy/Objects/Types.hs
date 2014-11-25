@@ -13,20 +13,8 @@ module Dodgy.Objects.Types where
 
 import Graphics.UI.GLUT
 
-type RotAngle   = Maybe Float
-type Scale      = Maybe Float
-type Paint      = Maybe Point4
-type Location   = Maybe Point3
-type NoseVector = Maybe Point3
-type UpVector   = Maybe Point3
-type Ambience4  = Maybe Point4
-type Diffuse4   = Maybe Point4
-type Specular4  = Maybe Point4
-type Emission4  = Maybe Point4
-type Shininess  = Maybe Int
+import Dodgy.GLUtils
 
-type Point3 = (Float, Float, Float)
-data Point4 = Point4 Float Float Float Float deriving (Show, Eq)
 
 data BrickType   = WideBrick |  LongBrick | UnitBrick deriving (Show, Eq)
 
@@ -96,9 +84,9 @@ updateBrickMap bm l = l { brickMap = bm }
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-      makeBrick (0,0,(-3)) UnitBrick
-      makeBrick (0,1,(-4)) UnitBrick
-      makeBrick (1,1,(-4)) UnitBrick
+      makeBrick (0,0,(-3)) UnitBrick,
+      makeBrick (0,1,(-4)) WideBrick,
+      makeBrick (1,1,(-4)) LongBrick
     ]
 }
 
@@ -166,6 +154,23 @@ data Textures = Textures {
   metal2 :: TextureObject
 } deriving (Show, Eq)
 
+
+
+
+
+
+type RotAngle   = Maybe Float
+type Scale      = Maybe Float
+type Paint      = Maybe Point4
+type Location   = Maybe Point3
+type NoseVector = Maybe Point3
+type UpVector   = Maybe Point3
+type Ambience4  = Maybe Point4
+type Diffuse4   = Maybe Point4
+type Specular4  = Maybe Point4
+type Emission4  = Maybe Point4
+type Shininess  = Maybe Int
+
 data ObjectAttributes = ObjectAttributes {
   rotation   :: RotAngle,
   scaleSize  :: Scale,
@@ -180,3 +185,31 @@ data ObjectAttributes = ObjectAttributes {
   shininess  :: Shininess,
   collider   :: Maybe Collider
 } deriving (Show, Eq)
+
+drawLightingEffects :: ObjectAttributes -> IO ()
+drawLightingEffects object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess collider) = do
+  
+  case shininess of 
+      (Just sh) -> do 
+        materialShininess FrontAndBack $= (iToGL sh)
+      _ -> postRedisplay Nothing
+
+  case specular4 of 
+    (Just point4) -> do 
+      materialSpecular FrontAndBack $= pointToColor4f point4
+    _ -> postRedisplay Nothing
+
+  case diffuse4 of 
+    (Just point4) -> do 
+      materialDiffuse FrontAndBack $= pointToColor4f point4
+    _ -> postRedisplay Nothing
+
+  case ambience4 of 
+    (Just point4) -> do 
+      materialAmbient FrontAndBack $= pointToColor4f point4
+    _ -> postRedisplay Nothing
+
+  case emission4 of 
+    (Just point4) -> do 
+      materialEmission FrontAndBack $= pointToColor4f point4
+    _ -> postRedisplay Nothing

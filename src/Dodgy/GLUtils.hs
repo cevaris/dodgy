@@ -8,9 +8,8 @@ import System.Random
 import Graphics.Rendering.OpenGL.Raw.ARB.WindowPos
 import Graphics.UI.GLUT
 
-import Dodgy.Types
-import Dodgy.Objects.Types
-import Dodgy.Textures
+type Point3 = (Float, Float, Float)
+data Point4 = Point4 Float Float Float Float deriving (Show, Eq)
 
 yellow   = (Point4 1.0 1.0 0.0 1.0)
 white    = (Point4 1 1 1 1)
@@ -108,40 +107,4 @@ round2GL x = showGFloat (Just 2) x ""
 
 listf :: [Float] -> [GLfloat]
 listf ls = map (\x -> ((realToFrac x)::GLfloat)) ls
-
-drawLightingEffects :: ObjectAttributes -> IO ()
-drawLightingEffects object@(ObjectAttributes rotation scaleSize paint location noseVector upVector ambience4 diffuse4 specular4 emission4 shininess collider) = do
-  
-  case shininess of 
-      (Just sh) -> do 
-        materialShininess FrontAndBack $= (iToGL sh)
-      _ -> postRedisplay Nothing
-
-  case specular4 of 
-    (Just point4) -> do 
-      materialSpecular FrontAndBack $= pointToColor4f point4
-    _ -> postRedisplay Nothing
-
-  case diffuse4 of 
-    (Just point4) -> do 
-      materialDiffuse FrontAndBack $= pointToColor4f point4
-    _ -> postRedisplay Nothing
-
-  case ambience4 of 
-    (Just point4) -> do 
-      materialAmbient FrontAndBack $= pointToColor4f point4
-    _ -> postRedisplay Nothing
-
-  case emission4 of 
-    (Just point4) -> do 
-      materialEmission FrontAndBack $= pointToColor4f point4
-    _ -> postRedisplay Nothing
-
-
-
-
-
-
-
-
 
