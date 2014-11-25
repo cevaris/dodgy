@@ -14,6 +14,7 @@ import Dodgy.Objects.Grid
 import Dodgy.Objects.Cube
 import Dodgy.Objects.Fighter
 import Dodgy.Objects.Sphere
+import Dodgy.Objects.Brick
 
 
 draw :: State -> IO ()
@@ -134,21 +135,8 @@ draw state = do
   }
 
   mapMR (brickMap level) (\brick -> case brick of 
-      (Brick l k Disabled) -> postRedisplay Nothing
-      (Brick l k Enabled)  -> drawCube state $ ObjectAttributes {
-        rotation   = Nothing,
-        scaleSize  = Just 0.25,
-        paint      = Just darkGray,
-        location   = Just (loc brick),
-        noseVector = Just (0, 0, 1),
-        upVector   = Just (0,1,0),
-        ambience4  = Just darkGray,
-        diffuse4   = Just yellow,
-        specular4  = Just yellow,
-        emission4  = Just emiss,
-        shininess  = Just shine,
-        collider   = Nothing 
-     })
+      (Brick l k Disabled _) -> postRedisplay Nothing
+      (Brick l k Enabled  _) -> drawBrick state brick)
 
   let brickLocations = map (\x -> show $ (loc x)) (brickMap level)
   putStrLn $ show brickLocations

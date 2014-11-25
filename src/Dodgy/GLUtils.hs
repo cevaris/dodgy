@@ -12,6 +12,13 @@ import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Textures
 
+yellow   = (Point4 1.0 1.0 0.0 1.0)
+white    = (Point4 1 1 1 1)
+black    = (Point4 0 0 0 1)
+blue     = (Point4 (173/255) (216/255) (230/255) 0)
+darkGray = (Point4 (50/255) (50/255) (50/255) 0)
+snowGray = (Point4 (138/255) (138/255) (138/255) 0)
+
 iToGL :: Int -> GLfloat
 iToGL i = (fromIntegral i)::GLfloat
 

@@ -42,18 +42,6 @@ initDodgy args = do
 
   mainLoop
 
-makeBrick :: Point3 -> BrickType -> Brick
-makeBrick l k = Brick {
-  loc   = l,
-  kind  = k,
-  isDrawn = Enabled
-}
-
-makeBricks :: [Brick]
-makeBricks = do
-  let points = boundedXY3f (-1) 1 (-5) 5
-  (flip map) points (\l -> makeBrick l UnitBrick)
-
 
 makeState :: IO State
 makeState = do

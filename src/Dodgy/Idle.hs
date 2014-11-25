@@ -41,7 +41,7 @@ idle state = do
       brickMap'' = map (updateIsDrawn 3.0) brickMap'
       level'     = updateBrickMap brickMap'' lv
 
-  putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
+  -- putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
       
   level state $~! (\x -> level')
 
