@@ -34,11 +34,11 @@ makeBrick l k = Brick {
 
 makeUnitBrickAttributes :: Point3 ->  ObjectAttributes
 makeUnitBrickAttributes l = do
-  let ambience      = 1.0
-      diffusion     = 1.0
-      specularizion = 1.0
-      emission      = 1.0
-      shine         = 2
+  let ambience      = 30
+      diffusion     = 65
+      specularizion = 85
+      emission      = 0
+      shine         = 5^2
       ambs  = (Point4 (0.01*ambience) (0.01*ambience) (0.01*ambience) 1.0)
       diffs = (Point4 (0.01*diffusion) (0.01*diffusion) (0.01*diffusion) 1.0)
       specs = (Point4 (0.01*specularizion) (0.01*specularizion) (0.01*specularizion) 1.0)
@@ -62,25 +62,11 @@ makeUnitBrickAttributes l = do
 -- makeWideBrick :: Brick
 -- makeLongBrick :: Brick
 
--- makeBricks :: [Brick]
--- makeBricks = do
---   let points = boundedXY3f (-1) 1 (-5) 5
---   (flip map) points (\l -> makeBrick l UnitBrick)
-
-
 
 updateBrickMap :: [Brick] -> Map -> Map
 updateBrickMap bm l = l { brickMap = bm }
 
 
--- makeMapOne :: Map
--- makeMapOne = MapOne {
---   brickMap = [
---       Brick { loc = (0,0,(-3)), kind = UnitBrick, isDrawn = Enabled },
---       Brick { loc = (0,1,(-4)), kind = UnitBrick, isDrawn = Enabled },
---       Brick { loc = (1,1,(-4)), kind = UnitBrick, isDrawn = Enabled }
---     ]
--- }
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
@@ -91,14 +77,10 @@ makeMapOne = MapOne {
 }
 
 
--- makeMapTwo :: Map
--- makeMapTwo = MapTwo {
---   brickMap = [
---       Brick { loc = (0,0,(-4)), kind = UnitBrick, isDrawn = Enabled },
---       Brick { loc = (0,4,(-4)), kind = UnitBrick, isDrawn = Enabled },
---       Brick { loc = (1,3,(-3)), kind = UnitBrick, isDrawn = Enabled }
---     ]
--- }
+
+
+
+
 
 
 data Brick = Brick {
@@ -133,6 +115,13 @@ updateIsDrawn zw b@(Brick (x, y, z) _ _ _)
   | z > zw    = b { isDrawn = Disabled }
   | otherwise = b
 
+
+
+
+
+
+
+
 data CollisionState = Collision | Miss deriving (Show, Eq)
 data Collider = BoxCollider {
   top :: Float,
@@ -142,6 +131,11 @@ data Collider = BoxCollider {
   front :: Float,
   back :: Float
 } deriving(Show, Eq)
+
+
+
+
+
 
 data Textures = Textures {
   steel :: TextureObject,
