@@ -133,36 +133,27 @@ draw state = do
     collider   = Nothing
   }
 
-  mapMR (brickMap level) (\brick -> drawCube state $ ObjectAttributes {
-    rotation   = Nothing,
-    scaleSize  = Just 0.25,
-    paint      = Just darkGray,
-    location   = Just (loc brick),
-    noseVector = Just (0, 0, 1),
-    upVector   = Just (0,1,0),
-    ambience4  = Just darkGray,
-    diffuse4   = Just yellow,
-    specular4  = Just yellow,
-    emission4  = Just emiss,
-    shininess  = Just shine,
-    collider   = Nothing
-  })
+  mapMR (brickMap level) (\brick -> case brick of 
+      (Brick l k Disabled) -> postRedisplay Nothing
+      (Brick l k Enabled)  -> drawCube state $ ObjectAttributes {
+        rotation   = Nothing,
+        scaleSize  = Just 0.25,
+        paint      = Just darkGray,
+        location   = Just (loc brick),
+        noseVector = Just (0, 0, 1),
+        upVector   = Just (0,1,0),
+        ambience4  = Just darkGray,
+        diffuse4   = Just yellow,
+        specular4  = Just yellow,
+        emission4  = Just emiss,
+        shininess  = Just shine,
+        collider   = Nothing 
+     })
 
-  --let bricks = replicate 5 $ ObjectAttributes {
-  --    rotation   = Nothing,
-  --    scaleSize  = Just 0.25,
-  --    paint      = Just white,
-  --    location   = Just (0, 0, (-2)),
-  --    noseVector = Just (1, 0, 0),
-  --    upVector   = Just (0,1,0),
-  --    ambience4  = Just white,
-  --    diffuse4   = Just yellow,
-  --    specular4  = Just yellow,
-  --    emission4  = Just emiss,
-  --    shininess  = Just shine
-  --  }
-  --mapM_ (putStrLn . show) bricks
-
+  let brickLocations = map (\x -> show $ (loc x)) (brickMap level)
+  putStrLn $ show brickLocations
+      
+     
   lighting $= Disabled
   ------------------------------------
   

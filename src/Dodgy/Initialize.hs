@@ -79,6 +79,8 @@ makeState = do
   sh <- newIORef 5
   mv <- newIORef True
 
+  zw <- newIORef 4.0
+
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
   mode'   <- newIORef Medium
@@ -92,6 +94,7 @@ makeState = do
     frames = f, t0 = t, ph' = ph, th' = th, gr' = gr, zh' = zh, asp = as, fov = fv, dim = di, 
     ylight' = yl, rlight' = rl, emiss' = em, diff' = df, amb' = am, spec' = sp, smooth' = sm, light' = li, shine' = sh,
     move' = mv,
+    zwall = zw,
     mpPosX = mpPosX', mpPosY = mpPosY',
     mode  = mode',
     level = level',

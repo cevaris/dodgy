@@ -34,22 +34,15 @@ idle state = do
 
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
-  putStrLn $ show f
+  -- putStrLn $ show f
   --putStrLn $ show (brickMap level)
 
-  let brickMap' = updateBrickLocations (brickMap lv) f
-      level'    = updateBrickMap brickMap' lv
-  
-  --putStrLn $ show (brickMap level')
+  let brickMap'  = updateBrickLocations (brickMap lv) f
+      brickMap'' = map (updateIsDrawn 3.0) brickMap'
+      level'     = updateBrickMap brickMap'' lv
 
-  --putStrLn $ show level'
-
-  --level state $~! (\x -> newIORef level')
-  --level state (\x -> MapTwo { brickMap = [] })
-  --level state $~ level'
-
-  --level state $~! (MapOne [])
-
+  putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
+      
   level state $~! (\x -> level')
 
   if mpPosX' > 1.0

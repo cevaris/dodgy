@@ -56,6 +56,11 @@ updateBrickLocations bricks interval = do
   let update = updateBrickLoc interval
   map (update) bricks
 
+updateIsDrawn :: Float -> Brick -> Brick
+updateIsDrawn zw b@(Brick (x, y, z) _ _)
+  | z > zw    = b { isDrawn = Disabled }
+  | otherwise = b
+
 data CollisionState = Collision | Miss deriving (Show, Eq)
 data Collider = BoxCollider {
   top :: Float,

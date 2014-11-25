@@ -40,6 +40,8 @@ data State = State {
   shine'  :: IORef Int,
   move'   :: IORef Bool,
 
+  zwall   :: IORef Float,
+
   mpPosX  :: IORef Float,
   mpPosY  :: IORef Float,
   mode    :: IORef Difficulty,
