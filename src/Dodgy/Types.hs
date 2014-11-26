@@ -44,6 +44,8 @@ data State = State {
 
   mpPosX  :: IORef Float,
   mpPosY  :: IORef Float,
+  s_coll  :: IORef Collider,
+
   mode    :: IORef Difficulty,
 
   level   :: IORef Map,

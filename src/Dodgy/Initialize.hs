@@ -71,6 +71,15 @@ makeState = do
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
+  coll'   <- newIORef $ BoxCollider {
+    top    = 1,
+    bottom = 1,
+    left   = 1,
+    right  = 1,
+    front  = 1,
+    back   = 1
+  }
+
   mode'   <- newIORef Medium
 
   level'  <- newIORef makeMapOne
@@ -84,6 +93,7 @@ makeState = do
     move' = mv,
     zwall = zw,
     mpPosX = mpPosX', mpPosY = mpPosY',
+    s_coll = coll',
     mode  = mode',
     level = level',
     textures = tx,

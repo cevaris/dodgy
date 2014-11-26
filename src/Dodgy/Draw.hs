@@ -138,8 +138,8 @@ draw state = do
       (Brick l k Disabled _) -> postRedisplay Nothing
       (Brick l k Enabled  _) -> drawBrick state brick)
 
-  let brickLocations = map (\x -> show $ (loc x)) (brickMap level)
-  putStrLn $ show brickLocations
+  -- let brickLocations = map (\x -> show $ (loc x)) (brickMap level)
+  -- putStrLn $ show brickLocations
       
      
   lighting $= Disabled

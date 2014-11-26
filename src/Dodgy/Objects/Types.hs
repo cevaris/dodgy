@@ -28,12 +28,11 @@ makeBrick l k = Brick {
   loc   = l,
   kind  = k,
   isDrawn = Enabled,
-  attrs = case k of
-           _ -> makeUnitBrickAttributes l
+  attrs = makeBrickAttributes l k
 }
 
-makeUnitBrickAttributes :: Point3 ->  ObjectAttributes
-makeUnitBrickAttributes l = do
+makeBrickAttributes :: Point3 -> BrickType -> ObjectAttributes
+makeBrickAttributes l k = do
   let ambience      = 30
       diffusion     = 65
       specularizion = 85
@@ -44,11 +43,16 @@ makeUnitBrickAttributes l = do
       specs = (Point4 (0.01*specularizion) (0.01*specularizion) (0.01*specularizion) 1.0)
       emiss = (Point4 0.0 0.0 (0.01*emission) 1.0)
 
+  let collider' = case k of
+        UnitBrick -> makeUnitCollider
+        WideBrick -> makeWideCollider
+        LongBrick -> makeLongCollider
+
   ObjectAttributes {
     rotation   = Nothing,
     scaleSize  = Just 0.25,
     paint      = Just darkGray,
-    location   = Just l,
+    location   = Nothing, -- Do not use this location
     noseVector = Just (0, 0, 1),
     upVector   = Just (0,1,0),
     ambience4  = Just darkGray,
@@ -56,16 +60,37 @@ makeUnitBrickAttributes l = do
     specular4  = Just yellow,
     emission4  = Just emiss,
     shininess  = Just shine,
-    collider   = Nothing 
+    collider   = Just collider'
  }
-
--- makeWideBrick :: Brick
--- makeLongBrick :: Brick
-
 
 updateBrickMap :: [Brick] -> Map -> Map
 updateBrickMap bm l = l { brickMap = bm }
 
+
+makeUnitCollider = BoxCollider {
+  top    = 1,
+  bottom = 1,
+  left   = 1,
+  right  = 1,
+  front  = 1,
+  back   = 1
+}
+makeWideCollider = BoxCollider {
+  top    = 1,
+  bottom = 1,
+  left   = 3,
+  right  = 3,
+  front  = 1,
+  back   = 1
+}
+makeLongCollider = BoxCollider {
+  top    = 1,
+  bottom = 1,
+  left   = 1,
+  right  = 1,
+  front  = 3,
+  back   = 3
+}
 
 makeMapOne :: Map
 makeMapOne = MapOne {
@@ -75,10 +100,6 @@ makeMapOne = MapOne {
       makeBrick (1,1,(-4)) LongBrick
     ]
 }
-
-
-
-
 
 
 
@@ -115,7 +136,15 @@ updateIsDrawn zw b@(Brick (x, y, z) _ _ _)
   | z > zw    = b { isDrawn = Disabled }
   | otherwise = b
 
+-- exeCollision :: (Point3, Collider) -> [Brick] -> CollisionState
+-- exeCollision (p1, c1) bricks = do
+--   let collisions = (flip map) bricks (\b -> do
+--                                          let coll2 = (collider $ attrs b)
 
+--                                          case coll2 of
+--                                            Nothing   -> Miss
+--                                            (Just c2) -> testCollision p1 c1 (loc b) c2)
+--   Miss
 
 
 

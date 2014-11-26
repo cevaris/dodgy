@@ -34,13 +34,27 @@ idle state = do
 
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
+  c1      <- get (s_coll state)
   -- putStrLn $ show f
   --putStrLn $ show (brickMap level)
+
 
   let brickMap'  = updateBrickLocations (brickMap lv) f
       brickMap'' = map (updateIsDrawn 3.0) brickMap'
       level'     = updateBrickMap brickMap'' lv
 
+  let p1 = (mpPosX', mpPosY', 2.75)
+      tcoll = (\b -> do
+                  let coll2 = (collider $ attrs b)
+                      p2    = (loc b)
+                                         
+                  case coll2 of
+                    Nothing   -> Miss
+                    (Just c2) -> do
+                      testCollision p1 c1 p2 c2)
+
+  let collisions = map tcoll brickMap''
+  -- putStrLn $ show collisions
   -- putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
       
   level state $~! (\x -> level')
