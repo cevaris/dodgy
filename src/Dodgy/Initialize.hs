@@ -71,14 +71,7 @@ makeState = do
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
-  coll'   <- newIORef $ BoxCollider {
-    top    = 1,
-    bottom = 1,
-    left   = 1,
-    right  = 1,
-    front  = 1,
-    back   = 1
-  }
+  coll'   <- newIORef makeUnitCollider
 
   mode'   <- newIORef Medium
 

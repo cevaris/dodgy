@@ -68,37 +68,39 @@ updateBrickMap bm l = l { brickMap = bm }
 
 
 makeUnitCollider = BoxCollider {
-  top    = 1,
-  bottom = 1,
-  left   = 1,
-  right  = 1,
-  front  = 1,
-  back   = 1
+  top    = 1/2,
+  bottom = 1/2,
+  left   = 1/2,
+  right  = 1/2,
+  front  = 1/2,
+  back   = 1/2
 }
 makeWideCollider = BoxCollider {
-  top    = 1,
-  bottom = 1,
-  left   = 3,
-  right  = 3,
-  front  = 1,
-  back   = 1
+  top    = 1/2,
+  bottom = 1/2,
+  left   = 3/2,
+  right  = 3/2,
+  front  = 1/2,
+  back   = 1/2
 }
 makeLongCollider = BoxCollider {
-  top    = 1,
-  bottom = 1,
-  left   = 1,
-  right  = 1,
-  front  = 3,
-  back   = 3
+  top    = 1/2,
+  bottom = 1/2,
+  left   = 1/2,
+  right  = 1/2,
+  front  = 3/2,
+  back   = 3/2
 }
 
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-      makeBrick (0,0,(-3)) UnitBrick,
-      makeBrick (0,1,(-4)) WideBrick,
-      makeBrick (1,1,(-4)) LongBrick
-    ]
+     makeBrick (0,0,1.5)  UnitBrick,
+     makeBrick (0,0,0.5)  UnitBrick,     
+     makeBrick (0,0,(-3)) UnitBrick
+     -- makeBrick (0,1,(-4)) WideBrick,
+     -- makeBrick (1,1,(-4)) LongBrick
+     ]
 }
 
 

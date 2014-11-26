@@ -40,21 +40,32 @@ idle state = do
 
 
   let brickMap'  = updateBrickLocations (brickMap lv) f
-      brickMap'' = map (updateIsDrawn 3.0) brickMap'
+      brickMap'' = map (updateIsDrawn 10.0) brickMap'
       level'     = updateBrickMap brickMap'' lv
 
   let p1 = (mpPosX', mpPosY', 2.75)
       tcoll = (\b -> do
                   let coll2 = (collider $ attrs b)
                       p2    = (loc b)
-                                         
+                 
+
                   case coll2 of
-                    Nothing   -> Miss
-                    (Just c2) -> do
-                      testCollision p1 c1 p2 c2)
+                    Nothing   -> "MISS"
+                    -- (Just c2) -> do
+                    --   let c1' = calcPosition p1 c1
+                    --       c2' = calcPosition p2 c2
+                    --   show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
+                    (Just c2) -> show $ testCollision p1 c1 p2 c2)
+
+              
+                  -- case coll2 of
+                  --   Nothing   -> Miss
+                  --   (Just c2) -> do
+                  --     testCollision p1 c1 p2 c2)
 
   let collisions = map tcoll brickMap''
-  -- putStrLn $ show collisions
+  putStrLn $ show collisions ++ "\n\n-----"
+  
   -- putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
       
   level state $~! (\x -> level')
