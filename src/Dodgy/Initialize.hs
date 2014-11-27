@@ -53,9 +53,9 @@ makeState = do
   th <- newIORef 0 --(-30)
   gr <- newIORef 0
   zh <- newIORef 90
-  fv <- newIORef 130 --65
+  fv <- newIORef 65 --65
   as <- newIORef 1
-  di <- newIORef 5
+  di <- newIORef 10
   --di <- newIORef 0.5
   
   yl <- newIORef 0

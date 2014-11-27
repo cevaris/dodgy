@@ -55,7 +55,7 @@ idle state = do
                       let c1' = calcPosition p1 c1
                           c2' = calcPosition p2 c2
                       show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
-                    --(Just c2) -> show $ testCollision p1 c1 p2 c2)
+                  --(Just c2) -> show $ testCollision p1 c1 p2 c2)
 
               
                   -- case coll2 of
@@ -70,20 +70,24 @@ idle state = do
       
   level state $~! (\x -> level')
 
-  if mpPosX' > 1.0
-    then mpPosX state $~! (\x -> (-0.99))
+  let maxMove = 5.0
+      epsilon = 0.01
+      swapPos = maxMove - epsilon
+      
+  if mpPosX' > maxMove
+    then mpPosX state $~! (\x -> (-swapPos))
     else postRedisplay Nothing  
 
-  if mpPosX' < (-1.0)
-    then mpPosX state $~! (\x -> 0.99)
+  if mpPosX' < (-maxMove)
+    then mpPosX state $~! (\x -> swapPos)
     else postRedisplay Nothing
 
-  if mpPosY' > 1.0
-    then mpPosY state $~! (\x -> (-0.99))
+  if mpPosY' > maxMove
+    then mpPosY state $~! (\x -> (-swapPos))
     else postRedisplay Nothing
 
-  if mpPosY' < (-1.0)
-    then mpPosY state $~! (\x -> 0.99)
+  if mpPosY' < (-maxMove)
+    then mpPosY state $~! (\x -> swapPos)
     else postRedisplay Nothing
 
   ---------------------------------------
