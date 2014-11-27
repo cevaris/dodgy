@@ -50,7 +50,7 @@ makeBrickAttributes l k = do
 
   ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = Just 0.25,
+    scaleSize  = Just 1.0,
     paint      = Just darkGray,
     location   = Nothing, -- Do not use this location
     noseVector = Just (0, 0, 1),
@@ -95,9 +95,9 @@ makeLongCollider = BoxCollider {
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-     makeBrick (0,0,1.5)  UnitBrick,
-     makeBrick (0,0,0.5)  UnitBrick,     
-     makeBrick (0,0,(-3)) UnitBrick
+     makeBrick (0,0,0)     UnitBrick,
+     makeBrick (0,0,(-5))  UnitBrick,     
+     makeBrick (0,0,(-10)) UnitBrick
      -- makeBrick (0,1,(-4)) WideBrick,
      -- makeBrick (1,1,(-4)) LongBrick
      ]

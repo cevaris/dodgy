@@ -51,11 +51,11 @@ idle state = do
 
                   case coll2 of
                     Nothing   -> "MISS"
-                    -- (Just c2) -> do
-                    --   let c1' = calcPosition p1 c1
-                    --       c2' = calcPosition p2 c2
-                    --   show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
-                    (Just c2) -> show $ testCollision p1 c1 p2 c2)
+                    (Just c2) -> do
+                      let c1' = calcPosition p1 c1
+                          c2' = calcPosition p2 c2
+                      show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
+                    --(Just c2) -> show $ testCollision p1 c1 p2 c2)
 
               
                   -- case coll2 of

@@ -28,7 +28,7 @@ executeCollisionTest (c1, c2) = do
       r = (C.right c1)  < (C.left c2)
       f = (C.front c1)  < (C.back  c2)
       h = (C.back c1)   > (C.front c2)
---  if not (b || t || l || r || f || h)
+  --if not (b || t || l || r || f || h)
   if not (f || h)
     then C.Collision
     else C.Miss

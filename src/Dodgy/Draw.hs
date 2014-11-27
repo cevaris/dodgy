@@ -106,7 +106,7 @@ draw state = do
 
   drawCube state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = Just 0.1,
+    scaleSize  = Just 1,
     paint      = Just darkGray,
     location   = Just (mpPosX, mpPosY, 2.75),
     noseVector = Just (0, 0, 1),
@@ -121,7 +121,7 @@ draw state = do
 
   drawStarSphere state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = (Just 0.25),
+    scaleSize  = (Just 1),
     paint      = Just $ (Point4 255 255 0 0),
     location   = (Just loc3),
     noseVector = Nothing,
