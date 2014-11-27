@@ -26,6 +26,8 @@ initDodgy args = do
   size <- get screenSize
   case size of
     (Size x y) -> initialWindowSize $= Size (x `div` 2) y
+
+  initialWindowPosition $= Position 3 3
   
   _window <- createWindow "Dodgy - Adam Cardenas"
 
