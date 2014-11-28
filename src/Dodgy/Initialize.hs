@@ -33,9 +33,20 @@ initDodgy args = do
 
   state <- makeState
   clearColor $= Color4 1 1 1 0
-  clearColor $= Color4 (0/255) (0/255) (0/255) 0
+  --clearColor $= Color4 (0/255) (0/255) (0/255) 0
   depthFunc $= Just Less
 
+  let fgc = Color4 0.5 0.5 0.5 1.0
+
+  fog $= Enabled
+  fogMode $= Exp 0.1
+  --fogMode $= Exp2 0.35
+  --fogIndex $= Index1 100
+  --fogMode $= Linear 1 6
+  fogColor $= fgc
+  clearColor $= fgc
+
+  
   displayCallback $= draw state
   reshapeCallback $= Just (reshape state)
   
