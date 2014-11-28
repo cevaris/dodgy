@@ -54,7 +54,15 @@ idle state = do
                     (Just c2) -> do
                       let c1' = calcPosition p1 c1
                           c2' = calcPosition p2 c2
-                      show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
+                          b = (bottom c1') < (top c2')
+                          t = (top c1')    > (bottom c2')
+                          l = (left c1')   > (right c2')
+                          r = (right c1')  < (left c2')
+                          f = (front c1')  < (back  c2')
+                          ba = (back c1')  > (front c2')
+                          snap = [b, t, l, r, f, ba]
+                      show c1' ++ " " ++ show c2' ++ " " ++ show snap ++ " " ++ show (not (foldr1 (||) snap)))
+                      -- show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
                   --(Just c2) -> show $ testCollision p1 c1 p2 c2)
 
               
@@ -63,8 +71,9 @@ idle state = do
                   --   (Just c2) -> do
                   --     testCollision p1 c1 p2 c2)
 
-  let collisions = map tcoll brickMap''
-  putStrLn $ show collisions ++ "\n\n-----"
+  mapM_ (putStrLn . tcoll) brickMap''
+  --let collisions = map tcoll brickMap''
+  --putStrLn $ show collisions ++ "\n\n-----"
   
   -- putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
       
