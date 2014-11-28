@@ -10,7 +10,7 @@ import Dodgy.Objects.Types
 drawCube :: State -> ObjectAttributes -> IO ()
 drawCube state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
 
-  let w = 1.0
+  let w = 0.5
 
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do

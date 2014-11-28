@@ -68,19 +68,19 @@ updateBrickMap bm l = l { brickMap = bm }
 
 
 makeUnitCollider = BoxCollider {
-  c_width  = 2,
-  c_height = 2,
-  c_depth  = 2
+  c_width  = 1,
+  c_height = 1,
+  c_depth  = 1
 }
 makeWideCollider = BoxCollider {
-  c_width  = 6,
-  c_height = 2,
-  c_depth  = 2
+  c_width  = 3,
+  c_height = 1,
+  c_depth  = 1
 }
 makeLongCollider = BoxCollider {
-  c_width  = 2,
-  c_height = 2,
-  c_depth  = 6
+  c_width  = 1,
+  c_height = 1,
+  c_depth  = 3
 }
 
 makeMapOne :: Map

@@ -9,7 +9,7 @@ import Dodgy.Objects.Types
 drawBrick :: State -> Brick -> IO ()
 drawBrick state brick = do
 
-  let w      = 1.0
+  let w      = 0.5
       tex    = textures state
       metal1' = metal1 tex
       brickType' = (kind brick)
