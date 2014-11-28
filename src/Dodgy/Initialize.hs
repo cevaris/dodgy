@@ -59,7 +59,7 @@ makeState = do
   --di <- newIORef 0.5
   
   yl <- newIORef 0
-  rl <- newIORef 5
+  rl <- newIORef 10
   em <- newIORef 0
   df <- newIORef 65
   am <- newIORef 30
