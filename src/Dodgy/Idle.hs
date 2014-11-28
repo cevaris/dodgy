@@ -34,7 +34,7 @@ idle state = do
 
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
-  c1      <- get (s_coll state)
+  c1      <- get (p_coll state)
   -- putStrLn $ show f
   --putStrLn $ show (brickMap level)
 

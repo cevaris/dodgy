@@ -39,10 +39,13 @@ updateInfo state = do
     lightStatus <- get (light' state)
     shadStatus <- get (smooth' state)
 
+    hp <- get (lifep state)
+
     let seconds = fromIntegral (t - t0') / 1000 :: GLfloat
         fps = fromIntegral f / seconds
-        result = ("[mpPosX " ++ show mpPosX ++ "] [mpPosY " ++ show mpPosY ++ "] [mode "++ show mode ++ "]",
-                  "")
+        result = ("Life Points: " ++ show hp ++ "", "Score: " ++ show t ++ "")
+        --result = ("[mpPosX " ++ show mpPosX ++ "] [mpPosY " ++ show mpPosY ++ "] [mode "++ show mode ++ "]",
+        --         "")
         --result = ("[ph " ++ round2 ph ++ "] [th " ++ round2 th ++ "] [zh " ++ round2 zh ++ "] [zoom " ++ show dim ++ "] [lightStatus " ++ show lightStatus ++  "] [shading " ++ show shadStatus ++  "] ",
         --          "[specular " ++ show spec ++  "] [ambience " ++ show amb ++  "] [diffuse " ++ show diff ++  "] [shininess " ++ show shine ++  "] [emission " ++ show emiss ++  "] ")
     info state $= result

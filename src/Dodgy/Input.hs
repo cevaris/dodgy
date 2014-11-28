@@ -11,19 +11,23 @@ import Dodgy.Objects.Types
 ----------------------------------------------------------------------------------------------------------------
 -- Key Binding
 keyboard :: State -> KeyboardMouseCallback
-keyboard state (SpecialKey KeyUp)   _ _ _ = modRotate state KeyUp
-keyboard state (SpecialKey KeyDown) _ _ _ = modRotate state KeyDown
-keyboard state (SpecialKey KeyLeft) _ _ _ = modRotate state KeyLeft
-keyboard state (SpecialKey KeyRight)_ _ _ = modRotate state KeyRight
+keyboard state (SpecialKey KeyUp)   _ _ _ = modRotateSpecial state KeyUp
+keyboard state (SpecialKey KeyDown) _ _ _ = modRotateSpecial state KeyDown
+keyboard state (SpecialKey KeyLeft) _ _ _ = modRotateSpecial state KeyLeft
+keyboard state (SpecialKey KeyRight)_ _ _ = modRotateSpecial state KeyRight
 
 keyboard state (Char 'z')           Up _ _ = modDim state Decrease
 keyboard state (Char 'Z')           Up _ _ = modDim state Increase
 
-keyboard state (Char 'j')           _ _ _ = modMainPlayer state LeftDirection
-keyboard state (Char 'l')           _ _ _ = modMainPlayer state RightDirection
+keyboard state (Char 'a')           _ _ _ = modMainPlayer state LeftDirection
+keyboard state (Char 'd')           _ _ _ = modMainPlayer state RightDirection
+keyboard state (Char 'w')           _ _ _ = modMainPlayer state UpDirection
+keyboard state (Char 's')           _ _ _ = modMainPlayer state DownDirection
 
-keyboard state (Char 'i')           _ _ _ = modMainPlayer state UpDirection
-keyboard state (Char 'k')           _ _ _ = modMainPlayer state DownDirection
+keyboard state (Char 'j')           _ _ _ = modRotate state LeftDirection
+keyboard state (Char 'l')           _ _ _ = modRotate state RightDirection
+keyboard state (Char 'i')           _ _ _ = modRotate state UpDirection
+keyboard state (Char 'k')           _ _ _ = modRotate state DownDirection
 
 
 --keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
@@ -58,6 +62,19 @@ keyboard state (Char 'k')           _ _ _ = modMainPlayer state DownDirection
 
 keyboard _     (Char '\27')         _ _ _ = exitWith ExitSuccess
 keyboard _     _                    _ _ _ = return ()
+
+
+modRotateSpecial :: State -> SpecialKey -> IO ()
+modRotateSpecial state KeyDown  = ph' state $~! (\x -> x - 5)
+modRotateSpecial state KeyUp    = ph' state $~! (+5)
+modRotateSpecial state KeyRight = th' state $~! (\x -> x - 5)
+modRotateSpecial state KeyLeft  = th' state $~! (+5)
+
+modRotate :: State -> Direction -> IO ()
+modRotate state DownDirection  = ph' state $~! (\x -> x - 5)
+modRotate state UpDirection    =  ph' state $~! (+5)
+modRotate state RightDirection = th' state $~! (\x -> x - 5)
+modRotate state LeftDirection  =  th' state $~! (+5)
 
 modMainPlayer :: State -> Direction -> IO ()
 modMainPlayer state LeftDirection  = do
@@ -138,17 +155,7 @@ modLightHeight state Decrease = do
   ylight' state $~! (\x -> x - 0.1)
 modLightHeight state Increase  = do
   ylight' state $~! (+0.1)
-
-modRotate :: State -> SpecialKey -> IO ()
-modRotate state KeyDown = do
-  ph' state $~! (\x -> x - 5)
-modRotate state KeyUp  = do
-  ph' state $~! (+5)
-modRotate state KeyRight = do
-  th' state $~! (\x -> x - 5)
-modRotate state KeyLeft = do
-  th' state $~! (+5)
-
+  
 modFov :: State -> ChangeDirection -> IO ()
 modFov state Decrease = do
   fov state $~! (\x -> x - 2)

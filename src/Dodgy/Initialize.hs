@@ -62,7 +62,7 @@ makeState = do
   rl <- newIORef 10
   em <- newIORef 0
   df <- newIORef 65
-  am <- newIORef 50 -- 30
+  am <- newIORef 80 -- 30
   sp <- newIORef 85
   sm <- newIORef Smooth
   li <- newIORef True
@@ -74,6 +74,8 @@ makeState = do
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
   coll'   <- newIORef makeFigherCollider
+  damage' <- newIORef 0
+  lifep'  <- newIORef 100
 
   mode'   <- newIORef Medium
 
@@ -88,7 +90,9 @@ makeState = do
     move' = mv,
     zwall = zw,
     mpPosX = mpPosX', mpPosY = mpPosY',
-    s_coll = coll',
+    p_coll = coll',
+    damage = damage',
+    lifep  = lifep',
     mode  = mode',
     level = level',
     textures = tx,

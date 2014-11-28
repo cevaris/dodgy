@@ -135,7 +135,8 @@ draw state = do
 
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
-      color3f 0 0 0
+      -- color3f 0 0 0
+      color3f 1 1 1
       glWindowPos 5 30
       renderString Helvetica18 $ (fst info)
       glWindowPos 5 5
