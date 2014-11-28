@@ -33,7 +33,7 @@ initDodgy args = do
 
   state <- makeState
   clearColor $= Color4 1 1 1 0
-  --clearColor $= Color4 (0/255) (0/255) (0/255) 0
+  clearColor $= Color4 (0/255) (0/255) (0/255) 0
   depthFunc $= Just Less
 
   displayCallback $= draw state
@@ -105,8 +105,9 @@ makeTextures = do
   --alien' <- loadGLTextureFromFile "resources/textures/terran.jpg"
   alien' <- loadGLTextureFromFile "resources/textures/deathstar.png"
   star'  <- loadGLTextureFromFile "resources/textures/star.jpg"
-  metal1' <- loadGLTextureFromFile "resources/textures/metal1.jpg"
-  metal2' <- loadGLTextureFromFile "resources/textures/metal2.jpg"
+  metal1' <- loadGLTextureFromFile "resources/textures/light-metal1.jpg"
+  metal2' <- loadGLTextureFromFile "resources/textures/light-metal2.jpg"
+  metal3' <- loadGLTextureFromFile "resources/textures/hull-steel.jpg"
 
   return $ Textures {
     steel = steel',
@@ -116,5 +117,6 @@ makeTextures = do
     alien = alien',
     star  = star',
     metal1 = metal1',
-    metal2 = metal2'
+    metal2 = metal2',
+    metal3 = metal3'
   }

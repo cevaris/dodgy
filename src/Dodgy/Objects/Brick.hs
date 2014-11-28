@@ -8,9 +8,9 @@ import Dodgy.Objects.Cube
 
 
 bindBrickTexture :: Textures -> BrickType -> TextureObject
-bindBrickTexture tex WideBrick = steel tex
-bindBrickTexture tex LongBrick = metal2 tex
-bindBrickTexture tex UnitBrick = comb tex
+bindBrickTexture tex WideBrick = metal3 tex
+bindBrickTexture tex LongBrick = metal3 tex
+bindBrickTexture tex UnitBrick = metal3 tex
 
 bindBrickTexture tex _         = comb tex
 

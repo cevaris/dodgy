@@ -158,7 +158,8 @@ data Textures = Textures {
   alien :: TextureObject,
   star  :: TextureObject,
   metal1 :: TextureObject,
-  metal2 :: TextureObject
+  metal2 :: TextureObject,
+  metal3 :: TextureObject
 } deriving (Show, Eq)
 
 
