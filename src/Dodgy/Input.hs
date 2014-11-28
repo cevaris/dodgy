@@ -61,13 +61,13 @@ keyboard _     _                    _ _ _ = return ()
 
 modMainPlayer :: State -> Direction -> IO ()
 modMainPlayer state LeftDirection  = do
-  mpPosX state $~! (subtract 0.05)
+  mpPosX state $~! (subtract 0.075)
 modMainPlayer state RightDirection = do
-  mpPosX state $~! (+0.05) 
+  mpPosX state $~! (+0.075) 
 modMainPlayer state DownDirection  = do
-  mpPosY state $~! (subtract 0.05)
+  mpPosY state $~! (subtract 0.075)
 modMainPlayer state UpDirection    = do
-  mpPosY state $~! (+0.05) 
+  mpPosY state $~! (+0.075) 
 
 toggleLightMovement :: State -> KeyState -> IO ()
 toggleLightMovement state  Up = do

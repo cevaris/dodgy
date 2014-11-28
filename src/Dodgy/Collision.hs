@@ -17,8 +17,17 @@ calcPosition (x,y,z) c = C.BoxCollider {
   C.back   = z - (C.back c)
 }
 
+-- testCollision :: Point3 -> C.Collider -> Point3 -> C.Collider -> C.CollisionState
+-- testCollision p1 c1 p2 c2 = executeCollisionTest ((calcPosition p1 c1), (calcPosition p2 c2))
+
 testCollision :: Point3 -> C.Collider -> Point3 -> C.Collider -> C.CollisionState
-testCollision p1 c1 p2 c2 = executeCollisionTest ((calcPosition p1 c1), (calcPosition p2 c2))
+testCollision (x1,y1,z1) c1 (x2,y2,z2) c2 = do
+  let xAxis = (abs(x1 - x2) * 2) < (2 + 2)
+      yAxis = (abs(y1 - y2) * 2) < (2 + 2)
+      zAxis = (abs(z1 - z2) * 2) < (2 + 2)
+  if (xAxis && yAxis && zAxis)
+    then C.Collision
+    else C.Miss
 
 executeCollisionTest :: (C.Collider, C.Collider) -> C.CollisionState
 executeCollisionTest (c1, c2) = do
