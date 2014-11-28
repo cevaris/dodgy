@@ -73,7 +73,7 @@ makeState = do
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
-  coll'   <- newIORef makeUnitCollider
+  coll'   <- newIORef makeFigherCollider
 
   mode'   <- newIORef Medium
 

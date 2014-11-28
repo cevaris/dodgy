@@ -93,8 +93,8 @@ draw state = do
     rotation   = Nothing,
     scaleSize  = Just 1,
     paint      = Just white,
-    location   = Just (0, 1, 1),
-    noseVector = Just (0, (-1), 1),
+    location   = Just (mpPosX, mpPosY, 2.75),
+    noseVector = Just (0, 0, (-1)),
     upVector   = Just (0,1,0),
     ambience4  = Just white,
     diffuse4   = Just yellow,
@@ -104,20 +104,6 @@ draw state = do
     collider   = Nothing
   }
 
-  drawCube state $ ObjectAttributes {
-    rotation   = Nothing,
-    scaleSize  = Just 1,
-    paint      = Just darkGray,
-    location   = Just (mpPosX, mpPosY, 2.75),
-    noseVector = Just (0, 0, 1),
-    upVector   = Just (0,1,0),
-    ambience4  = Just darkGray,
-    diffuse4   = Just yellow,
-    specular4  = Just yellow,
-    emission4  = Just emiss,
-    shininess  = Just shine,
-    collider   = Nothing
-  }
 
   drawStarSphere state $ ObjectAttributes {
     rotation   = Nothing,

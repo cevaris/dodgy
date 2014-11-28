@@ -55,6 +55,11 @@ makeBrickAttributes l k = do
 updateBrickMap :: [Brick] -> Map -> Map
 updateBrickMap bm l = l { brickMap = bm }
 
+makeFigherCollider = BoxCollider {
+  c_width  = 1,
+  c_height = 0.5,
+  c_depth  = 1
+}
 
 makeUnitCollider = BoxCollider {
   c_width  = 1,
