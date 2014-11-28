@@ -74,7 +74,7 @@ makeState = do
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
   coll'   <- newIORef makeFigherCollider
-  damage' <- newIORef 0
+  score' <- newIORef 0
   lifep'  <- newIORef 100
 
   mode'   <- newIORef Medium
@@ -91,7 +91,7 @@ makeState = do
     zwall = zw,
     mpPosX = mpPosX', mpPosY = mpPosY',
     p_coll = coll',
-    damage = damage',
+    score = score',
     lifep  = lifep',
     mode  = mode',
     level = level',

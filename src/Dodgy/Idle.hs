@@ -50,7 +50,7 @@ idle state = do
                  
 
                   case coll2 of
-                    Nothing   -> "MISS"
+                    Nothing   -> Miss
                     (Just c2) -> do
                       -- let c1' = calcPosition p1 c1
                       --     c2' = calcPosition p2 c2
@@ -63,7 +63,8 @@ idle state = do
                           -- snap = [b, t, l, r, f, ba]
                       --show c1' ++ " " ++ show c2' ++ " " ++ show snap ++ " " ++ show (not (foldr1 (||) snap)) ++ " " ++ show (testCollision p1 c1 p2 c2))
                       -- show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
-                      show $ testCollision p1 c1 p2 c2)
+                      -- show $ testCollision p1 c1 p2 c2)
+                      testCollision p1 c1 p2 c2)
 
               
                   -- case coll2 of
@@ -71,9 +72,16 @@ idle state = do
                   --   (Just c2) -> do
                   --     testCollision p1 c1 p2 c2)
 
-  mapM_ (putStrLn . tcoll) brickMap''
-  --let collisions = map tcoll brickMap''
-  --putStrLn $ show collisions ++ "\n\n-----"
+  -- mapM_ (putStrLn . tcoll) brickMap''
+  let collisions = map tcoll brickMap''
+      detectedCollision = elem Collision collisions
+      
+  -- putStrLn $ show collisions ++ "\n\n-----"
+  putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
+
+  if detectedCollision
+     then postRedisplay Nothing
+     else score state $~! (+1)
   
   -- putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
       
