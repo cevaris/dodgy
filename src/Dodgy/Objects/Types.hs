@@ -68,36 +68,27 @@ updateBrickMap bm l = l { brickMap = bm }
 
 
 makeUnitCollider = BoxCollider {
-  top    = 1/2,
-  bottom = 1/2,
-  left   = 1/2,
-  right  = 1/2,
-  front  = 1/2,
-  back   = 1/2
+  c_width  = 2,
+  c_height = 2,
+  c_depth  = 2
 }
 makeWideCollider = BoxCollider {
-  top    = 1/2,
-  bottom = 1/2,
-  left   = 3/2,
-  right  = 3/2,
-  front  = 1/2,
-  back   = 1/2
+  c_width  = 6,
+  c_height = 2,
+  c_depth  = 2
 }
 makeLongCollider = BoxCollider {
-  top    = 1/2,
-  bottom = 1/2,
-  left   = 1/2,
-  right  = 1/2,
-  front  = 3/2,
-  back   = 3/2
+  c_width  = 2,
+  c_height = 2,
+  c_depth  = 6
 }
 
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-     makeBrick (0,0,0)     UnitBrick,
-     makeBrick (0,0,(-5))  UnitBrick,     
-     makeBrick (0,0,(-10)) UnitBrick
+     makeBrick (0,0,0) UnitBrick,
+     makeBrick (0,(-1),(-5)) WideBrick,     
+     makeBrick (0,1,(-10)) LongBrick
      -- makeBrick (0,1,(-4)) WideBrick,
      -- makeBrick (1,1,(-4)) LongBrick
      ]
@@ -155,12 +146,9 @@ updateIsDrawn zw b@(Brick (x, y, z) _ _ _)
 
 data CollisionState = Collision | Miss deriving (Show, Eq)
 data Collider = BoxCollider {
-  top :: Float,
-  bottom :: Float,
-  left :: Float,
-  right :: Float,
-  front :: Float,
-  back :: Float
+  c_width :: Float,
+  c_height :: Float,
+  c_depth :: Float
 } deriving(Show, Eq)
 
 
