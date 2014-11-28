@@ -62,7 +62,7 @@ makeState = do
   rl <- newIORef 10
   em <- newIORef 0
   df <- newIORef 65
-  am <- newIORef 30
+  am <- newIORef 50 -- 30
   sp <- newIORef 85
   sm <- newIORef Smooth
   li <- newIORef True

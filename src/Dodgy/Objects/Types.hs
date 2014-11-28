@@ -1,22 +1,11 @@
 module Dodgy.Objects.Types where
--- ( Brick,
---   loc,
-  
---   BrickType,
---   Point3,
---   Point4,
---   Collider,
---   CollisionState,
---   Textures,
---   ObjectAttributes
---   ) where
 
 import Graphics.UI.GLUT
 
 import Dodgy.GLUtils
 
 
-data BrickType   = WideBrick |  LongBrick | UnitBrick deriving (Show, Eq)
+data BrickType = WideBrick |  LongBrick | UnitBrick | HealthBrick | OctahedronBrick deriving (Show, Eq)
 
 data Map 
   = MapOne { brickMap :: [Brick]} 

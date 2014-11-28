@@ -135,8 +135,8 @@ draw state = do
   }
 
   mapMR (brickMap level) (\brick -> case brick of 
-      (Brick l k Disabled _) -> postRedisplay Nothing
-      (Brick l k Enabled  _) -> drawBrick state brick)
+      (Brick _ _ Disabled _) -> postRedisplay Nothing
+      (Brick _ _ Enabled  _) -> drawBrick state brick)
 
   -- let brickLocations = map (\x -> show $ (loc x)) (brickMap level)
   -- putStrLn $ show brickLocations
