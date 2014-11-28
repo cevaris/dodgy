@@ -1,4 +1,4 @@
-module Dodgy.Objects.Cube (drawCube) where 
+module Dodgy.Objects.Cube (drawCube, cube) where 
  
 import Graphics.UI.GLUT
 
@@ -30,63 +30,64 @@ drawCube state object@(ObjectAttributes rotation scaleSize paint location noseVe
 cube :: Float -> IO ()
 cube w = do
 
-  -- Front
-  drawNormal3f 0 0 w
-  --drawTexCoord2f 0 0
-  drawVertex3f (-w) (-w)  w
-  --drawTexCoord2f 1 0
-  drawVertex3f w (-w)  w
-  --drawTexCoord2f 1 1
-  drawVertex3f w w  w
-  --drawTexCoord2f 0 1
-  drawVertex3f (-w) w  w
-  -- Back
-  drawNormal3f 0  0 (-w)
-  --drawTexCoord2f 0 0
-  drawVertex3f w (-w) (-w)
-  --drawTexCoord2f 1 0
-  drawVertex3f (-w) (-w) (-w)
-  --drawTexCoord2f 1 1
-  drawVertex3f (-w) w (-w)
-  --drawTexCoord2f 0 1
-  drawVertex3f w w (-w)
-  -- Right
-  drawNormal3f w  0  0
-  --drawTexCoord2f 0 0
-  drawVertex3f w (-w) w
-  --drawTexCoord2f 1 0
-  drawVertex3f w (-w) (-w)
-  --drawTexCoord2f 1 1
-  drawVertex3f w w (-w)
-  --drawTexCoord2f 0 1
-  drawVertex3f w w w
-  -- Left
-  drawNormal3f (-w)  0  0
-  --drawTexCoord2f 0 0
-  drawVertex3f (-w) (-w) (-w)
-  --drawTexCoord2f 1 0
-  drawVertex3f (-w) (-w) w
-  --drawTexCoord2f 1 1
-  drawVertex3f (-w) w w
-  --drawTexCoord2f 0 1
-  drawVertex3f (-w) w (-w)
-  -- Top
-  drawNormal3f 0 w  0
-  --drawTexCoord2f 0 0
-  drawVertex3f (-w) w w
-  --drawTexCoord2f 1 0
-  drawVertex3f w w w
-  --drawTexCoord2f 1 1
-  drawVertex3f w w (-w)
-  --drawTexCoord2f 0 1
-  drawVertex3f (-w) w (-w)
-  -- Bottom
-  drawNormal3f 0 (-1) 0
-  --drawTexCoord2f 0 0
-  drawVertex3f (-w) (-w) (-w)
-  --drawTexCoord2f 1 0
-  drawVertex3f w (-w) (-w)
-  --drawTexCoord2f 1 1
-  drawVertex3f w (-w) w
-  --drawTexCoord2f 0 1
-  drawVertex3f (-w) (-w) w
+  renderPrimitive Quads $ do
+    -- Front
+    drawNormal3f 0 0 w
+    drawTexCoord2f 0 0
+    drawVertex3f (-w) (-w)  w
+    drawTexCoord2f 1 0
+    drawVertex3f w (-w)  w
+    drawTexCoord2f 1 1
+    drawVertex3f w w  w
+    drawTexCoord2f 0 1
+    drawVertex3f (-w) w  w
+    -- Back
+    drawNormal3f 0  0 (-w)
+    drawTexCoord2f 0 0
+    drawVertex3f w (-w) (-w)
+    drawTexCoord2f 1 0
+    drawVertex3f (-w) (-w) (-w)
+    drawTexCoord2f 1 1
+    drawVertex3f (-w) w (-w)
+    drawTexCoord2f 0 1
+    drawVertex3f w w (-w)
+    -- Right
+    drawNormal3f w  0  0
+    drawTexCoord2f 0 0
+    drawVertex3f w (-w) w
+    drawTexCoord2f 1 0
+    drawVertex3f w (-w) (-w)
+    drawTexCoord2f 1 1
+    drawVertex3f w w (-w)
+    drawTexCoord2f 0 1
+    drawVertex3f w w w
+    -- Left
+    drawNormal3f (-w)  0  0
+    drawTexCoord2f 0 0
+    drawVertex3f (-w) (-w) (-w)
+    drawTexCoord2f 1 0
+    drawVertex3f (-w) (-w) w
+    drawTexCoord2f 1 1
+    drawVertex3f (-w) w w
+    drawTexCoord2f 0 1
+    drawVertex3f (-w) w (-w)
+    -- Top
+    drawNormal3f 0 w  0
+    drawTexCoord2f 0 0
+    drawVertex3f (-w) w w
+    drawTexCoord2f 1 0
+    drawVertex3f w w w
+    drawTexCoord2f 1 1
+    drawVertex3f w w (-w)
+    drawTexCoord2f 0 1
+    drawVertex3f (-w) w (-w)
+    -- Bottom
+    drawNormal3f 0 (-1) 0
+    drawTexCoord2f 0 0
+    drawVertex3f (-w) (-w) (-w)
+    drawTexCoord2f 1 0
+    drawVertex3f w (-w) (-w)
+    drawTexCoord2f 1 1
+    drawVertex3f w (-w) w
+    drawTexCoord2f 0 1
+    drawVertex3f (-w) (-w) w

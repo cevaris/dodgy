@@ -91,7 +91,7 @@ draw state = do
       
   drawSteelFighter state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = Just 2,
+    scaleSize  = Just 1,
     paint      = Just white,
     location   = Just (0, 1, 1),
     noseVector = Just (0, (-1), 1),

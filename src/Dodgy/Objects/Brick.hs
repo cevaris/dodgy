@@ -4,6 +4,7 @@ import Graphics.UI.GLUT
 import Dodgy.GLUtils
 import Dodgy.Types
 import Dodgy.Objects.Types
+import Dodgy.Objects.Cube
 
 
 bindBrickTexture :: Textures -> BrickType -> TextureObject
@@ -50,70 +51,6 @@ drawBrick state brick = do
          UnitBrick -> cuboid
          WideBrick -> cuboid
          LongBrick -> cuboid
-         
-                    
-cube :: Float -> IO ()
-cube w = do
 
-  renderPrimitive Quads $ do
-    -- Front
-    drawNormal3f 0 0 w
-    drawTexCoord2f 0 0
-    drawVertex3f (-w) (-w)  w
-    drawTexCoord2f 1 0
-    drawVertex3f w (-w)  w
-    drawTexCoord2f 1 1
-    drawVertex3f w w  w
-    drawTexCoord2f 0 1
-    drawVertex3f (-w) w  w
-    -- Back
-    drawNormal3f 0  0 (-w)
-    drawTexCoord2f 0 0
-    drawVertex3f w (-w) (-w)
-    drawTexCoord2f 1 0
-    drawVertex3f (-w) (-w) (-w)
-    drawTexCoord2f 1 1
-    drawVertex3f (-w) w (-w)
-    drawTexCoord2f 0 1
-    drawVertex3f w w (-w)
-    -- Right
-    drawNormal3f w  0  0
-    drawTexCoord2f 0 0
-    drawVertex3f w (-w) w
-    drawTexCoord2f 1 0
-    drawVertex3f w (-w) (-w)
-    drawTexCoord2f 1 1
-    drawVertex3f w w (-w)
-    drawTexCoord2f 0 1
-    drawVertex3f w w w
-    -- Left
-    drawNormal3f (-w)  0  0
-    drawTexCoord2f 0 0
-    drawVertex3f (-w) (-w) (-w)
-    drawTexCoord2f 1 0
-    drawVertex3f (-w) (-w) w
-    drawTexCoord2f 1 1
-    drawVertex3f (-w) w w
-    drawTexCoord2f 0 1
-    drawVertex3f (-w) w (-w)
-    -- Top
-    drawNormal3f 0 w  0
-    drawTexCoord2f 0 0
-    drawVertex3f (-w) w w
-    drawTexCoord2f 1 0
-    drawVertex3f w w w
-    drawTexCoord2f 1 1
-    drawVertex3f w w (-w)
-    drawTexCoord2f 0 1
-    drawVertex3f (-w) w (-w)
-    -- Bottom
-    drawNormal3f 0 (-1) 0
-    drawTexCoord2f 0 0
-    drawVertex3f (-w) (-w) (-w)
-    drawTexCoord2f 1 0
-    drawVertex3f w (-w) (-w)
-    drawTexCoord2f 1 1
-    drawVertex3f w (-w) w
-    drawTexCoord2f 0 1
-    drawVertex3f (-w) (-w) w
+                    
   
