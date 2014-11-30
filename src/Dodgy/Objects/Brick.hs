@@ -18,7 +18,7 @@ drawBrick :: State -> Brick -> IO ()
 drawBrick state brick@(Brick _ UnitBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ LongBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ WideBrick _ _) = cuboid state brick
-drawBrick state brick@(Brick _ _ _ _) = plus state brick
+drawBrick state brick@(Brick _ HealthBrick _ _) = plus state brick
 
 cuboid :: State -> Brick -> IO ()
 cuboid state brick = do
@@ -64,27 +64,22 @@ plus state brick = do
       paint' = (paint (attrs brick))
       scaleSize' = (scaleSize (attrs brick))
 
+
   
   let colorCube = do
         drawLightingEffects (attrs brick)
         case (paint') of        
          ((Just (Point4 px py pz pa))) -> do
            color3f px py pz
+        
         texture Texture2D $= Enabled
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
         textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-
+  
   -- Center
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
-      drawLightingEffects (attrs brick)
-      case (paint') of        
-         ((Just (Point4 px py pz pa))) -> do
-          color3f px py pz
-      texture Texture2D $= Enabled
-      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-
+      colorCube
       translate $ vector3f lx ly lz
       cube w
   -- Top
@@ -111,5 +106,3 @@ plus state brick = do
       colorCube
       translate $ vector3f (lx+sep )ly lz
       cube w
-  
-  
