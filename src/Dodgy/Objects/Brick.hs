@@ -11,12 +11,18 @@ bindBrickTexture :: Textures -> BrickType -> TextureObject
 bindBrickTexture tex WideBrick = metal3 tex
 bindBrickTexture tex LongBrick = metal3 tex
 bindBrickTexture tex UnitBrick = metal3 tex
-
+bindBrickTexture tex HealthBrick = redBubbles tex
 bindBrickTexture tex _         = comb tex
 
 drawBrick :: State -> Brick -> IO ()
-drawBrick state brick = do
+drawBrick state brick@(Brick _ UnitBrick _ _) = cuboid state brick
+drawBrick state brick@(Brick _ LongBrick _ _) = cuboid state brick
+drawBrick state brick@(Brick _ WideBrick _ _) = cuboid state brick
+drawBrick state brick@(Brick _ _ _ _) = plus state brick
 
+cuboid :: State -> Brick -> IO ()
+cuboid state brick = do
+  
   let w      = 0.5
       tex    = (textures state)
       brickKind = (kind brick)
@@ -45,12 +51,52 @@ drawBrick state brick = do
       textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
       textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
       
-      let cuboid = cube w
+      cube w
 
-      case brickKind of
-         UnitBrick -> cuboid
-         WideBrick -> cuboid
-         LongBrick -> cuboid
+plus :: State -> Brick -> IO ()
+plus state brick = do
+  
+  let w      = 0.5/4
+      sep    = 1.0/4
+      tex    = (textures state)
+      brickKind = (kind brick)
+      (lx, ly, lz) = (loc brick)
+      paint' = (paint (attrs brick))
+      scaleSize' = (scaleSize (attrs brick))
 
-                    
+  drawLightingEffects (attrs brick)
+  texture Texture2D $= Enabled
+  textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+  textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+
+  case (paint') of
+   ((Just (Point4 px py pz pa))) -> do 
+     color3f px py pz
+
+  -- Center
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+      translate $ vector3f lx ly lz
+      cube w
+  -- Top
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+      translate $ vector3f lx (ly+sep) lz
+      cube w
+  -- Bottom
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+      translate $ vector3f lx (ly-sep) lz
+      cube w
+  -- Left 
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+      translate $ vector3f (lx-sep) ly lz
+      cube w
+  -- Right
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+      translate $ vector3f (lx+sep )ly lz
+      cube w
+  
   

@@ -32,19 +32,21 @@ initDodgy args = do
   _window <- createWindow "Dodgy - Adam Cardenas"
 
   state <- makeState
-  clearColor $= Color4 1 1 1 0
-  --clearColor $= Color4 (0/255) (0/255) (0/255) 0
+
+  --clearColor $= Color4 1 1 1 0
+  clearColor $= Color4 (0/255) (0/255) (0/255) 0
   depthFunc $= Just Less
 
-  let fgc = Color4 0.5 0.5 0.5 1.0
+  --let fgc = Color4 0.5 0.5 0.5 1.0
+  let fgc = Color4 1 1 1 1.0
 
-  fog $= Enabled
-  fogMode $= Exp 0.1
-  --fogMode $= Exp2 0.35
-  --fogIndex $= Index1 100
-  --fogMode $= Linear 1 6
-  fogColor $= fgc
-  clearColor $= fgc
+  -- fog $= Enabled
+  -- fogMode $= Exp 0.25
+  -- --fogMode $= Exp2 0.35
+  -- --fogIndex $= Index1 100
+  -- --fogMode $= Linear 1 6
+  -- fogColor $= fgc
+  -- clearColor $= fgc
 
   
   displayCallback $= draw state
@@ -66,7 +68,7 @@ makeState = do
   zh <- newIORef 90
   fv <- newIORef 65 --65
   as <- newIORef 1
-  di <- newIORef 10
+  di <- newIORef 3
   --di <- newIORef 0.5
   
   yl <- newIORef 0
@@ -115,23 +117,27 @@ makeTextures :: IO Textures
 makeTextures = do
   steel' <- loadGLTextureFromFile "resources/textures/future-steel.jpg"
   comb'  <- loadGLTextureFromFile "resources/textures/comb-steel.jpg"
-  water' <- loadGLTextureFromFile "resources/textures/water.jpg"
-  borg'  <- loadGLTextureFromFile "resources/textures/borg.jpg"
-  --alien' <- loadGLTextureFromFile "resources/textures/terran.jpg"
-  alien' <- loadGLTextureFromFile "resources/textures/deathstar.png"
+  -- water' <- loadGLTextureFromFile "resources/textures/water.jpg"
+  -- borg'  <- loadGLTextureFromFile "resources/textures/borg.jpg"
+  -- --alien' <- loadGLTextureFromFile "resources/textures/terran.jpg"
+  -- alien' <- loadGLTextureFromFile "resources/textures/deathstar.png"
   star'  <- loadGLTextureFromFile "resources/textures/star.jpg"
-  metal1' <- loadGLTextureFromFile "resources/textures/light-metal1.jpg"
-  metal2' <- loadGLTextureFromFile "resources/textures/light-metal2.jpg"
+  -- metal1' <- loadGLTextureFromFile "resources/textures/light-metal1.jpg"
+  -- metal2' <- loadGLTextureFromFile "resources/textures/light-metal2.jpg"
+  redTex' <- loadGLTextureFromFile "resources/textures/red.jpg"
   metal3' <- loadGLTextureFromFile "resources/textures/hull-steel.jpg"
+  
 
   return $ Textures {
     steel = steel',
     comb  = comb',
-    water = water',
-    borg  = borg',
-    alien = alien',
+    -- water = water',
+    -- borg  = borg',
+    -- alien = alien',
     star  = star',
-    metal1 = metal1',
-    metal2 = metal2',
+    -- metal1 = metal1',
+    -- metal2 = metal2',
+    redBubbles = redTex',
     metal3 = metal3'
+    
   }

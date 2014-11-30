@@ -98,8 +98,8 @@ drawAlienSphere state object@(ObjectAttributes rotation scaleSize paint location
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
       let q = 5
-          tex = textures state
-          alien' = alien tex
+          -- tex = textures state
+          -- alien' = alien tex
 
       case (paint, location, scaleSize) of
         ((Just (Point4 px py pz pa)), (Just (lx, ly, lz)), (Just s))-> do 
@@ -115,12 +115,12 @@ drawAlienSphere state object@(ObjectAttributes rotation scaleSize paint location
 
           drawLightingEffects object
 
-          texture Texture2D $= Enabled
-          textureBinding Texture2D $= Just alien'
-          --textureWrapMode Texture2D S $= (Repeated, Clamp)
-          --textureWrapMode Texture2D T $= (Repeated, Clamp)
-          textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-          --textureFunction $= Modulate
+          -- texture Texture2D $= Enabled
+          -- textureBinding Texture2D $= Just alien'
+          -- --textureWrapMode Texture2D S $= (Repeated, Clamp)
+          -- --textureWrapMode Texture2D T $= (Repeated, Clamp)
+          -- textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+          -- --textureFunction $= Modulate
 
           mapM_ (\ph -> do
               renderPrimitive QuadStrip $ mapM_ (\th -> do

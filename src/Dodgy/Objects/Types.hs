@@ -36,7 +36,8 @@ makeBrickAttributes l k = do
         UnitBrick -> makeUnitCollider
         WideBrick -> makeWideCollider
         LongBrick -> makeLongCollider
-
+        HealthBrick -> makeHpCollider
+        
   ObjectAttributes {
     rotation   = Nothing,
     scaleSize  = Just 1.0,
@@ -76,13 +77,23 @@ makeLongCollider = BoxCollider {
   c_height = 1,
   c_depth  = 3
 }
+makeHpCollider = BoxCollider {
+  c_width  = 1,
+  c_height = 1,
+  c_depth  = 1
+}
 
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
      makeBrick (0,0,0) UnitBrick,
-     makeBrick (0,(-1),(-5)) WideBrick,     
-     makeBrick (0,1,(-10)) LongBrick
+     makeBrick (0,(-1),(-5)) WideBrick,
+     makeBrick (0,0,(-7)) HealthBrick,
+     makeBrick (0,1,(-10)) LongBrick,
+     makeBrick (1,0,(-15)) UnitBrick,
+     makeBrick ((-1),1,(-16)) WideBrick,     
+     makeBrick (0,1,(-18)) LongBrick,
+     makeBrick (0,2,(-18)) LongBrick
      -- makeBrick (0,1,(-4)) WideBrick,
      -- makeBrick (1,1,(-4)) LongBrick
      ]
@@ -153,13 +164,14 @@ data Collider = BoxCollider {
 data Textures = Textures {
   steel :: TextureObject,
   comb :: TextureObject,
-  water :: TextureObject,
-  borg  :: TextureObject,
-  alien :: TextureObject,
+  -- water :: TextureObject,
+  -- borg  :: TextureObject,
+  -- alien :: TextureObject,
   star  :: TextureObject,
-  metal1 :: TextureObject,
-  metal2 :: TextureObject,
-  metal3 :: TextureObject
+  -- metal1 :: TextureObject,
+  -- metal2 :: TextureObject,
+  metal3 :: TextureObject,
+  redBubbles :: TextureObject
 } deriving (Show, Eq)
 
 
