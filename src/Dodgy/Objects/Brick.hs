@@ -64,38 +64,51 @@ plus state brick = do
       paint' = (paint (attrs brick))
       scaleSize' = (scaleSize (attrs brick))
 
-  drawLightingEffects (attrs brick)
-  texture Texture2D $= Enabled
-  textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-  textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-
-  case (paint') of
-   ((Just (Point4 px py pz pa))) -> do 
-     color3f px py pz
+  
+  let colorCube = do
+        drawLightingEffects (attrs brick)
+        case (paint') of        
+         ((Just (Point4 px py pz pa))) -> do
+           color3f px py pz
+        texture Texture2D $= Enabled
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+        textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
 
   -- Center
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
+      drawLightingEffects (attrs brick)
+      case (paint') of        
+         ((Just (Point4 px py pz pa))) -> do
+          color3f px py pz
+      texture Texture2D $= Enabled
+      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+
       translate $ vector3f lx ly lz
       cube w
   -- Top
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
+      colorCube
       translate $ vector3f lx (ly+sep) lz
       cube w
   -- Bottom
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
+      colorCube
       translate $ vector3f lx (ly-sep) lz
       cube w
   -- Left 
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
+      colorCube
       translate $ vector3f (lx-sep) ly lz
       cube w
   -- Right
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
+      colorCube
       translate $ vector3f (lx+sep )ly lz
       cube w
   
