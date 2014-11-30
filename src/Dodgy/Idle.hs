@@ -62,7 +62,7 @@ idle state = do
   let collisions = filter ((==Collision) . snd) collResults
       detectedCollision = length collisions >0 
       
-  putStrLn $ "Collision State: " ++ show detectedCollision ++ " " ++ show (length collisions) ++ ""
+  putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
 
   if detectedCollision
      then postRedisplay Nothing
