@@ -5,7 +5,7 @@ import Graphics.UI.GLUT
 import Dodgy.GLUtils
 
 
-data BrickType = WideBrick |  LongBrick | UnitBrick | HealthBrick | OctahedronBrick deriving (Show, Eq)
+data BrickType = WideBrick |  LongBrick | UnitBrick | HealthBrick | SpecialBrick deriving (Show, Eq)
 
 data Map 
   = MapOne { brickMap :: [Brick]} 
@@ -37,6 +37,7 @@ makeBrickAttributes l k = do
         WideBrick -> makeWideCollider
         LongBrick -> makeLongCollider
         HealthBrick -> makeHpCollider
+        SpecialBrick -> makeSpCollider
         
   ObjectAttributes {
     rotation   = Nothing,
@@ -82,11 +83,16 @@ makeHpCollider = BoxCollider {
   c_height = 1,
   c_depth  = 1
 }
+makeSpCollider = BoxCollider {
+  c_width  = 1,
+  c_height = 1,
+  c_depth  = 1
+}
 
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-     makeBrick (0,0,0) UnitBrick,
+     makeBrick (0,0,0) SpecialBrick,
      makeBrick (0,(-1),(-5)) WideBrick,
      makeBrick (0,0,(-7)) HealthBrick,
      makeBrick (0,1,(-10)) LongBrick,

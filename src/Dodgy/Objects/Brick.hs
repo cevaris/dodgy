@@ -5,6 +5,7 @@ import Dodgy.GLUtils
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Objects.Cube
+import Dodgy.Objects.Pyramid
 
 
 bindBrickTexture :: Textures -> BrickType -> TextureObject
@@ -19,6 +20,39 @@ drawBrick state brick@(Brick _ UnitBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ LongBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ WideBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ HealthBrick _ _) = plus state brick
+drawBrick state brick@(Brick _ SpecialBrick _ _) = compPyramid state brick
+drawBrick state _ = postRedisplay Nothing
+
+
+compPyramid :: State -> Brick -> IO ()
+compPyramid state brick = do
+  
+  let w      = 0.5
+      tex    = (textures state)
+      brickKind = (kind brick)
+      location' = Just (loc brick)
+      paint' = (paint (attrs brick))
+      scaleSize' = (scaleSize (attrs brick))
+
+
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+
+      texture Texture2D $= Enabled
+      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+
+      drawLightingEffects (attrs brick)
+
+      case (paint', location') of
+        ((Just (Point4 px py pz pa)), (Just (lx, ly, lz))) -> do 
+          color3f px py pz
+          translate $ vector3f lx ly lz
+
+      octahedron w
+     
+
+
 
 cuboid :: State -> Brick -> IO ()
 cuboid state brick = do
@@ -34,6 +68,10 @@ cuboid state brick = do
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
 
+      texture Texture2D $= Enabled
+      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+
       drawLightingEffects (attrs brick)
 
       case (paint', location', scaleSize') of
@@ -47,10 +85,6 @@ cuboid state brick = do
             LongBrick -> scale3f s s (3*s)
             _         -> postRedisplay Nothing
 
-      texture Texture2D $= Enabled
-      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-      
       cube w
 
 plus :: State -> Brick -> IO ()
@@ -63,9 +97,7 @@ plus state brick = do
       (lx, ly, lz) = (loc brick)
       paint' = (paint (attrs brick))
       scaleSize' = (scaleSize (attrs brick))
-
-
-  
+ 
   let colorCube = do
         drawLightingEffects (attrs brick)
         case (paint') of        

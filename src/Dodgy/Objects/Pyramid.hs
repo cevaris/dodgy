@@ -1,7 +1,9 @@
-module Dodgy.Objects.Pyramid (drawPyramid) where 
+module Dodgy.Objects.Pyramid (drawPyramid, octahedron) where 
  
 import Graphics.UI.GLUT
 
+import Dodgy.Types
+import Dodgy.Objects.Types
 import Dodgy.GLUtils
 
 -- Draw solid pyramid
@@ -84,7 +86,64 @@ drawPyramid state object@(ObjectAttributes rotation scaleSize paint location nos
             drawVertex3f (-1) (-1) (-1)
             drawVertex3f (-1) (-1) 1
 
-            
+
+octahedron :: Float -> IO ()
+octahedron w = do
+  renderPrimitive Triangles $ do
+    
+    -- Front
+    drawNormal3f 0 (w*0.5) (w*0.5)
+    drawVertex3f 0 w 0
+    drawVertex3f (-w) (-w) w
+    drawVertex3f w (-w) w
+      
+    -- Right
+    drawNormal3f (w*0.5) (w*0.5) 0
+    drawVertex3f 0 w 0
+    drawVertex3f w (-w) w
+    drawVertex3f w (-w) (-w)
+    
+    -- Back
+    drawNormal3f 0 (w*0.5) (-(w*0.5))
+    drawVertex3f 0 w 0
+    drawVertex3f w (-w) (-w)
+    drawVertex3f (-w) (-w) (-w)
+    
+    -- Left
+    drawNormal3f (-(w*0.5)) (w*0.5) 0
+    drawVertex3f  0 w 0
+    drawVertex3f (-w)(-w)(-w)
+    drawVertex3f (-w) (-w) w
+    
+    -- -- Botttom
+    -- -- Front
+    -- drawNormal3f 0 (w*0.5) (w*0.5)
+    -- drawVertex3f 0 w 0
+    -- drawVertex3f (-w) (-w) w
+    -- drawVertex3f w (-w) w
+      
+    -- -- Right
+    -- drawNormal3f (w*0.5) (w*0.5) 0
+    -- drawVertex3f 0 w 0
+    -- drawVertex3f w (-w) w
+    -- drawVertex3f w (-w) (-w)
+    
+    -- -- Back
+    -- drawNormal3f 0 (w*0.5) (-(w*0.5))
+    -- drawVertex3f 0 w 0
+    -- drawVertex3f w (-w) (-w)
+    -- drawVertex3f (-w) (-w) (-w)
+    
+    -- -- Left
+    -- drawNormal3f (-(w*0.5)) (w*0.5) 0
+    -- drawVertex3f  0 w 0
+    -- drawVertex3f (-w)(-w)(-w)
+    -- drawVertex3f (-w) (-w) w
+
+    
+
+
+          
         
-              
+          
         
