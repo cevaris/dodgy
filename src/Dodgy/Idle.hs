@@ -43,35 +43,23 @@ idle state = do
       brickMap'' = map (updateIsDrawn 10.0) brickMap'
       level'     = updateBrickMap brickMap'' lv
 
+  let dispatchCollision = (\k -> case k of
+                            HealthBrick -> lifep  state $~! (+10)
+                            SpecialBrick -> score state $~! (+100)
+                            _ -> lifep state $~! (subtract 10))
+
   let p1 = (mpPosX', mpPosY', 2.75)
       tcoll = (\b -> do
-                  let coll2 = (collider $ attrs b)
-                      p2    = (loc b)
+         let p2 = (loc b)
                  
-
-                  case coll2 of
-                    Nothing   -> Miss
-                    (Just c2) -> do
-                      -- let c1' = calcPosition p1 c1
-                      --     c2' = calcPosition p2 c2
-                          -- b = (bottom c1') < (top c2')
-                          -- t = (top c1')    > (bottom c2')
-                          -- l = (left c1')   > (right c2')
-                          -- r = (right c1')  < (left c2')
-                          -- f = (front c1')  < (back  c2')
-                          -- ba = (back c1')  > (front c2')
-                          -- snap = [b, t, l, r, f, ba]
-                      --show c1' ++ " " ++ show c2' ++ " " ++ show snap ++ " " ++ show (not (foldr1 (||) snap)) ++ " " ++ show (testCollision p1 c1 p2 c2))
-                      -- show p1 ++ " " ++ show c1' ++ " " ++ show p2 ++ " " ++ show c2' ++ " " ++ (show $ testCollision p1 c1 p2 c2))
-                      -- show $ testCollision p1 c1 p2 c2)
-                      testCollision p1 c1 p2 c2)
-
-              
-                  -- case coll2 of
-                  --   Nothing   -> Miss
-                  --   (Just c2) -> do
-                  --     testCollision p1 c1 p2 c2)
-
+         case (collider $ attrs b) of
+          Nothing   -> Miss
+          (Just c2) -> do
+            -- show $ testCollision p1 c1 p2 c2)
+            let result = testCollision p1 c1 p2 c2
+            dispatchCollision (kind b)
+            result) 
+                         
   -- mapM_ (putStrLn . tcoll) brickMap''
   let collisions = map tcoll brickMap''
       detectedCollision = elem Collision collisions

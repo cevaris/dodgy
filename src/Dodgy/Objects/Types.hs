@@ -42,11 +42,11 @@ makeBrickAttributes l k = do
   ObjectAttributes {
     rotation   = Nothing,
     scaleSize  = Just 1.0,
-    paint      = Just darkGray,
+    paint      = Just snowGray,
     location   = Nothing, -- Do not use this location
     noseVector = Just (0, 0, 1),
     upVector   = Just (0,1,0),
-    ambience4  = Just darkGray,
+    ambience4  = Just snowGray,
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just emiss,
