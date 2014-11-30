@@ -27,7 +27,8 @@ drawBrick state _ = postRedisplay Nothing
 compPyramid :: State -> Brick -> IO ()
 compPyramid state brick = do
   
-  let w      = 0.5
+  let w      = 0.5/2
+      sep    = 1.0/8
       tex    = (textures state)
       brickKind = (kind brick)
       location' = Just (loc brick)
@@ -47,9 +48,27 @@ compPyramid state brick = do
       case (paint', location') of
         ((Just (Point4 px py pz pa)), (Just (lx, ly, lz))) -> do 
           color3f px py pz
-          translate $ vector3f lx ly lz
+          translate $ vector3f lx (ly+sep) lz
 
-      octahedron w
+      octahedronTop w
+
+  preservingMatrix $ do
+    preservingAttrib [AllServerAttributes] $ do
+
+      texture Texture2D $= Enabled
+      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+
+      drawLightingEffects (attrs brick)
+
+      case (paint', location') of
+        ((Just (Point4 px py pz pa)), (Just (lx, ly, lz))) -> do 
+          color3f px py pz
+          translate $ vector3f lx (ly-sep) lz
+          rotate1f 180 $ vector3f 1 0 0
+
+      octahedronTop w
+  
      
 
 
