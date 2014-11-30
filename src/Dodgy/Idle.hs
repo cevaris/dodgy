@@ -44,34 +44,33 @@ idle state = do
       level'     = updateBrickMap brickMap'' lv
 
   let dispatchCollision = (\k -> case k of
-                            HealthBrick -> lifep  state $~! (+10)
-                            SpecialBrick -> score state $~! (+100)
-                            _ -> lifep state $~! (subtract 10))
+                            HealthBrick -> lifep  state $~! (+1)
+                            SpecialBrick -> score state $~! (+10)
+                            _ -> lifep state $~! (subtract 1))
 
   let p1 = (mpPosX', mpPosY', 2.75)
       tcoll = (\b -> do
          let p2 = (loc b)
                  
          case (collider $ attrs b) of
-          Nothing   -> Miss
-          (Just c2) -> do
-            -- show $ testCollision p1 c1 p2 c2)
-            let result = testCollision p1 c1 p2 c2
-            dispatchCollision (kind b)
-            result) 
+          Nothing   -> (b, Miss)
+          (Just c2) -> (b, testCollision p1 c1 p2 c2)) 
                          
-  -- mapM_ (putStrLn . tcoll) brickMap''
-  let collisions = map tcoll brickMap''
-      detectedCollision = elem Collision collisions
+  -- -- mapM_ (putStrLn . tcoll) brickMap''
+  let collResults = map tcoll brickMap''
+
+  let collisions = filter ((==Collision) . snd) collResults
+      detectedCollision = length collisions >0 
       
-  -- putStrLn $ show collisions ++ "\n\n-----"
-  putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
+  putStrLn $ "Collision State: " ++ show detectedCollision ++ " " ++ show (length collisions) ++ ""
 
   if detectedCollision
      then postRedisplay Nothing
      else score state $~! (+1)
-  
-  -- putStrLn $ show $ map (\(Brick l k d) -> show l ++ " " ++ show d) brickMap''
+
+  let collidedBricks = map (kind . fst) collisions
+
+  mapM_ dispatchCollision collidedBricks
       
   level state $~! (\x -> level')
 
