@@ -68,8 +68,6 @@ idle state = do
   let collidedBricks = map (kind . fst) collisions
   mapM_ dispatchCollision collidedBricks
 
-  
-  
   boost' <- get (boost state)
 
   if boost' <= 0
