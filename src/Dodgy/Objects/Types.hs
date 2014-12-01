@@ -138,12 +138,12 @@ data Brick = Brick {
 
 -- Speed of moving objects
 speed :: Float
-speed = 0.001
+speed = 0.01
 
 updateBrickLoc :: Float -> Brick -> Brick
 updateBrickLoc i b = do
   let (x,y,z) = loc b
-      loc'    =  i + z
+      loc'    =  (speed*i) + z
       -- loc'    = ((fromIntegral (i `mod` 5))::Float) * speed + z      
   
   b { loc = (x, y, loc' ) }

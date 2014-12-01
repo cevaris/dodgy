@@ -76,12 +76,12 @@ idle state = do
      then boost state $~! (\x -> 0)
      else boost state $~! (subtract 1)
 
-  zOffset state $~! if boost' <= 0 then (\_ -> 0.01) else (\_ -> 0.1)
+  zOffset state $~! if boost' <= 0 then (\_ -> 1) else (\_ -> 10)
   zOffset' <- get (zOffset state)
 
   -- Update Brick positions
   let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
-      brickMap'' = map (updateIsDrawn 10.0) brickMap'
+      brickMap'' = map (updateIsDrawn 4) brickMap'
       level'     = updateBrickMap brickMap'' lv
   level state $~! (\x -> level')
 
