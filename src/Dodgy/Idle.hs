@@ -35,14 +35,8 @@ idle state = do
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
   c1      <- get (p_coll state)
-  -- putStrLn $ show f
-  --putStrLn $ show (brickMap level)
 
-
-  let brickMap'  = updateBrickLocations (brickMap lv) f
-      brickMap'' = map (updateIsDrawn 10.0) brickMap'
-      level'     = updateBrickMap brickMap'' lv
-
+  
   let dispatchCollision = (\k -> case k of
                             HealthBrick -> lifep  state $~! (+1)
                             SpecialBrick -> score state $~! (+10)
@@ -55,26 +49,43 @@ idle state = do
          case (collider $ attrs b) of
           Nothing   -> (b, Miss)
           (Just c2) -> (b, testCollision p1 c1 p2 c2)) 
-                         
-  -- -- mapM_ (putStrLn . tcoll) brickMap''
-  let collResults = map tcoll brickMap''
 
+  -- Calculate brick collision
+  let collResults = map tcoll (brickMap lv)
+
+  -- See if there are any collisions
   let collisions = filter ((==Collision) . snd) collResults
       detectedCollision = length collisions >0 
       
   putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
 
+  -- Update score if no colision
   if detectedCollision
      then postRedisplay Nothing
      else score state $~! (+1)
 
+  -- Detect which type of collision
   let collidedBricks = map (kind . fst) collisions
-
   mapM_ dispatchCollision collidedBricks
-      
+
+  
+  
+  boost' <- get (boost state)
+
+  if boost' <= 0
+     then boost state $~! (\x -> 0)
+     else boost state $~! (subtract 1)
+
+  zOffset state $~! if boost' <= 0 then (\_ -> 0.01) else (\_ -> 0.1)
+  zOffset' <- get (zOffset state)
+
+  -- Update Brick positions
+  let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
+      brickMap'' = map (updateIsDrawn 10.0) brickMap'
+      level'     = updateBrickMap brickMap'' lv
   level state $~! (\x -> level')
 
-  let maxMove = 5.0
+  let maxMove = 1.5
       epsilon = 0.01
       swapPos = maxMove - epsilon
       

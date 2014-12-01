@@ -29,6 +29,7 @@ keyboard state (Char 'l')           _ _ _ = modRotate state RightDirection
 keyboard state (Char 'i')           _ _ _ = modRotate state UpDirection
 keyboard state (Char 'k')           _ _ _ = modRotate state DownDirection
 
+keyboard state (Char ' ')           _ _ _ = modBoost state
 
 --keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
 --keyboard state (Char ']')           Up _ _ = modLightHeight state Increase
@@ -76,15 +77,20 @@ modRotate state UpDirection    =  ph' state $~! (+5)
 modRotate state RightDirection = th' state $~! (\x -> x - 5)
 modRotate state LeftDirection  =  th' state $~! (+5)
 
+modBoost :: State -> IO ()
+modBoost  state  = do
+  boost state $~! (\x -> 20)
+
+playerDelta = 0.1
 modMainPlayer :: State -> Direction -> IO ()
 modMainPlayer state LeftDirection  = do
-  mpPosX state $~! (subtract 0.075)
+  mpPosX state $~! (subtract playerDelta)
 modMainPlayer state RightDirection = do
-  mpPosX state $~! (+0.075) 
+  mpPosX state $~! (+playerDelta) 
 modMainPlayer state DownDirection  = do
-  mpPosY state $~! (subtract 0.075)
+  mpPosY state $~! (subtract playerDelta)
 modMainPlayer state UpDirection    = do
-  mpPosY state $~! (+0.075) 
+  mpPosY state $~! (+playerDelta) 
 
 toggleLightMovement :: State -> KeyState -> IO ()
 toggleLightMovement state  Up = do
@@ -113,48 +119,48 @@ toggleLight state  Up = do
 toggleLight state Down = postRedisplay Nothing
 
 
-modEmission :: State -> ChangeDirection -> IO ()
-modEmission state Decrease = do
-  emiss' state $~! (\x -> x - 5)
-modEmission state Increase  = do
-  emiss' state $~! (+5)  
+-- modEmission :: State -> ChangeDirection -> IO ()
+-- modEmission state Decrease = do
+--   emiss' state $~! (\x -> x - 5)
+-- modEmission state Increase  = do
+--   emiss' state $~! (+5)  
 
 
-modShininess :: State -> ChangeDirection -> IO ()
-modShininess state Decrease = do
-  shine' state $~! (\x -> x - 1)
-modShininess state Increase  = do
-  shine' state $~! (+1)  
+-- modShininess :: State -> ChangeDirection -> IO ()
+-- modShininess state Decrease = do
+--   shine' state $~! (\x -> x - 1)
+-- modShininess state Increase  = do
+--   shine' state $~! (+1)  
 
-modAmbience :: State -> ChangeDirection -> IO ()
-modAmbience state Decrease = do
-  amb' state $~! (\x -> x - 5)
-modAmbience state Increase  = do
-  amb' state $~! (+5)
+-- modAmbience :: State -> ChangeDirection -> IO ()
+-- modAmbience state Decrease = do
+--   amb' state $~! (\x -> x - 5)
+-- modAmbience state Increase  = do
+--   amb' state $~! (+5)
 
-modDiffusion :: State -> ChangeDirection -> IO ()
-modDiffusion state Decrease = do
-  diff' state $~! (\x -> x - 5)
-modDiffusion state Increase  = do
-  diff' state $~! (+5)
+-- modDiffusion :: State -> ChangeDirection -> IO ()
+-- modDiffusion state Decrease = do
+--   diff' state $~! (\x -> x - 5)
+-- modDiffusion state Increase  = do
+--   diff' state $~! (+5)
 
-modSpecular :: State -> ChangeDirection -> IO ()
-modSpecular state Decrease = do
-  spec' state $~! (\x -> x - 5)
-modSpecular state Increase  = do
-  spec' state $~! (+5)
+-- modSpecular :: State -> ChangeDirection -> IO ()
+-- modSpecular state Decrease = do
+--   spec' state $~! (\x -> x - 5)
+-- modSpecular state Increase  = do
+--   spec' state $~! (+5)
 
-modLightRadius :: State -> ChangeDirection -> IO ()
-modLightRadius state Decrease = do
-  rlight' state $~! (\x -> x - 1)
-modLightRadius state Increase  = do
-  rlight' state $~! (+1)
+-- modLightRadius :: State -> ChangeDirection -> IO ()
+-- modLightRadius state Decrease = do
+--   rlight' state $~! (\x -> x - 1)
+-- modLightRadius state Increase  = do
+--   rlight' state $~! (+1)
 
-modLightHeight :: State -> ChangeDirection -> IO ()
-modLightHeight state Decrease = do
-  ylight' state $~! (\x -> x - 0.1)
-modLightHeight state Increase  = do
-  ylight' state $~! (+0.1)
+-- modLightHeight :: State -> ChangeDirection -> IO ()
+-- modLightHeight state Decrease = do
+--   ylight' state $~! (\x -> x - 0.1)
+-- modLightHeight state Increase  = do
+--   ylight' state $~! (+0.1)
   
 modFov :: State -> ChangeDirection -> IO ()
 modFov state Decrease = do

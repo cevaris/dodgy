@@ -41,13 +41,13 @@ data State = State {
   move'   :: IORef Bool,
 
   zwall   :: IORef Float,
-
+  zOffset :: IORef Float,
   mpPosX  :: IORef Float,
   mpPosY  :: IORef Float,
   p_coll  :: IORef Collider,
   score   :: IORef Int,
   lifep   :: IORef Int,
-  
+  boost   :: IORef Int,  
 
   mode    :: IORef Difficulty,
 

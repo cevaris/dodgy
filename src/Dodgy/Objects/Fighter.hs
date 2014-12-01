@@ -1,13 +1,11 @@
-
-
-
-
 module Dodgy.Objects.Fighter (drawFighter, drawSteelFighter) where 
- 
+
+import Control.Monad
+import Data.Fixed
+
 import Graphics.UI.GLUT
 
 import Dodgy.GLUtils
-
 import Dodgy.Types
 import Dodgy.Objects.Types
 
@@ -325,6 +323,49 @@ drawSteelFighter state object@(ObjectAttributes rotation scaleSize paint locatio
           drawVertex3f tail  wid (-wid)
           drawTexCoord2f 0 1
           drawVertex3f tail (-wid) (-wid)
+
+        -- renderObject Solid (Sphere' (1.0/16) 16 16)
+
+        -- renderPrimitive Triangles $ do
+        --   let defd = 5
+        --       cRad = 1.0/16
+        --       loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
+
+        --   forM_ loop360 (\p -> do
+        --                     drawVertex3f (negate ) 0 0
+        --                     drawVertex3f 0 (negate $ glSin p) (negate $ (glCos p))
+        --                     drawVertex3f 0 (negate $ glSin(p+defd)) (negate $ glCos(p+defd)))
+            -- drawVertex3f 0 0 1
+            -- drawVertex3f (glCos p) (glSin p) 0
+            -- drawVertex3f (glCos (p+defd)) (glSin(p+defd)) 0)
+   
+
+          
+
+  -- glBegin(GL_TRIANGLES);
+  -- for (k=0;k<=360;k+=DEF_D){
+  -- glColor3f(0.0,0.0,1.0);
+  -- glVertex3f(0,0,1);
+  -- glColor3f(0.0,1.0,1.0);
+  -- glVertex3f(Cos(k),Sin(k),0);
+  -- glColor3f(1.0,0.0,0.0);
+  -- glVertex3f(Cos(k+DEF_D),Sin(k+DEF_D),0);
+  -- }
+  -- glEnd();
+
+  --         /* bottom circle */
+  --         /* rotate back */
+  --         glRotated(90,1,0,0);
+  --         glBegin(GL_TRIANGLES);
+  --         for (k=0;k<=360;k+=DEF_D) {
+  -- glColor3f(1.0,0.0,0.0);
+  -- glVertex3f(0,0,0);
+  -- glColor3f(1.0,0.0,1.0);
+  -- glVertex3f(Cos(k),0,Sin(k));
+  -- glColor3f(1.0,1.0,0.0);
+  -- glVertex3f(Cos(k+DEF_D),0,Sin(k+DEF_D));
+  -- }
+  -- glEnd(); 
 
         --color3f 1 1 0
         --color3f (211/255) (211/255) (211/255)

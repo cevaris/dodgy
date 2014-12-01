@@ -99,9 +99,30 @@ makeMapOne = MapOne {
      makeBrick (1,0,(-15)) UnitBrick,
      makeBrick ((-1),1,(-16)) WideBrick,     
      makeBrick (0,1,(-18)) LongBrick,
-     makeBrick (0,2,(-18)) LongBrick
-     -- makeBrick (0,1,(-4)) WideBrick,
-     -- makeBrick (1,1,(-4)) LongBrick
+     makeBrick (0,2,(-18)) LongBrick,
+     
+     makeBrick (0,1,(-20)) LongBrick,
+     makeBrick (1,0,(-22)) UnitBrick,
+     makeBrick ((-1),1,(-25)) WideBrick,
+     makeBrick (0,1,(-30)) LongBrick,
+     makeBrick (1,0,(-35)) UnitBrick,
+     makeBrick ((-1),1,(-35)) WideBrick,
+     makeBrick (0,1,(-40)) LongBrick,
+     makeBrick (1,0,(-45)) UnitBrick,
+     makeBrick ((-1),1,(-46)) WideBrick,
+     makeBrick (0,1,(-50)) LongBrick,
+     makeBrick (1,0,(-55)) UnitBrick,
+     makeBrick ((-1),1,(-55)) WideBrick,
+     makeBrick (0,1,(-60)) LongBrick,
+     makeBrick (1,0,(-65)) UnitBrick,
+     makeBrick ((-1),1,(-67)) WideBrick,
+     makeBrick (0,1,(-70)) LongBrick,
+     makeBrick (1,0,(-75)) UnitBrick,
+     makeBrick ((-1),1,(-80)) WideBrick,
+     makeBrick (0,1,(-83)) LongBrick,
+     makeBrick (1,0,(-84)) UnitBrick,
+     makeBrick ((-1),1,(-85)) WideBrick
+
      ]
 }
 
@@ -117,20 +138,20 @@ data Brick = Brick {
 
 -- Speed of moving objects
 speed :: Float
-speed = 0.0075
+speed = 0.001
 
-updateBrickLoc :: Int -> Brick -> Brick
+updateBrickLoc :: Float -> Brick -> Brick
 updateBrickLoc i b = do
   let (x,y,z) = loc b
-      -- loc'    = ((fromIntegral i)::Float) * speed + z
-      loc'    = ((fromIntegral (i `mod` 5))::Float) * speed + z      
+      loc'    =  i + z
+      -- loc'    = ((fromIntegral (i `mod` 5))::Float) * speed + z      
   
   b { loc = (x, y, loc' ) }
 
 updateBrickIsDrawn :: Capability -> Brick -> Brick
 updateBrickIsDrawn c b = b { isDrawn = c }
 
-updateBrickLocations :: [Brick] -> Int -> [Brick]
+updateBrickLocations :: [Brick] -> Float -> [Brick]
 updateBrickLocations bricks interval = do
   let update = updateBrickLoc interval
   map (update) bricks

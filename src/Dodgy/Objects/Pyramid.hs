@@ -114,6 +114,15 @@ octahedronTop w = do
     drawVertex3f (-w)(-w)(-w)
     drawVertex3f (-w) (-w) w
 
+  renderPrimitive Quads $ do
+
+    drawNormal3f 0 (-(w*0.5)) 0
+    drawVertex3f w (-w) w
+    drawVertex3f w (-w) (-w)
+    drawVertex3f (-w) (-w) (-w)
+    drawVertex3f (-w) (-w) w
+
+
 octahedronBottom :: Float -> IO ()
 octahedronBottom w = do
   renderPrimitive Triangles $ do

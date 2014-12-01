@@ -89,6 +89,8 @@ makeState = do
   coll'   <- newIORef makeFigherCollider
   score' <- newIORef 0
   lifep'  <- newIORef 100
+  boost' <- newIORef 0
+  zOffset' <- newIORef 0
 
   mode'   <- newIORef Medium
 
@@ -102,10 +104,12 @@ makeState = do
     ylight' = yl, rlight' = rl, emiss' = em, diff' = df, amb' = am, spec' = sp, smooth' = sm, light' = li, shine' = sh,
     move' = mv,
     zwall = zw,
+    zOffset = zOffset',
     mpPosX = mpPosX', mpPosY = mpPosY',
     p_coll = coll',
     score = score',
     lifep  = lifep',
+    boost = boost',
     mode  = mode',
     level = level',
     textures = tx,

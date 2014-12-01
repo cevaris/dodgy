@@ -21,7 +21,7 @@ drawBrick state brick@(Brick _ LongBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ WideBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ HealthBrick _ _) = plus state brick
 drawBrick state brick@(Brick _ SpecialBrick _ _) = compPyramid state brick
-drawBrick state _ = postRedisplay Nothing
+-- drawBrick state _ = postRedisplay Nothing
 
 
 compPyramid :: State -> Brick -> IO ()
