@@ -5,7 +5,12 @@ A Haskell OpenGL/GLUT dodging game
 
 
 ## Installation
-    # Build/Compile project
+
+### Apt-Get install the following packages
+- zlib-dev
+- libghc-zlib-bindings-dev
+
+### Build/Compile project
     make
     # Execute application
     ./bin/Dodgy
@@ -14,17 +19,22 @@ A Haskell OpenGL/GLUT dodging game
 ### Key Bindings
 
 
-| Command                             | Key Binding   |
-| ------------------------------------|:-------------:|
-| Close App                           | ESC           |
-| Rotate Right                        | Right Arrow   |
-| Rotate Left                         | Left Arrow    |
-| Rotate Down                         | Down Arrow    |
-| Rotate Up                           | Up Arrow      |
+| Command                             | Key Binding      |
+| ------------------------------------|:----------------:|
+| Close App                           | ESC              |
+| Fighter Boost!                      | Space bar        |
+| Move Right                          | d                |
+| Move Left                           | a                |
+| Move Up                             | w                |
+| Move Down                           | s                |
+| Rotate Right                        | l, Right Arrow   |
+| Rotate Left                         | j, Left Arrow    |
+| Rotate Down                         | k, Down Arrow    |
+| Rotate Up                           | i, Up Arrow      |
 
 
 ## Assignment Length
-~ hours
+~30 hours
 
 
 ### Sources
