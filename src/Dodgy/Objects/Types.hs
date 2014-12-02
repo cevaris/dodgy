@@ -79,14 +79,14 @@ makeLongCollider = BoxCollider {
   c_depth  = 3
 }
 makeHpCollider = BoxCollider {
-  c_width  = 1,
-  c_height = 1,
-  c_depth  = 1
+  c_width  = 6/10,
+  c_height = 6/10,
+  c_depth  = 6/10
 }
 makeSpCollider = BoxCollider {
-  c_width  = 1,
-  c_height = 1,
-  c_depth  = 1
+  c_width  = 1/2,
+  c_height = 1/2,
+  c_depth  = 1/2
 }
 
 makeMapOne :: Map
