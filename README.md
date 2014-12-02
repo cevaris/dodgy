@@ -11,9 +11,14 @@ A Haskell OpenGL/GLUT dodging game
 - libghc-zlib-bindings-dev
 
 ### Build/Compile project
+
     make
-    # Execute application
+    
+### Execute application
+
     ./bin/Dodgy
+    # or
+    make run
 
   
 ### Key Bindings
