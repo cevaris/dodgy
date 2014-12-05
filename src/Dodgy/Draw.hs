@@ -15,6 +15,7 @@ import Dodgy.Objects.Cube
 import Dodgy.Objects.Fighter
 import Dodgy.Objects.Sphere
 import Dodgy.Objects.Brick
+import Dodgy.Objects.Shuttle
 
 
 draw :: State -> IO ()
@@ -88,8 +89,7 @@ draw state = do
   position4f loc4
 
   -- Models
-      
-  drawSteelFighter state $ ObjectAttributes {
+  drawShuttle state $ ObjectAttributes {
     rotation   = Nothing,
     scaleSize  = Just 1,
     paint      = Just white,

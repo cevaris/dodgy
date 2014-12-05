@@ -72,7 +72,7 @@ makeState = do
 
   
   yl <- newIORef 0
-  rl <- newIORef3 j
+  rl <- newIORef 3
   em <- newIORef 0
   df <- newIORef 65
   am <- newIORef 30 -- 30
