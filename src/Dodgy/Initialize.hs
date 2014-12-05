@@ -68,14 +68,14 @@ makeState = do
   zh <- newIORef 90
   fv <- newIORef 65 --65
   as <- newIORef 1
-  di <- newIORef 3
-  --di <- newIORef 0.5
+  di <- newIORef 0.6 --3
+
   
   yl <- newIORef 0
-  rl <- newIORef 10
+  rl <- newIORef3 j
   em <- newIORef 0
   df <- newIORef 65
-  am <- newIORef 80 -- 30
+  am <- newIORef 30 -- 30
   sp <- newIORef 85
   sm <- newIORef Smooth
   li <- newIORef True

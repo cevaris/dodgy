@@ -31,11 +31,11 @@ keyboard state (Char 'k')           _ _ _ = modRotate state DownDirection
 
 keyboard state (Char ' ')           _ _ _ = modBoost state
 
---keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
---keyboard state (Char ']')           Up _ _ = modLightHeight state Increase
+keyboard state (Char '[')           Up _ _ = modLightHeight state Decrease
+keyboard state (Char ']')           Up _ _ = modLightHeight state Increase
 
---keyboard state (Char 'r')           Up _ _ = modLightRadius state Decrease
---keyboard state (Char 'R')           Up _ _ = modLightRadius state Increase
+keyboard state (Char 'r')           Up _ _ = modLightRadius state Decrease
+keyboard state (Char 'R')           Up _ _ = modLightRadius state Increase
 
 --keyboard state (Char 's')           Up _ _ = modSpecular state Decrease
 --keyboard state (Char 'S')           Up _ _ = modSpecular state Increase
@@ -150,17 +150,17 @@ toggleLight state Down = postRedisplay Nothing
 -- modSpecular state Increase  = do
 --   spec' state $~! (+5)
 
--- modLightRadius :: State -> ChangeDirection -> IO ()
--- modLightRadius state Decrease = do
---   rlight' state $~! (\x -> x - 1)
--- modLightRadius state Increase  = do
---   rlight' state $~! (+1)
+modLightRadius :: State -> ChangeDirection -> IO ()
+modLightRadius state Decrease = do
+  rlight' state $~! (\x -> x - 1)
+modLightRadius state Increase  = do
+  rlight' state $~! (+1)
 
--- modLightHeight :: State -> ChangeDirection -> IO ()
--- modLightHeight state Decrease = do
---   ylight' state $~! (\x -> x - 0.1)
--- modLightHeight state Increase  = do
---   ylight' state $~! (+0.1)
+modLightHeight :: State -> ChangeDirection -> IO ()
+modLightHeight state Decrease = do
+  ylight' state $~! (\x -> x - 0.1)
+modLightHeight state Increase  = do
+  ylight' state $~! (+0.1)
   
 modFov :: State -> ChangeDirection -> IO ()
 modFov state Decrease = do

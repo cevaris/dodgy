@@ -93,7 +93,7 @@ draw state = do
     rotation   = Nothing,
     scaleSize  = Just 1,
     paint      = Just white,
-    location   = Just (mpPosX, mpPosY, 2.75),
+    location   = Just (mpPosX, mpPosY, 0),
     noseVector = Just (0, 0, (-1)),
     upVector   = Just (0,1,0),
     ambience4  = Just white,
@@ -107,7 +107,7 @@ draw state = do
 
   drawStarSphere state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = (Just 1),
+    scaleSize  = (Just 0.5),
     paint      = Just $ (Point4 255 255 0 0),
     location   = (Just loc3),
     noseVector = Nothing,
@@ -119,13 +119,10 @@ draw state = do
     shininess  = Just shine,
     collider   = Nothing
   }
-
-  mapMR (brickMap level) (\brick -> case brick of 
-      (Brick _ _ Disabled _) -> postRedisplay Nothing
-      (Brick _ _ Enabled  _) -> drawBrick state brick)
-
-  -- let brickLocations = map (\x -> show $ (loc x)) (brickMap level)
-  -- putStrLn $ show brickLocations
+ 
+  -- mapMR (brickMap level) (\brick -> case brick of 
+  --     (Brick _ _ Disabled _) -> postRedisplay Nothing
+  --     (Brick _ _ Enabled  _) -> drawBrick state brick)
       
      
   lighting $= Disabled
