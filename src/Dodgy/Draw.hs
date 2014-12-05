@@ -91,7 +91,7 @@ draw state = do
   -- Models
   drawShuttle state $ ObjectAttributes {
     rotation   = Nothing,
-    scaleSize  = Just 3,
+    scaleSize  = Just 1,
     paint      = Just white,
     location   = Just (mpPosX, mpPosY, 0),
     noseVector = Just (0, 0, (-1)),

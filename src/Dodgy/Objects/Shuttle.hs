@@ -110,7 +110,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        -- Offset, scale and rotate
         color3f cx cy cz
         translate $ vector3f lx ly lz
         let ns = s/14
@@ -123,16 +122,64 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         renderPrimitive QuadStrip $ do
           forM_ loop360 (\p -> do
-                            drawVertex3f cone (glSin p) (glCos p)
+                            
                             drawNormal3f cone (glSin p) (glCos p)
                             drawTexCoord2f cone (glSin p)
+                            drawVertex3f cone (glSin p) (glCos p)
                             
-                            drawVertex3f tail (glSin p) (glCos p)
+                            
                             drawNormal3f tail (glSin p) (glCos p)
-                            drawTexCoord2f tail (glSin p))
+                            drawTexCoord2f tail (glSin p)
+                            drawVertex3f tail (glSin p) (glCos p))
 
 
-    -- Base cone
+
+    -- -- Base sphere
+    -- preservingMatrix $ do
+    --   preservingAttrib [AllServerAttributes] $ do
+        
+    --     -- Offset, scale and rotate
+    --     color3f cx cy cz
+    --     translate $ vector3f lx ly ((lz-cone)*s)
+    --     let ns = s/14
+    --     scale3f ns ns ns
+    --     multMatrix (mat :: GLmatrix GLfloat)
+
+    --     texture Texture2D $= Enabled
+    --     textureBinding Texture2D $= Just steel'
+    --     textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+    --     sphere
+
+    -- -- Tip cone
+    -- preservingMatrix $ do
+    --   preservingAttrib [AllServerAttributes] $ do
+        
+    --     -- Offset, scale and rotate
+    --     color3f cx cy cz
+    --     translate $ vector3f lx ly ((lz-cone)*s)
+    --     let ns = s/14
+    --     scale3f ns ns ns
+    --     multMatrix (mat :: GLmatrix GLfloat)
+
+    --     texture Texture2D $= Enabled
+    --     textureBinding Texture2D $= Just steel'
+    --     textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+    --     renderPrimitive Triangles $ do
+    --       forM_ loop360 (\p -> do
+    --                         drawNormal3f 1 0 0
+    --                         drawVertex3f 1 0 0
+
+    --                         drawNormal3f 0 (glCos p) (glSin p)
+    --                         drawVertex3f 0 (glCos p) (glSin p)
+
+    --                         drawNormal3f 0 (glCos (p+defd)) (glSin (p+defd))
+    --                         drawVertex3f 0 (glCos (p+defd)) (glSin (p+defd)))
+
+
+    
+    -- Tip sphere
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
@@ -140,7 +187,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         color3f cx cy cz
         translate $ vector3f lx ly ((lz-cone)*s)
         let ns = s/14
-        scale3f ns ns ns
+            zs = ns*3
+        scale3f ns ns zs
         multMatrix (mat :: GLmatrix GLfloat)
 
         texture Texture2D $= Enabled
@@ -229,7 +277,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         --color3f 1 0 0
         --color3f cx cy cz
 
-
+    -- Wings
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
@@ -318,27 +366,27 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawTexCoord2f 0 0
           drawVertex3f tail (-0.0001) (-0.5)
 
-           -- Bottom Cone
-          drawNormal3f 1 (-cone/wid) 0
-          drawTexCoord2f 1 0.5
-          drawVertex3f nose  0.0  0.0
-          drawTexCoord2f 0 1 
-          drawVertex3f cone (-wid) (wid)
-          drawTexCoord2f 0 0
-          drawVertex3f cone (-wid) (-wid)
+        --    -- Bottom Cone
+        --   drawNormal3f 1 (-cone/wid) 0
+        --   drawTexCoord2f 1 0.5
+        --   drawVertex3f nose  0.0  0.0
+        --   drawTexCoord2f 0 1 
+        --   drawVertex3f cone (-wid) (wid)
+        --   drawTexCoord2f 0 0
+        --   drawVertex3f cone (-wid) (-wid)
 
 
-        renderPrimitive Quads $ do
-          -- Bottom Capsule
-          drawNormal3f 0 (-1) 0
-          drawTexCoord2f 0 0
-          drawVertex3f cone (-wid)  wid
-          drawTexCoord2f 1 0
-          drawVertex3f cone (-wid) (-wid)
-          drawTexCoord2f 1 1
-          drawVertex3f tail (-wid) (-wid)
-          drawTexCoord2f 0 1
-          drawVertex3f tail (-wid)  wid
+        -- renderPrimitive Quads $ do
+        --   -- Bottom Capsule
+        --   drawNormal3f 0 (-1) 0
+        --   drawTexCoord2f 0 0
+        --   drawVertex3f cone (-wid)  wid
+        --   drawTexCoord2f 1 0
+        --   drawVertex3f cone (-wid) (-wid)
+        --   drawTexCoord2f 1 1
+        --   drawVertex3f tail (-wid) (-wid)
+        --   drawTexCoord2f 0 1
+        --   drawVertex3f tail (-wid)  wid
       
         
       
