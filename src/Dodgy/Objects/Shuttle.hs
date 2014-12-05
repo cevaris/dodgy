@@ -21,7 +21,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     let wid  = 0.05
         nose = 0.50
         cone = 0.20
-        wing = 0.00
         strk = (-0.20)
         tail = (-0.50)
         d0 = sqrt(dx*dx+dy*dy+dz*dz)
@@ -48,7 +47,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
                                        z0, z1,  z2, 0,
                                        0,  0,   0,  1]
 
-
     drawLightingEffects object
 
 
@@ -68,7 +66,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         renderPrimitive QuadStrip $ do
           forM_ loop360 (\p -> do
-                            
                             drawNormal3f cone (glSin p) (glCos p)
                             drawTexCoord2f cone (glSin p)
                             drawVertex3f cone (glSin p) (glCos p)
@@ -143,7 +140,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        -- Offset, scale and rotate
         color3f cx cy cz
         translate $ vector3f lx ly ((lz-cone)*s)
         let ns = s/14
@@ -162,6 +158,34 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
+        color3f cx cy cz
+        translate $ vector3f lx ly lz
+        scale3f s s s
+       -- multMatrix (mat :: GLmatrix GLfloat)
+        
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+
+        -- let wy = 0.25
+        --     woz = 0.25
+    
+        -- renderPrimitive Quads $ do
+        --   drawNormal3f 0 1 0
+
+        --   drawVertex3f 0 0 wid
+
+        --   drawVertex3f tail 0 0
+  
+        --   drawVertex3f tail 0.5 tail
+          
+        --   drawVertex3f 0.5  0.5 wid
+
+    -- Wings
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
         -- Offset, scale and rotate
         color3f cx cy cz
         translate $ vector3f lx ly lz
@@ -171,6 +195,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+         
 
         -- Top of Side Wings
         renderPrimitive Triangles $ do
@@ -178,16 +203,16 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           -- Right Top Wing
           drawNormal3f 0 1 0
           drawTexCoord2f 1 1
-          drawVertex3f wing 0.0001  wid
+          drawVertex3f 0 0.0001  wid
           drawTexCoord2f 1 0
           drawVertex3f tail 0.0001  wid
           drawTexCoord2f 0 0
           drawVertex3f tail 0.0001  0.5
-
+  
           -- Left Top Wing
           drawNormal3f 0 1 0
           drawTexCoord2f 1 1
-          drawVertex3f wing 0.0001 (-wid)
+          drawVertex3f 0 0.0001 (-wid)
           drawTexCoord2f 1 0
           drawVertex3f tail 0.0001 (-wid)
           drawTexCoord2f 0 0
@@ -228,20 +253,20 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         renderPrimitive Triangles $ do
 
 
-          -- Right Bottom Wing
-          drawNormal3f 0 (-1) 0
-          drawTexCoord2f 1 1
-          drawVertex3f wing (-0.0001)  wid
-          drawTexCoord2f 1 0
-          drawVertex3f tail (-0.0001)  wid
-          drawTexCoord2f 0 0
-          drawVertex3f tail (-0.0001)  0.5
+          -- -- Right Bottom Wing
+          -- drawNormal3f 0 (-1) 0
+          -- drawTexCoord2f 1 1
+          -- drawVertex3f wing (-0.0001)  wid
+          -- drawTexCoord2f 1 0
+          -- drawVertex3f tail (-0.0001)  wid
+          -- drawTexCoord2f 0 0
+          -- drawVertex3f tail (-0.0001)  0.5
 
 
           -- Left Bottom Wing
           drawNormal3f 0 (-1) 0
           drawTexCoord2f 1 1
-          drawVertex3f wing (-0.0001) (-wid)
+          drawVertex3f 0 (-0.0001) (-wid)
           drawTexCoord2f 1 0
           drawVertex3f tail (-0.0001) (-wid)
           drawTexCoord2f 0 0

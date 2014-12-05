@@ -104,7 +104,6 @@ draw state = do
     collider   = Nothing
   }
 
-
   drawStarSphere state $ ObjectAttributes {
     rotation   = Nothing,
     scaleSize  = (Just 0.5),
