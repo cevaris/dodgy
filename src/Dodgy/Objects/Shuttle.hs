@@ -40,6 +40,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         tex = textures state
         steel' = steel tex
         comb' = comb tex
+        defd = 5
+        loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
 
     mat <- newMatrix RowMajor $ listf [x0, x1,  x2, 0,
                                        y0, y1,  y2, 0,
@@ -64,47 +66,47 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
         --textureWrapMode Texture2D S $= (Repeated, Repeat)
         --textureWrapMode Texture2D T $= (Repeated, Repeat)
-
+        
 
         -- Front Cone
-        renderPrimitive Triangles $ do
+        -- renderPrimitive Triangles $ do
 
-          -- Front
-          drawNormal3f 1 0 (cone/wid)
-          drawTexCoord2f 1 0
-          drawVertex3f nose 0 0
-          drawTexCoord2f 0 1
-          drawVertex3f cone wid wid
-          drawTexCoord2f 0 0
-          drawVertex3f cone (-wid) wid
+          -- -- Front
+          -- drawNormal3f 1 0 (cone/wid)
+          -- drawTexCoord2f 1 0
+          -- drawVertex3f nose 0 0
+          -- drawTexCoord2f 0 1
+          -- drawVertex3f cone wid wid
+          -- drawTexCoord2f 0 0
+          -- drawVertex3f cone (-wid) wid
 
-          -- Back
-          drawNormal3f 1 0 (-cone/wid)
-          drawTexCoord2f 1 0
-          drawVertex3f nose  0.0  0.0
-          drawTexCoord2f 0 1
-          drawVertex3f cone  wid (-wid)
-          drawTexCoord2f 0 0
-          drawVertex3f cone (-wid) (-wid)
+          -- -- Back
+          -- drawNormal3f 1 0 (-cone/wid)
+          -- drawTexCoord2f 1 0
+          -- drawVertex3f nose  0.0  0.0
+          -- drawTexCoord2f 0 1
+          -- drawVertex3f cone  wid (-wid)
+          -- drawTexCoord2f 0 0
+          -- drawVertex3f cone (-wid) (-wid)
 
-          -- Top
-          drawNormal3f 1 (cone/wid) 0
-          drawTexCoord2f 1 0
-          drawVertex3f nose  0.0  0.0
-          drawTexCoord2f 0 1
-          drawVertex3f cone  wid  wid
-          drawTexCoord2f 0 0
-          drawVertex3f cone  wid (-wid)
+          -- -- Top
+          -- drawNormal3f 1 (cone/wid) 0
+          -- drawTexCoord2f 1 0
+          -- drawVertex3f nose  0.0  0.0
+          -- drawTexCoord2f 0 1
+          -- drawVertex3f cone  wid  wid
+          -- drawTexCoord2f 0 0
+          -- drawVertex3f cone  wid (-wid)
 
-          -- Cockpit
-          color3f (0/255)  (0/255)  (0/255) 
-          drawNormal3f 1 (cone/wid) 0
-          drawVertex3f nose  0.0  0.0
-          drawVertex3f (cone*1.1)  (wid*1.05)  (wid*0.6)
-          drawVertex3f (cone*1.1)  (wid*1.05) (-(wid*0.6))
-          color3f cx cy cz
+          -- -- Cockpit
+          -- color3f (0/255)  (0/255)  (0/255) 
+          -- drawNormal3f 1 (cone/wid) 0
+          -- drawVertex3f nose  0.0  0.0
+          -- drawVertex3f (cone*1.1)  (wid*1.05)  (wid*0.6)
+          -- drawVertex3f (cone*1.1)  (wid*1.05) (-(wid*0.6))
+          -- color3f cx cy cz
 
-    
+    -- Capsule Cylindar
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
@@ -114,21 +116,10 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         let ns = s/14
         scale3f ns ns s
         multMatrix (mat :: GLmatrix GLfloat)
-        --rotate1f 90 $ vector3f 0 0 1
 
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-        -- textureWrapMode TextureCubeMap S $= (Repeated, Repeat)
-        -- textureWrapMode TextureCubeMap T $= (Repeated, Repeat)
-        -- textureWrapMode TextureCubeMap R $= (Repeated, Repeat)
-        -- textureGenMode S $= Just NormalMap
-        -- textureGenMode T $= Just NormalMap
-        -- textureGenMode R $= Just NormalMap
-        -- textureFunction $= Modulate  
-
-        let defd = 5
-            loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
 
         renderPrimitive QuadStrip $ do
           forM_ loop360 (\p -> do
@@ -141,13 +132,13 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
                             drawTexCoord2f tail (glSin p))
 
 
-    
+    -- Base cone
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
         -- Offset, scale and rotate
         color3f cx cy cz
-        translate $ vector3f lx ly (lz-tail)
+        translate $ vector3f lx ly (lz-cone)
         let ns = s/14
         scale3f ns ns ns
         multMatrix (mat :: GLmatrix GLfloat)
@@ -156,7 +147,24 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
-        --renderObject Solid (Sphere' ((realToFrac wid)::GLdouble) 16 16)
+        sphere
+
+
+    -- Back Capsule Cap
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        -- Offset, scale and rotate
+        color3f cx cy cz
+        translate $ vector3f lx ly (lz-tail)
+        let ns = s/14
+        scale3f ns ns (ns/3)
+        multMatrix (mat :: GLmatrix GLfloat)
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
         sphere
 
 
