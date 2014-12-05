@@ -52,60 +52,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     drawLightingEffects object
 
 
-    preservingMatrix $ do
-      preservingAttrib [AllServerAttributes] $ do
-        
-        -- Offset, scale and rotate
-        color3f cx cy cz
-        translate $ vector3f lx ly lz
-        scale3f s s s
-        multMatrix (mat :: GLmatrix GLfloat)
-
-        texture Texture2D $= Enabled
-        textureBinding Texture2D $= Just steel'
-        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-        --textureWrapMode Texture2D S $= (Repeated, Repeat)
-        --textureWrapMode Texture2D T $= (Repeated, Repeat)
-        
-
-        -- Front Cone
-        -- renderPrimitive Triangles $ do
-
-          -- -- Front
-          -- drawNormal3f 1 0 (cone/wid)
-          -- drawTexCoord2f 1 0
-          -- drawVertex3f nose 0 0
-          -- drawTexCoord2f 0 1
-          -- drawVertex3f cone wid wid
-          -- drawTexCoord2f 0 0
-          -- drawVertex3f cone (-wid) wid
-
-          -- -- Back
-          -- drawNormal3f 1 0 (-cone/wid)
-          -- drawTexCoord2f 1 0
-          -- drawVertex3f nose  0.0  0.0
-          -- drawTexCoord2f 0 1
-          -- drawVertex3f cone  wid (-wid)
-          -- drawTexCoord2f 0 0
-          -- drawVertex3f cone (-wid) (-wid)
-
-          -- -- Top
-          -- drawNormal3f 1 (cone/wid) 0
-          -- drawTexCoord2f 1 0
-          -- drawVertex3f nose  0.0  0.0
-          -- drawTexCoord2f 0 1
-          -- drawVertex3f cone  wid  wid
-          -- drawTexCoord2f 0 0
-          -- drawVertex3f cone  wid (-wid)
-
-          -- -- Cockpit
-          -- color3f (0/255)  (0/255)  (0/255) 
-          -- drawNormal3f 1 (cone/wid) 0
-          -- drawVertex3f nose  0.0  0.0
-          -- drawVertex3f (cone*1.1)  (wid*1.05)  (wid*0.6)
-          -- drawVertex3f (cone*1.1)  (wid*1.05) (-(wid*0.6))
-          -- color3f cx cy cz
-
     -- Capsule Cylindar
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
@@ -132,6 +78,24 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
                             drawTexCoord2f tail (glSin p)
                             drawVertex3f tail (glSin p) (glCos p))
 
+    -- Capsule Tail Cap
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        -- Offset, scale and rotate
+        color3f cx cy cz
+        
+        translate $ vector3f lx ly ((lz-tail)*s)
+        let ns = s/14
+        scale3f ns ns (ns/3)
+        multMatrix (mat :: GLmatrix GLfloat)
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
+
     -- Cockpit Back
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
@@ -148,6 +112,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
 
+        color3f cx cy cz
         translate $ vector3f lx ((lz+0.03)*s) ((lz-cone)*s)
         let ns = s/14
         scale3f (ns/1.2) (ns/6) (ns*2.6)
@@ -155,57 +120,11 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         color4f snowGray
         sphere
-
-
-    -- -- Base sphere
-    -- preservingMatrix $ do
-    --   preservingAttrib [AllServerAttributes] $ do
-        
-    --     -- Offset, scale and rotate
-    --     color3f cx cy cz
-    --     translate $ vector3f lx ly ((lz-cone)*s)
-    --     let ns = s/14
-    --     scale3f ns ns ns
-    --     multMatrix (mat :: GLmatrix GLfloat)
-
-    --     texture Texture2D $= Enabled
-    --     textureBinding Texture2D $= Just steel'
-    --     textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-
-    --     sphere
-
-    -- -- Tip cone
-    -- preservingMatrix $ do
-    --   preservingAttrib [AllServerAttributes] $ do
-        
-    --     -- Offset, scale and rotate
-    --     color3f cx cy cz
-    --     translate $ vector3f lx ly ((lz-cone)*s)
-    --     let ns = s/14
-    --     scale3f ns ns ns
-    --     multMatrix (mat :: GLmatrix GLfloat)
-
-    --     texture Texture2D $= Enabled
-    --     textureBinding Texture2D $= Just steel'
-    --     textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-
-    --     renderPrimitive Triangles $ do
-    --       forM_ loop360 (\p -> do
-    --                         drawNormal3f 1 0 0
-    --                         drawVertex3f 1 0 0
-
-    --                         drawNormal3f 0 (glCos p) (glSin p)
-    --                         drawVertex3f 0 (glCos p) (glSin p)
-
-    --                         drawNormal3f 0 (glCos (p+defd)) (glSin (p+defd))
-    --                         drawVertex3f 0 (glCos (p+defd)) (glSin (p+defd)))
-
   
     -- Tip sphere
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        -- Offset, scale and rotate
         color3f cx cy cz
         translate $ vector3f lx ((ly+0.025)*s) ((lz-cone)*s)
         let ns = s/16
@@ -215,10 +134,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         blend $= Enabled
         blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
-
-        -- texture Texture2D $= Enabled
-        -- textureBinding Texture2D $= Just steel'
-        -- textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
         color4f (Point4 0 0 0 0.4)
         sphere
@@ -241,88 +156,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
         sphere
-
-    
-
-
-    -- Capsule Tail Cap
-    preservingMatrix $ do
-      preservingAttrib [AllServerAttributes] $ do
-        
-        -- Offset, scale and rotate
-        color3f cx cy cz
-        
-        translate $ vector3f lx ly ((lz-tail)*s)
-        let ns = s/14
-        scale3f ns ns (ns/3)
-        multMatrix (mat :: GLmatrix GLfloat)
-
-        texture Texture2D $= Enabled
-        textureBinding Texture2D $= Just steel'
-        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-
-        sphere
-        
-
-
-        --   -- Tail Cap
-        --   drawNormal3f (-1) 0 0
-        --   drawTexCoord2f 0 0
-        --   drawVertex3f tail (-wid)  wid
-        --   drawTexCoord2f 1 0
-        --   drawVertex3f tail  wid  wid
-        --   drawTexCoord2f 1 1
-        --   drawVertex3f tail  wid (-wid)
-        --   drawTexCoord2f 0 1
-        --   drawVertex3f tail (-wid) (-wid)
-
-        -- renderObject Solid (Sphere' (1.0/16) 16 16)
-
-        -- renderPrimitive Triangles $ do
-        --   let defd = 5
-        --       cRad = 1.0/16
-        --       loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
-
-        --   forM_ loop360 (\p -> do
-        --                     drawVertex3f (negate ) 0 0
-        --                     drawVertex3f 0 (negate $ glSin p) (negate $ (glCos p))
-        --                     drawVertex3f 0 (negate $ glSin(p+defd)) (negate $ glCos(p+defd)))
-            -- drawVertex3f 0 0 1
-            -- drawVertex3f (glCos p) (glSin p) 0
-            -- drawVertex3f (glCos (p+defd)) (glSin(p+defd)) 0)
-   
-
           
-
-  -- glBegin(GL_TRIANGLES);
-  -- for (k=0;k<=360;k+=DEF_D){
-  -- glColor3f(0.0,0.0,1.0);
-  -- glVertex3f(0,0,1);
-  -- glColor3f(0.0,1.0,1.0);
-  -- glVertex3f(Cos(k),Sin(k),0);
-  -- glColor3f(1.0,0.0,0.0);
-  -- glVertex3f(Cos(k+DEF_D),Sin(k+DEF_D),0);
-  -- }
-  -- glEnd();
-
-  --         /* bottom circle */
-  --         /* rotate back */
-  --         glRotated(90,1,0,0);
-  --         glBegin(GL_TRIANGLES);
-  --         for (k=0;k<=360;k+=DEF_D) {
-  -- glColor3f(1.0,0.0,0.0);
-  -- glVertex3f(0,0,0);
-  -- glColor3f(1.0,0.0,1.0);
-  -- glVertex3f(Cos(k),0,Sin(k));
-  -- glColor3f(1.0,1.0,0.0);
-  -- glVertex3f(Cos(k+DEF_D),0,Sin(k+DEF_D));
-  -- }
-  -- glEnd(); 
-
-        --color3f 1 1 0
-        --color3f (211/255) (211/255) (211/255)
-        --color3f 1 0 0
-        --color3f cx cy cz
 
     -- Wings
     preservingMatrix $ do
