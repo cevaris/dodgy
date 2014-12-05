@@ -132,6 +132,29 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
                             drawTexCoord2f tail (glSin p)
                             drawVertex3f tail (glSin p) (glCos p))
 
+    -- Cockpit Back
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+
+        translate $ vector3f lx ly ((lz-cone)*s)
+        let ns = s/14
+        scale3f ns ns (ns/3)
+        multMatrix (mat :: GLmatrix GLfloat)
+
+        color4f snowGray
+        sphere
+
+    -- Cockpit Floor
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+
+        translate $ vector3f lx ((lz+0.03)*s) ((lz-cone)*s)
+        let ns = s/14
+        scale3f (ns/1.2) (ns/6) (ns*2.6)
+        multMatrix (mat :: GLmatrix GLfloat)
+
+        color4f snowGray
+        sphere
 
 
     -- -- Base sphere
@@ -177,6 +200,28 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     --                         drawNormal3f 0 (glCos (p+defd)) (glSin (p+defd))
     --                         drawVertex3f 0 (glCos (p+defd)) (glSin (p+defd)))
 
+  
+    -- Tip sphere
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        -- Offset, scale and rotate
+        color3f cx cy cz
+        translate $ vector3f lx ((ly+0.025)*s) ((lz-cone)*s)
+        let ns = s/16
+            zs = ns*3
+        scale3f ns ns zs
+        multMatrix (mat :: GLmatrix GLfloat)
+
+        blend $= Enabled
+        blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
+
+        -- texture Texture2D $= Enabled
+        -- textureBinding Texture2D $= Just steel'
+        -- textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        color4f (Point4 0 0 0 0.4)
+        sphere
 
     
     -- Tip sphere
@@ -196,6 +241,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
         sphere
+
+    
 
 
     -- Capsule Tail Cap
