@@ -2,12 +2,14 @@ module Dodgy.Objects.Shuttle (drawShuttle) where
 
 import Control.Monad
 import Data.Fixed
+import GHC.Float
 
 import Graphics.UI.GLUT
 
 import Dodgy.GLUtils
 import Dodgy.Types
 import Dodgy.Objects.Types
+import Dodgy.Objects.Sphere
 
 drawShuttle :: State -> ObjectAttributes -> IO ()
 drawShuttle state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
@@ -102,7 +104,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f (cone*1.1)  (wid*1.05) (-(wid*0.6))
           color3f cx cy cz
 
-
+    
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
@@ -117,6 +119,13 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+        -- textureWrapMode TextureCubeMap S $= (Repeated, Repeat)
+        -- textureWrapMode TextureCubeMap T $= (Repeated, Repeat)
+        -- textureWrapMode TextureCubeMap R $= (Repeated, Repeat)
+        -- textureGenMode S $= Just NormalMap
+        -- textureGenMode T $= Just NormalMap
+        -- textureGenMode R $= Just NormalMap
+        -- textureFunction $= Modulate  
 
         let defd = 5
             loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
@@ -125,47 +134,31 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           forM_ loop360 (\p -> do
                             drawVertex3f cone (glSin p) (glCos p)
                             drawNormal3f cone (glSin p) (glCos p)
+                            drawTexCoord2f cone (glSin p)
                             
                             drawVertex3f tail (glSin p) (glCos p)
-                            drawNormal3f tail (glSin p) (glCos p))
-  
+                            drawNormal3f tail (glSin p) (glCos p)
+                            drawTexCoord2f tail (glSin p))
 
-        -- -- Capsule
-        -- renderPrimitive Quads $ do
-        --   -- Front
-        --   drawNormal3f 0 0 1
-        --   drawTexCoord2f 1 1
-        --   drawVertex3f cone  wid  wid
-        --   drawTexCoord2f 1 0
-        --   drawVertex3f cone (-wid)  wid
-        --   drawTexCoord2f 0 0
-        --   drawVertex3f tail (-wid)  wid
-        --   drawTexCoord2f 0 1
-        --   drawVertex3f tail  wid  wid
 
-        --   -- Back
-        --   drawNormal3f 0 0 (-1)
-        --   drawTexCoord2f 0 0
-        --   drawVertex3f cone  wid (-wid)
-        --   drawTexCoord2f 1 0
-        --   drawVertex3f cone (-wid) (-wid)
-        --   drawTexCoord2f 1 1
-        --   drawVertex3f tail (-wid) (-wid)
-        --   drawTexCoord2f 0 1
-        --   drawVertex3f tail  wid (-wid)
-
-        --   -- Top
-        --   drawNormal3f 0 1 0
-        --   drawTexCoord2f 0 0
-        --   drawVertex3f cone  wid  wid
-        --   drawTexCoord2f 1 0
-        --   drawVertex3f cone  wid (-wid)
-        --   drawTexCoord2f 1 1
-        --   drawVertex3f tail  wid (-wid)
-        --   drawTexCoord2f 0 1
-        --   drawVertex3f tail  wid  wid
-
+    
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
         
+        -- Offset, scale and rotate
+        color3f cx cy cz
+        translate $ vector3f lx ly (lz-tail)
+        let ns = s/14
+        scale3f ns ns ns
+        multMatrix (mat :: GLmatrix GLfloat)
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        --renderObject Solid (Sphere' ((realToFrac wid)::GLdouble) 16 16)
+        sphere
+
 
         --   -- Tail Cap
         --   drawNormal3f (-1) 0 0

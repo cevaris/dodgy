@@ -1,4 +1,4 @@
-module Dodgy.Objects.Sphere (drawSphere, drawStarSphere, drawAlienSphere) where 
+module Dodgy.Objects.Sphere (drawSphere, drawStarSphere, drawAlienSphere,sphere) where 
 
 import Control.Monad
 import Data.Fixed
@@ -26,6 +26,22 @@ drawLatBand d (ph, th) =  do
   drawNormal3f x y z
   drawTexCoord2f (th/360) (ph/180+0.5)
   drawVertex3f x y z
+
+
+sphere :: IO ()
+sphere = do
+  -- let spherFunc = (p, ph -> do
+  --       drawLatBand q (ph, th)
+  --       drawLatBand q ((ph+5), th))
+
+  -- mapM_ (\ph -> mapM_ sphereFunc (sphereTh q)) (spherePh q)
+  let q = 5
+  forM_ (spherePh q) (\ph -> do
+                         renderPrimitive QuadStrip $ forM_ (sphereTh q) (\th -> do
+                                                                            drawLatBand q (ph, th)
+                                                                            drawLatBand q ((ph+5), th))
+                     ) 
+
 
 --Draw solid sphere
 drawSphere :: State -> ObjectAttributes -> IO ()
