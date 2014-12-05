@@ -138,7 +138,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         
         -- Offset, scale and rotate
         color3f cx cy cz
-        translate $ vector3f lx ly (lz-cone)
+        translate $ vector3f lx ly ((lz-cone)*s)
         let ns = s/14
         scale3f ns ns ns
         multMatrix (mat :: GLmatrix GLfloat)
@@ -150,13 +150,14 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         sphere
 
 
-    -- Back Capsule Cap
+    -- Capsule Tail Cap
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
         -- Offset, scale and rotate
         color3f cx cy cz
-        translate $ vector3f lx ly (lz-tail)
+        
+        translate $ vector3f lx ly ((lz-tail)*s)
         let ns = s/14
         scale3f ns ns (ns/3)
         multMatrix (mat :: GLmatrix GLfloat)
@@ -166,6 +167,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
         sphere
+        
 
 
         --   -- Tail Cap
