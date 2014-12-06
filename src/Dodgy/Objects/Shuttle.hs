@@ -198,13 +198,30 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f tail (wy+(wb/2)) woz
           drawVertex3f (tail/2) (wy+(wb/2)) woz
 
-        -- Right Top Tip Wing
+        -- Right Bottom Tip Wing
         renderPrimitive Triangles $ do
           drawNormal3f 0 1 0
           drawVertex3f tail (wy+(wb/2)) woz
           drawVertex3f (tail/2) (wy+(wb/2)) woz
           drawVertex3f tail 0 (woz*2)
+
+        -- Right Back Base Wing Cover
+        renderPrimitive Quads $ do
+          drawNormal3f (-1) 0 0
+          drawVertex3f tail 0 0
+          drawVertex3f tail wy woz
+          drawVertex3f tail (wy+(wb/2)) woz
+          drawVertex3f tail wb 0
+
+        -- Right Back Base Tip Wing Cover
+        renderPrimitive Triangles $ do
+          drawNormal3f (-1) 0 0
+          drawVertex3f tail wy woz
+          drawVertex3f tail (wy+(wb/2)) woz
+          drawVertex3f tail 0 (woz*2)
+
           
+
 
     -- Wings
     preservingMatrix $ do
