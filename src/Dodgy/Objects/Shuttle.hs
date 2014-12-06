@@ -83,9 +83,9 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         -- Offset, scale and rotate
         color3f cx cy cz
         multMatrix (mat :: GLmatrix GLfloat)
-        translate $ vector3f lx ly ((lz-tail)*s)
+        translate $ vector3f ((lx+tail)*s) ly lz
         let ns = s/14
-        scale3f ns ns (ns/3)
+        scale3f (ns/3) ns ns
 
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just steel'
@@ -93,32 +93,32 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         sphere
 
-    -- -- Cockpit Back
-    -- preservingMatrix $ do
-    --   preservingAttrib [AllServerAttributes] $ do
-    --     multMatrix (mat :: GLmatrix GLfloat)
-    --     translate $ vector3f lx ly ((lz-cone)*s)
-    --     let ns = s/14
-    --     scale3f ns ns (ns/3)
+    -- Cockpit Back
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        multMatrix (mat :: GLmatrix GLfloat)
+        translate $ vector3f ((lx+cone)*s) ly lz
+        let ns = s/14
+        scale3f (ns/3) ns ns 
         
 
-    --     color4f snowGray
-    --     sphere
+        color4f snowGray
+        sphere
 
-    -- -- Cockpit Floor
-    -- preservingMatrix $ do
-    --   preservingAttrib [AllServerAttributes] $ do
+    -- Cockpit Floor
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
 
-    --     color3f cx cy cz
-    --     multMatrix (mat :: GLmatrix GLfloat)
-    --     translate $ vector3f lx ((lz+0.03)*s) ((lz-cone)*s)
-    --     let ns = s/14
-    --     scale3f (ns/1.2) (ns/6) (ns*2.6)
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)
+        translate $ vector3f ((lx+cone)*s) ((lz+0.03)*s) lz
+        let ns = s/14
+        scale3f (ns*2.7) (ns/6) ns
 
-    --     color4f snowGray
-    --     sphere
+        color4f snowGray
+        sphere
   
-    -- Tip sphere
+    -- Cockpit
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
@@ -127,7 +127,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         translate $ vector3f ((lx+cone)*s) ((ly+0.025)*s) lz
         let ns = s/16
             zs = ns*3
-        scale3f zs ns ns 
+            ws = ns*1.1
+        scale3f zs ws ws
 
         blend $= Enabled
         blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
@@ -136,7 +137,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         sphere
 
     
-    -- Tip sphere
+    -- Nose Sphere
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
@@ -146,7 +147,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         
         let ns = s/14
             zs = ns*3
-        scale3f zs ns ns 
+            ws = ns*1.1
+        scale3f zs ws ws
         
 
         texture Texture2D $= Enabled
