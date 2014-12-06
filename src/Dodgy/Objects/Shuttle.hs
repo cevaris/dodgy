@@ -11,6 +11,8 @@ import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Objects.Sphere
 import Dodgy.Objects.Cube
+import Dodgy.Objects.Cylinder
+import Dodgy.Objects.Cone as Cone
 
 drawShuttle :: State -> ObjectAttributes -> IO ()
 drawShuttle state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
@@ -40,8 +42,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         tex = textures state
         steel' = steel tex
         comb' = comb tex
-        defd = 5
-        loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
 
     mat <- newMatrix RowMajor $ listf [x0, x1,  x2, 0,
                                        y0, y1,  y2, 0,
@@ -66,16 +66,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
-        renderPrimitive QuadStrip $ do
-          forM_ loop360 (\p -> do
-                            drawNormal3f cone (glSin p) (glCos p)
-                            drawTexCoord2f cone (glSin p)
-                            drawVertex3f cone (glSin p) (glCos p)
-                            
-                            
-                            drawNormal3f tail (glSin p) (glCos p)
-                            drawTexCoord2f tail (glSin p)
-                            drawVertex3f tail (glSin p) (glCos p))
+        cylinder cone tail
 
     -- Capsule Tail Cap
     preservingMatrix $ do
@@ -136,7 +127,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         color4f (Point4 0 0 0 0.4)
         sphere
-
     
     -- Nose Sphere
     preservingMatrix $ do
@@ -193,7 +183,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         -- Right Bottom Base Wing
         renderPrimitive Quads $ do
-          drawNormal3f 0 1 0
+          drawNormal3f 0 (-1) 1
           drawVertex3f 0 wb 0
           drawVertex3f tail wb 0
           drawVertex3f tail (wy+(wb/2)) woz
@@ -201,7 +191,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         -- Right Bottom Tip Wing
         renderPrimitive Triangles $ do
-          drawNormal3f 0 1 0
+          drawNormal3f 0 (-1) (-1)
           drawVertex3f tail (wy+(wb/2)) woz
           drawVertex3f (tail/2) (wy+(wb/2)) woz
           drawVertex3f tail 0 (woz*2)
@@ -236,6 +226,72 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f (tail/2) (wy+(wb/2)) woz
           drawVertex3f tail 0 (woz*2)
 
+    -- Right Booster Cylinder
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f lx ly (lz+0.2)
+        let ns = s/35
+        scale3f s ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        cylinder (tail/2) tail
+
+    -- Right Booster Cone
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f (lx+tail-0.0125) ly (lz+0.2)
+        let ns = s/25
+        scale3f ns ns ns
+        rotate1f 90 $ vector3f 0 1 0
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        Cone.cone 1 0
+
+    -- Right Booster Sphere Cap
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f (lx+(tail/2)) ly (lz+0.2)
+        let ns = s/35
+            xs = s/14
+        scale3f xs ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
+  
+    -- Right Booster Sphere Cap
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f (lx+(tail/2)) ly (lz+0.2)
+        let ns = s/35
+            xs = s/14
+        scale3f xs ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
 
 
     -- Wings
