@@ -172,19 +172,23 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
 
-        -- let wy = 0.25
-        --     woz = 0.25
-    
-        -- renderPrimitive Quads $ do
-        --   drawNormal3f 0 1 0
+        let wy = 0.075
+            woz = 0.25
 
-        --   drawVertex3f 0 0 wid
+        -- Right Top Base Wing
+        renderPrimitive Quads $ do
+          drawNormal3f 0 1 0
+          drawVertex3f 0 0 0
+          drawVertex3f tail 0 0
+          drawVertex3f tail wy woz
+          drawVertex3f (tail/2) wy woz
 
-        --   drawVertex3f tail 0 0
-  
-        --   drawVertex3f tail 0.5 tail
-          
-        --   drawVertex3f 0.5  0.5 wid
+        -- Right Top Tip Wing
+        renderPrimitive Triangles $ do
+          drawNormal3f 0 1 0
+          drawVertex3f tail wy woz
+          drawVertex3f (tail/2) wy woz
+          drawVertex3f tail 0 (woz*2)
 
     -- Wings
     preservingMatrix $ do
@@ -204,14 +208,14 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         -- Top of Side Wings
         renderPrimitive Triangles $ do
 
-          -- Right Top Wing
-          drawNormal3f 0 1 0
-          drawTexCoord2f 1 1
-          drawVertex3f 0 0.0001  wid
-          drawTexCoord2f 1 0
-          drawVertex3f tail 0.0001  wid
-          drawTexCoord2f 0 0
-          drawVertex3f tail 0.0001  0.5
+          -- -- Right Top Wing
+          -- drawNormal3f 0 1 0
+          -- drawTexCoord2f 1 1
+          -- drawVertex3f 0 0.0001  wid
+          -- drawTexCoord2f 1 0
+          -- drawVertex3f tail 0.0001  wid
+          -- drawTexCoord2f 0 0
+          -- drawVertex3f tail 0.0001  0.5
   
           -- Left Top Wing
           drawNormal3f 0 1 0
