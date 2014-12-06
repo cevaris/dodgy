@@ -171,9 +171,9 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
-
         let wy = 0.075
             woz = 0.25
+            wb = (-0.05)
 
         -- Right Top Base Wing
         renderPrimitive Quads $ do
@@ -189,6 +189,22 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f tail wy woz
           drawVertex3f (tail/2) wy woz
           drawVertex3f tail 0 (woz*2)
+
+        -- Right Bottom Base Wing
+        renderPrimitive Quads $ do
+          drawNormal3f 0 1 0
+          drawVertex3f 0 wb 0
+          drawVertex3f tail wb 0
+          drawVertex3f tail (wy+(wb/2)) woz
+          drawVertex3f (tail/2) (wy+(wb/2)) woz
+
+        -- Right Top Tip Wing
+        renderPrimitive Triangles $ do
+          drawNormal3f 0 1 0
+          drawVertex3f tail (wy+(wb/2)) woz
+          drawVertex3f (tail/2) (wy+(wb/2)) woz
+          drawVertex3f tail 0 (woz*2)
+          
 
     -- Wings
     preservingMatrix $ do
