@@ -10,6 +10,7 @@ import Dodgy.GLUtils
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Objects.Sphere
+import Dodgy.Objects.Cube
 
 drawShuttle :: State -> ObjectAttributes -> IO ()
 drawShuttle state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
@@ -157,7 +158,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         sphere
           
-
+   
     -- Wings
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
@@ -177,7 +178,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         -- Right Top Base Wing
         renderPrimitive Quads $ do
-          drawNormal3f 0 1 0
+          drawNormal3f 0 1 (-1)
           drawVertex3f 0 0 0
           drawVertex3f tail 0 0
           drawVertex3f tail wy woz
@@ -185,7 +186,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         -- Right Top Tip Wing
         renderPrimitive Triangles $ do
-          drawNormal3f 0 1 0
+          drawNormal3f 0 1 1
           drawVertex3f tail wy woz
           drawVertex3f (tail/2) wy woz
           drawVertex3f tail 0 (woz*2)
@@ -220,7 +221,21 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f tail (wy+(wb/2)) woz
           drawVertex3f tail 0 (woz*2)
 
-          
+        -- Right Front Base Wing Cover
+        renderPrimitive Quads $ do
+          drawNormal3f 1 0 0
+          drawVertex3f 0 0 0
+          drawVertex3f (tail/2) wy woz
+          drawVertex3f (tail/2) (wy+(wb/2)) woz
+          drawVertex3f 0 wb 0
+
+        -- Right Front Base Tip Wing Cover
+        renderPrimitive Triangles $ do
+          drawNormal3f 1 0 1
+          drawVertex3f (tail/2) wy woz
+          drawVertex3f (tail/2) (wy+(wb/2)) woz
+          drawVertex3f tail 0 (woz*2)
+
 
 
     -- Wings
