@@ -242,6 +242,24 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         cylinder (tail/2) tail
 
+    -- Right Booster Sphere Cap
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f ((lx+(tail/2))*s) ly ((lz+0.2)*s)
+        let ns = s/35
+            xs = s/14
+        scale3f xs ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
+
+
     -- Right Booster Cone
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
@@ -259,19 +277,54 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         Cone.cone 1 0
 
-    -- Right Booster Sphere Cap
+    -- Right Booster Thrust
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
         color3f cx cy cz
         multMatrix (mat :: GLmatrix GLfloat)    
-        translate $ vector3f ((lx+(tail/2))*s) ly ((lz+0.2)*s)
-        let ns = s/35
-            xs = s/14
+        translate $ vector3f ((lx+tail)*s) ly ((lz+0.2)*s)
+        let ns = s/38
+            xs = s/10
         scale3f xs ns ns
 
         texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just (star tex)
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
+  
+
+    -- Center Booster Cone
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f ((lx+tail-0.07)*s) ly lz
+        let ns = s/10
+        scale3f ns ns ns
+        rotate1f 90 $ vector3f 0 1 0
+
+        texture Texture2D $= Enabled
         textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        Cone.cone 1 0
+
+    -- Center Booster Thrust
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f ((lx+tail-0.01)*s) ly lz
+        let ns = s/21
+            xs = s/10
+        scale3f xs ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just (star tex)
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
         sphere
@@ -291,32 +344,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
          
-
-        -- Top of Side Wings
-        renderPrimitive Triangles $ do
-
-          -- -- Right Top Wing
-          -- drawNormal3f 0 1 0
-          -- drawTexCoord2f 1 1
-          -- drawVertex3f 0 0.0001  wid
-          -- drawTexCoord2f 1 0
-          -- drawVertex3f tail 0.0001  wid
-          -- drawTexCoord2f 0 0
-          -- drawVertex3f tail 0.0001  0.5
-  
-          -- Left Top Wing
-          drawNormal3f 0 1 0
-          drawTexCoord2f 1 1
-          drawVertex3f 0 0.0001 (-wid)
-          drawTexCoord2f 1 0
-          drawVertex3f tail 0.0001 (-wid)
-          drawTexCoord2f 0 0
-          drawVertex3f tail 0.0001 (-0.5)
-
-        --color3f 1 0 0
-        --color3f cx cy cz
-        --color3f (211/255) (211/255) (211/255)
-
         -- Top Fin Wing
         renderPrimitive Triangles $ do
           drawNormal3f 0 0 1
@@ -334,60 +361,3 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f tail 0.3 (-0.0001)
           drawTexCoord2f 0 0
           drawVertex3f tail 0.0 (-0.0001)
-
-
-
-
-        texture Texture2D $= Enabled
-        textureBinding Texture2D $= Just comb'
-        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-        textureWrapMode Texture2D S $= (Repeated, Repeat)
-        textureWrapMode Texture2D T $= (Repeated, Repeat)
-
-        -- Bottom of Side Wings
-        renderPrimitive Triangles $ do
-
-
-          -- -- Right Bottom Wing
-          -- drawNormal3f 0 (-1) 0
-          -- drawTexCoord2f 1 1
-          -- drawVertex3f wing (-0.0001)  wid
-          -- drawTexCoord2f 1 0
-          -- drawVertex3f tail (-0.0001)  wid
-          -- drawTexCoord2f 0 0
-          -- drawVertex3f tail (-0.0001)  0.5
-
-
-          -- Left Bottom Wing
-          drawNormal3f 0 (-1) 0
-          drawTexCoord2f 1 1
-          drawVertex3f 0 (-0.0001) (-wid)
-          drawTexCoord2f 1 0
-          drawVertex3f tail (-0.0001) (-wid)
-          drawTexCoord2f 0 0
-          drawVertex3f tail (-0.0001) (-0.5)
-
-        --    -- Bottom Cone
-        --   drawNormal3f 1 (-cone/wid) 0
-        --   drawTexCoord2f 1 0.5
-        --   drawVertex3f nose  0.0  0.0
-        --   drawTexCoord2f 0 1 
-        --   drawVertex3f cone (-wid) (wid)
-        --   drawTexCoord2f 0 0
-        --   drawVertex3f cone (-wid) (-wid)
-
-
-        -- renderPrimitive Quads $ do
-        --   -- Bottom Capsule
-        --   drawNormal3f 0 (-1) 0
-        --   drawTexCoord2f 0 0
-        --   drawVertex3f cone (-wid)  wid
-        --   drawTexCoord2f 1 0
-        --   drawVertex3f cone (-wid) (-wid)
-        --   drawTexCoord2f 1 1
-        --   drawVertex3f tail (-wid) (-wid)
-        --   drawTexCoord2f 0 1
-        --   drawVertex3f tail (-wid)  wid
-      
-        
-      
