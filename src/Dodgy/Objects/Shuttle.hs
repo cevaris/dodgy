@@ -226,6 +226,66 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
           drawVertex3f (tail/2) (wy+(wb/2)) woz
           drawVertex3f tail 0 (woz*2)
 
+        -- Left Top Base Wing
+        renderPrimitive Quads $ do
+          drawNormal3f 0 1 1
+          drawVertex3f 0 0 0
+          drawVertex3f tail 0 0
+          drawVertex3f tail wy (-woz)
+          drawVertex3f (tail/2) wy (-woz)
+
+        -- Left Top Tip Wing
+        renderPrimitive Triangles $ do
+          drawNormal3f 0 1 (-1)
+          drawVertex3f tail wy (-woz)
+          drawVertex3f (tail/2) wy (-woz)
+          drawVertex3f tail 0 ((-woz)*2)
+
+        -- Left Bottom Base Wing
+        renderPrimitive Quads $ do
+          drawNormal3f 0 (-1) (-1)
+          drawVertex3f 0 wb 0
+          drawVertex3f tail wb 0
+          drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+
+        -- Left Bottom Tip Wing
+        renderPrimitive Triangles $ do
+          drawNormal3f 0 (-1) 1
+          drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+          drawVertex3f tail 0 ((-woz)*2)
+
+        -- Left Back Base Wing Cover
+        renderPrimitive Quads $ do
+          drawNormal3f (-1) 0 0
+          drawVertex3f tail 0 0
+          drawVertex3f tail wy (-woz)
+          drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawVertex3f tail wb 0
+
+        -- Left Back Base Tip Wing Cover
+        renderPrimitive Triangles $ do
+          drawNormal3f (-1) 0 0
+          drawVertex3f tail wy (-woz)
+          drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawVertex3f tail 0 ((-woz)*2)
+
+        -- Left Front Base Wing Cover
+        renderPrimitive Quads $ do
+          drawNormal3f 1 0 0
+          drawVertex3f 0 0 0
+          drawVertex3f (tail/2) wy (-woz)
+          drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+          drawVertex3f 0 wb 0
+
+        -- Left Front Base Tip Wing Cover
+        renderPrimitive Triangles $ do
+          drawNormal3f 1 0 1
+          drawVertex3f (tail/2) wy (-woz)
+          drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+          drawVertex3f tail 0 ((-woz)*2)
+
     -- Right Booster Cylinder
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
@@ -293,7 +353,75 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
 
         sphere
-  
+
+    -- Left Booster Cylinder
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f lx ly ((lz-0.2)*s)
+        let ns = s/35
+        scale3f s ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        cylinder (tail/2) tail
+
+    -- Left Booster Sphere Cap
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f ((lx+(tail/2))*s) ly ((lz-0.2)*s)
+        let ns = s/35
+            xs = s/14
+        scale3f xs ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
+
+
+    -- Left Booster Cone
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f ((lx+tail-0.0125)*s) ly ((lz-0.2)*s)
+        let ns = s/25
+        scale3f ns ns ns
+        rotate1f 90 $ vector3f 0 1 0
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just steel'
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        Cone.cone 1 0
+
+    -- Left Booster Thrust
+    preservingMatrix $ do
+      preservingAttrib [AllServerAttributes] $ do
+        
+        color3f cx cy cz
+        multMatrix (mat :: GLmatrix GLfloat)    
+        translate $ vector3f ((lx+tail)*s) ly ((lz-0.2)*s)
+        let ns = s/38
+            xs = s/10
+        scale3f xs ns ns
+
+        texture Texture2D $= Enabled
+        textureBinding Texture2D $= Just (star tex)
+        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
+        sphere
+
 
     -- Center Booster Cone
     preservingMatrix $ do
@@ -320,7 +448,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         multMatrix (mat :: GLmatrix GLfloat)    
         translate $ vector3f ((lx+tail-0.01)*s) ly lz
         let ns = s/21
-            xs = s/10
+            xs = s/5
         scale3f xs ns ns
 
         texture Texture2D $= Enabled
