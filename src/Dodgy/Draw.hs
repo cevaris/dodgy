@@ -54,7 +54,8 @@ draw state = do
   let ex = (-2)*dim*sin(toDeg(th))*cos(toDeg(ph))
       ey =    2*dim               *sin(toDeg(ph))
       ez =    2*dim*cos(toDeg(th))*cos(toDeg(ph))
-  setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
+  --setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
+  setLookAt (ex, ey, ez) (0, 0, 0) (0,cos(toDeg(ph)),0)
 
 
 
@@ -93,8 +94,8 @@ draw state = do
     rotation   = Nothing,
     scaleSize  = Just 1,
     paint      = Just white,
-    location   = Just (mpPosX, mpPosY, 0),
-    noseVector = Just (1,0,0),
+    location   = Just (0, mpPosY, mpPosX),
+    noseVector = Just (0,0,(-1)),
     upVector   = Just (0,1,0),
     ambience4  = Just white,
     diffuse4   = Just yellow,
@@ -119,9 +120,9 @@ draw state = do
     collider   = Nothing
   }
  
-  -- mapMR (brickMap level) (\brick -> case brick of 
-  --     (Brick _ _ Disabled _) -> postRedisplay Nothing
-  --     (Brick _ _ Enabled  _) -> drawBrick state brick)
+  mapMR (brickMap level) (\brick -> case brick of 
+      (Brick _ _ Disabled _) -> postRedisplay Nothing
+      (Brick _ _ Enabled  _) -> drawBrick state brick)
       
      
   lighting $= Disabled

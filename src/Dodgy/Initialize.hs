@@ -68,7 +68,7 @@ makeState = do
   zh <- newIORef 90
   fv <- newIORef 65 --65
   as <- newIORef 1
-  di <- newIORef 0.6 --3
+  di <- newIORef 3 --0.6 --3
 
   
   yl <- newIORef 0
@@ -82,7 +82,7 @@ makeState = do
   sh <- newIORef 5
   mv <- newIORef True
 
-  zw <- newIORef 4.0
+  zw <- newIORef 0
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0

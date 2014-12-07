@@ -35,6 +35,7 @@ idle state = do
   mpPosX' <- get (mpPosX state)
   mpPosY' <- get (mpPosY state)
   c1      <- get (p_coll state)
+  zwall'   <- get (zwall state)
 
   
   let dispatchCollision = (\k -> case k of
@@ -79,7 +80,7 @@ idle state = do
 
   -- Update Brick positions
   let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
-      brickMap'' = map (updateIsDrawn 4) brickMap'
+      brickMap'' = map (updateIsDrawn zwall') brickMap'
       level'     = updateBrickMap brickMap'' lv
   level state $~! (\x -> level')
 

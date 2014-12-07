@@ -97,18 +97,18 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         color4f snowGray
         sphere
 
-    -- Cockpit Floor
-    preservingMatrix $ do
-      preservingAttrib [AllServerAttributes] $ do
+    -- -- Cockpit Floor
+    -- preservingMatrix $ do
+    --   preservingAttrib [AllServerAttributes] $ do
 
-        color3f cx cy cz
-        multMatrix (mat :: GLmatrix GLfloat)
-        translate $ vector3f ((lx+cone)*s) ((lz+0.03)*s) lz
-        let ns = s/14
-        scale3f (ns*2.7) (ns/6) ns
+    --     color3f cx cy cz
+    --     multMatrix (mat :: GLmatrix GLfloat)
+    --     translate $ vector3f ((lx+cone)*s) ((lz+0.03)*s) lz
+    --     let ns = s/14
+    --     scale3f (ns*2.7) (ns/6) ns
 
-        color4f snowGray
-        sphere
+    --     color4f snowGray
+    --     sphere
   
     -- Cockpit
     preservingMatrix $ do
