@@ -232,7 +232,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         
         color3f cx cy cz
         multMatrix (mat :: GLmatrix GLfloat)    
-        translate $ vector3f lx ly (lz+0.2)
+        translate $ vector3f lx ly ((lz+0.2)*s)
         let ns = s/35
         scale3f s ns ns
 
@@ -248,7 +248,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         
         color3f cx cy cz
         multMatrix (mat :: GLmatrix GLfloat)    
-        translate $ vector3f (lx+tail-0.0125) ly (lz+0.2)
+        translate $ vector3f ((lx+tail-0.0125)*s) ly ((lz+0.2)*s)
         let ns = s/25
         scale3f ns ns ns
         rotate1f 90 $ vector3f 0 1 0
@@ -265,7 +265,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         
         color3f cx cy cz
         multMatrix (mat :: GLmatrix GLfloat)    
-        translate $ vector3f (lx+(tail/2)) ly (lz+0.2)
+        translate $ vector3f ((lx+(tail/2))*s) ly ((lz+0.2)*s)
         let ns = s/35
             xs = s/14
         scale3f xs ns ns
@@ -276,23 +276,6 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         sphere
   
-    -- Right Booster Sphere Cap
-    preservingMatrix $ do
-      preservingAttrib [AllServerAttributes] $ do
-        
-        color3f cx cy cz
-        multMatrix (mat :: GLmatrix GLfloat)    
-        translate $ vector3f (lx+(tail/2)) ly (lz+0.2)
-        let ns = s/35
-            xs = s/14
-        scale3f xs ns ns
-
-        texture Texture2D $= Enabled
-        textureBinding Texture2D $= Just steel'
-        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-
-        sphere
-
 
     -- Wings
     preservingMatrix $ do
