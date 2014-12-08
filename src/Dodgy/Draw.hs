@@ -16,7 +16,7 @@ import Dodgy.Objects.Fighter
 import Dodgy.Objects.Sphere
 import Dodgy.Objects.Brick
 import Dodgy.Objects.Shuttle
-
+import Dodgy.Objects.StarCubeMap
 
 draw :: State -> IO ()
 draw state = do
@@ -113,6 +113,21 @@ draw state = do
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Just yellow,
+    shininess  = Just shine,
+    collider   = Nothing
+  }
+
+  drawStarCubeMap state $ ObjectAttributes {
+    rotation   = Nothing,
+    scaleSize  = (Just 15),
+    paint      = Just $ (Point4 255 255 0 0),
+    location   = Just (0,0,0),
+    noseVector = Nothing,
+    upVector   = Nothing,
+    ambience4  = Nothing,
+    diffuse4   = Just snowBlue,
+    specular4  = Just snowBlue,
+    emission4  = Just snowBlue,
     shininess  = Just shine,
     collider   = Nothing
   }

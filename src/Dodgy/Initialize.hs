@@ -71,6 +71,7 @@ makeState = do
   di <- newIORef 2 --0.6 --3
 
   
+
   yl <- newIORef 0
   rl <- newIORef 3
   em <- newIORef 0

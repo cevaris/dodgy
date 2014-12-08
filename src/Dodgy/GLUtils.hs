@@ -15,12 +15,14 @@ defd    = 5
 loop360 :: [Float]
 loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
 
+
 yellow   = (Point4 1.0 1.0 0.0 1.0)
 white    = (Point4 1 1 1 1)
 black    = (Point4 0 0 0 1)
 blue     = (Point4 (173/255) (216/255) (230/255) 0)
 darkGray = (Point4 (50/255) (50/255) (50/255) 0)
 snowGray = (Point4 (138/255) (138/255) (138/255) 0)
+snowBlue = (Point4 (230/255) (230/255) (250/255) 0)
 
 iToGL :: Int -> GLfloat
 iToGL i = (fromIntegral i)::GLfloat
