@@ -54,11 +54,8 @@ draw state = do
   let ex = (-2)*dim*sin(toDeg(th))*cos(toDeg(ph))
       ey =    2*dim               *sin(toDeg(ph))
       ez =    2*dim*cos(toDeg(th))*cos(toDeg(ph))
-  --setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
-  setLookAt (ex, ey, ez) (0, 0, 0) (0,cos(toDeg(ph)),0)
-
-
-
+  setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
+ 
   ------------------------------------
 
   let ambs     = (Point4 (0.01*ambience) (0.01*ambience) (0.01*ambience) 1.0)
@@ -94,7 +91,7 @@ draw state = do
     rotation   = Nothing,
     scaleSize  = Just 1,
     paint      = Just white,
-    location   = Just (0, mpPosY, mpPosX),
+    location   = Just (mpPosX, mpPosY, 2.75),
     noseVector = Just (0,0,(-1)),
     upVector   = Just (0,1,0),
     ambience4  = Just white,

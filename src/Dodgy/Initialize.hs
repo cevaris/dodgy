@@ -82,7 +82,7 @@ makeState = do
   sh <- newIORef 5
   mv <- newIORef True
 
-  zw <- newIORef 1
+  zw <- newIORef 2
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
