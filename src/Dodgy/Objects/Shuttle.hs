@@ -471,21 +471,44 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just steel'
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-         
+
+        let wz = 0.02
+            wbz = 2*wz
         -- Top Fin Wing
         renderPrimitive Triangles $ do
-          drawNormal3f 0 0 1
-          drawTexCoord2f 1 0
-          drawVertex3f strk 0.0 0.0001
-          drawTexCoord2f 0 1
-          drawVertex3f tail 0.3 0.0001
-          drawTexCoord2f 0 0
-          drawVertex3f tail 0.0 0.0001
 
-          drawNormal3f 0 0 (-1)
+          -- Right Fin
+          drawNormal3f 0 1 1 
           drawTexCoord2f 1 0
-          drawVertex3f strk 0.0 (-0.0001)
+          drawVertex3f strk 0.0 wz
           drawTexCoord2f 0 1
-          drawVertex3f tail 0.3 (-0.0001)
+          drawVertex3f tail 0.3 0
           drawTexCoord2f 0 0
-          drawVertex3f tail 0.0 (-0.0001)
+          drawVertex3f tail 0.0 wbz
+
+          -- Left Fin
+          drawNormal3f 0 1 (-1)
+          drawTexCoord2f 1 0
+          drawVertex3f strk 0.0 (-wz)
+          drawTexCoord2f 0 1
+          drawVertex3f tail 0.3 0
+          drawTexCoord2f 0 0
+          drawVertex3f tail 0.0 (-wbz)
+
+          -- Front Fin
+          drawNormal3f 1 1 0
+          drawTexCoord2f 0 1
+          drawVertex3f tail 0.3 0
+          drawTexCoord2f 1 0
+          drawVertex3f strk 0.0 (-wz)
+          drawTexCoord2f 0 0
+          drawVertex3f strk 0.0 wz
+          
+          -- Back fin
+          drawNormal3f (-1) 0 0
+          drawTexCoord2f 0 1
+          drawVertex3f tail 0.3 0
+          drawTexCoord2f 1 0
+          drawVertex3f tail 0.0 (-wbz)
+          drawTexCoord2f 0 0
+          drawVertex3f tail 0.0 wbz

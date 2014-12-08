@@ -95,7 +95,7 @@ draw state = do
     scaleSize  = Just 1,
     paint      = Just white,
     location   = Just (0, mpPosY, mpPosX),
-    noseVector = Just (1,0,0),
+    noseVector = Just (0,0,(-1)),
     upVector   = Just (0,1,0),
     ambience4  = Just white,
     diffuse4   = Just yellow,
@@ -120,9 +120,9 @@ draw state = do
     collider   = Nothing
   }
  
-  -- mapMR (brickMap level) (\brick -> case brick of 
-  --     (Brick _ _ Disabled _) -> postRedisplay Nothing
-  --     (Brick _ _ Enabled  _) -> drawBrick state brick)
+  mapMR (brickMap level) (\brick -> case brick of 
+      (Brick _ _ Disabled _) -> postRedisplay Nothing
+      (Brick _ _ Enabled  _) -> drawBrick state brick)
       
      
   lighting $= Disabled
