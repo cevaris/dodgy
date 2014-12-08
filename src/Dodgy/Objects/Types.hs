@@ -59,23 +59,23 @@ updateBrickMap bm l = l { brickMap = bm }
 
 makeFigherCollider = BoxCollider {
   c_width  = 1,
-  c_height = 0.5,
+  c_height = 1/2,
   c_depth  = 1
 }
 
 makeUnitCollider = BoxCollider {
-  c_width  = 1,
-  c_height = 1,
-  c_depth  = 1
+  c_width  = 1/2,
+  c_height = 1/2,
+  c_depth  = 1/2
 }
 makeWideCollider = BoxCollider {
   c_width  = 3,
-  c_height = 1,
-  c_depth  = 1
+  c_height = 1/2,
+  c_depth  = 1/2
 }
 makeLongCollider = BoxCollider {
-  c_width  = 1,
-  c_height = 1,
+  c_width  = 1/2,
+  c_height = 1/2,
   c_depth  = 3
 }
 makeHpCollider = BoxCollider {
@@ -84,15 +84,15 @@ makeHpCollider = BoxCollider {
   c_depth  = 6/10
 }
 makeSpCollider = BoxCollider {
-  c_width  = 1/2,
-  c_height = 1/2,
-  c_depth  = 1/2
+  c_width  = 1,
+  c_height = 1,
+  c_depth  = 1
 }
 
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-     makeBrick (0,0,0) SpecialBrick,
+     makeBrick (3,0,0) SpecialBrick,
      makeBrick (5,(-1),0) WideBrick,
      makeBrick (7,0,0) HealthBrick,
      makeBrick (10,1,0) LongBrick,
