@@ -93,36 +93,13 @@ makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
      makeBrick (0,0,0) SpecialBrick,
-     makeBrick (0,(-1),(-5)) WideBrick,
-     makeBrick (0,0,(-7)) HealthBrick,
-     makeBrick (0,1,(-10)) LongBrick,
-     makeBrick (1,0,(-15)) UnitBrick,
-     makeBrick ((-1),1,(-16)) WideBrick,     
-     makeBrick (0,1,(-18)) LongBrick,
-     makeBrick (0,2,(-18)) LongBrick,
-     
-     makeBrick (0,1,(-20)) LongBrick,
-     makeBrick (1,0,(-22)) UnitBrick,
-     makeBrick ((-1),1,(-25)) WideBrick,
-     makeBrick (0,1,(-30)) LongBrick,
-     makeBrick (1,0,(-35)) UnitBrick,
-     makeBrick ((-1),1,(-35)) WideBrick,
-     makeBrick (0,1,(-40)) LongBrick,
-     makeBrick (1,0,(-45)) UnitBrick,
-     makeBrick ((-1),1,(-46)) WideBrick,
-     makeBrick (0,1,(-50)) LongBrick,
-     makeBrick (1,0,(-55)) UnitBrick,
-     makeBrick ((-1),1,(-55)) WideBrick,
-     makeBrick (0,1,(-60)) LongBrick,
-     makeBrick (1,0,(-65)) UnitBrick,
-     makeBrick ((-1),1,(-67)) WideBrick,
-     makeBrick (0,1,(-70)) LongBrick,
-     makeBrick (1,0,(-75)) UnitBrick,
-     makeBrick ((-1),1,(-80)) WideBrick,
-     makeBrick (0,1,(-83)) LongBrick,
-     makeBrick (1,0,(-84)) UnitBrick,
-     makeBrick ((-1),1,(-85)) WideBrick
-
+     makeBrick (5,(-1),0) WideBrick,
+     makeBrick (7,0,0) HealthBrick,
+     makeBrick (10,1,0) LongBrick,
+     makeBrick (1,0,0) UnitBrick,
+     makeBrick (16,1,0) WideBrick,     
+     makeBrick (17,1,(-1)) LongBrick,
+     makeBrick (18,2,1) LongBrick
      ]
 }
 
@@ -143,10 +120,9 @@ speed = 0.01
 updateBrickLoc :: Float -> Brick -> Brick
 updateBrickLoc i b = do
   let (x,y,z) = loc b
-      loc'    =  (speed*i) + z
-      -- loc'    = ((fromIntegral (i `mod` 5))::Float) * speed + z      
+      loc'    =  x-(speed*i)
   
-  b { loc = (x, y, loc' ) }
+  b { loc = (loc', y, z) }
 
 updateBrickIsDrawn :: Capability -> Brick -> Brick
 updateBrickIsDrawn c b = b { isDrawn = c }

@@ -101,7 +101,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
       preservingAttrib [AllServerAttributes] $ do
 
         color3f cx cy cz          
-        translate $ vector3f ((lx+cone)*s) ((lz+0.03)*s) lz
+        translate $ vector3f ((lx+cone)*s) ((ly+0.03)*s) lz
         multMatrix (mat :: GLmatrix GLfloat)
         let ns = s/14
         scale3f (ns*2.7) (ns/6) ns

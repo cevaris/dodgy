@@ -62,8 +62,8 @@ makeState :: IO State
 makeState = do
   f  <- newIORef 0
   t  <- newIORef 0
-  ph <- newIORef 5 -- 20
-  th <- newIORef 0 --(-30)
+  ph <- newIORef 20 -- 20
+  th <- newIORef 90 --(-30)
   gr <- newIORef 0
   zh <- newIORef 90
   fv <- newIORef 65 --65

@@ -43,10 +43,9 @@ idle state = do
                             SpecialBrick -> score state $~! (+10)
                             _ -> lifep state $~! (subtract 1))
 
-  let p1 = (mpPosX', mpPosY', 2.75)
+  let p1 = (0, mpPosY', mpPosX')
       tcoll = (\b -> do
          let p2 = (loc b)
-                 
          case (collider $ attrs b) of
           Nothing   -> (b, Miss)
           (Just c2) -> (b, testCollision p1 c1 p2 c2)) 
@@ -78,7 +77,7 @@ idle state = do
   zOffset state $~! if boost' <= 0 then (\_ -> 1) else (\_ -> 10)
   zOffset' <- get (zOffset state)
 
-  -- Update Brick positions
+  -- -- Update Brick positions
   let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
       brickMap'' = map (updateIsDrawn zwall') brickMap'
       level'     = updateBrickMap brickMap'' lv
