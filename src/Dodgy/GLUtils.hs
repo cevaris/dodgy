@@ -16,6 +16,7 @@ loop360 :: [Float]
 loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
 
 
+red      = (Point4 (204/255) 0 0 0)
 yellow   = (Point4 1.0 1.0 0.0 1.0)
 white    = (Point4 1 1 1 1)
 black    = (Point4 0 0 0 1)

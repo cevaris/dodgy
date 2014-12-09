@@ -120,7 +120,7 @@ makeState = do
 
 makeTextures :: IO Textures
 makeTextures = do
-  redTex' <- loadGLTextureFromFile "resources/textures/red.jpg"
+  redTex' <- loadGLTextureFromFile "resources/textures/red2.jpg"
   steel' <- loadGLTextureFromFile "resources/textures/future-steel.jpg"
   comb'  <- loadGLTextureFromFile "resources/textures/comb-steel.jpg"
   -- water' <- loadGLTextureFromFile "resources/textures/water.jpg"

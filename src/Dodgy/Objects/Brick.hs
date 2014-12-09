@@ -13,7 +13,7 @@ bindBrickTexture :: Textures -> BrickType -> TextureObject
 bindBrickTexture tex WideBrick = metal3 tex
 bindBrickTexture tex LongBrick = metal3 tex
 bindBrickTexture tex UnitBrick = metal3 tex
-bindBrickTexture tex HealthBrick = (redBubbles tex)
+bindBrickTexture tex HealthBrick = redBubbles tex
 bindBrickTexture tex _         = comb tex
 
 drawBrick :: State -> Brick -> IO ()
@@ -115,17 +115,23 @@ plus state brick = do
       (lx, ly, lz) = (loc brick)
       paint' = (paint (attrs brick))
       scaleSize' = (scaleSize (attrs brick))
-  
+
   let colorCube = do
         drawLightingEffects (attrs brick)
+
+        blend $= Enabled
+        blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
+        
+        color4f (Point4 (204/255) 0 0 0.4)
         -- case (paint') of        
         --  ((Just (Point4 px py pz pa))) -> do
         --    color3f px py pz
 
         
-        texture Texture2D $= Enabled
-        textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-        textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+        --texture Texture2D $= Enabled
+        --textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+        --textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
+        --textureBinding Texture2D $= Just (redBubbles  tex)
   
   -- Center
   preservingMatrix $ do
