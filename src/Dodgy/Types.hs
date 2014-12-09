@@ -47,7 +47,8 @@ data State = State {
   p_coll  :: IORef Collider,
   score   :: IORef Int,
   lifep   :: IORef Int,
-  boost   :: IORef Int,  
+  boost   :: IORef Int,
+  c_state :: IORef CollisionState,
 
   mode    :: IORef Difficulty,
 

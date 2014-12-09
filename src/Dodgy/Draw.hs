@@ -24,6 +24,8 @@ draw state = do
 
   clear [ ColorBuffer, DepthBuffer ]
 
+  f' <- get (frames state)
+  t0' <- get (t0 state)
   ph <- get (ph' state)
   th <- get (th' state)
   gr <- get (gr' state)
@@ -48,15 +50,20 @@ draw state = do
 
   lightStatus <- get (light' state)
   shadeStatus <- get (smooth' state)
-
+  c_state' <- get (c_state state)
 
   loadIdentity
 
   let ex = (-2)*dim*sin(toDeg(th))*cos(toDeg(ph))
       ey =    2*dim               *sin(toDeg(ph))
       ez =    2*dim*cos(toDeg(th))*cos(toDeg(ph))
-  setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
- 
+
+
+  -- Shake the screen to notify collision
+  case c_state' of
+   Collision -> setLookAt (ex,ey,ez) (0,(sin(fromIntegral f')/2),(cos(fromIntegral f')/2)) (0,cos(toDeg(ph)),0)
+   Miss -> setLookAt (ex,ey,ez) (0,0,0) (0,cos(toDeg(ph)),0)
+    
   ------------------------------------
 
   let ambs     = (Point4 (0.01*ambience) (0.01*ambience) (0.01*ambience) 1.0)

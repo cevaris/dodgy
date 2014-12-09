@@ -11,7 +11,6 @@ import Dodgy.Textures
 import Dodgy.Types
 import Dodgy.Objects.Types
 import Dodgy.Map
-
 import Dodgy.Draw
 import Dodgy.Input
 import Dodgy.Reshape
@@ -91,6 +90,7 @@ makeState = do
   score' <- newIORef 0
   lifep'  <- newIORef 100
   boost' <- newIORef 0
+  c_state' <- newIORef Miss
   zOffset' <- newIORef 0
 
   mode'   <- newIORef Medium
@@ -108,6 +108,7 @@ makeState = do
     zOffset = zOffset',
     mpPosX = mpPosX', mpPosY = mpPosY',
     p_coll = coll',
+    c_state = c_state',
     score = score',
     lifep  = lifep',
     boost = boost',

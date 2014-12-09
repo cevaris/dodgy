@@ -55,7 +55,23 @@ idle state = do
 
   -- See if there are any collisions
   let collisions = filter ((==Collision) . snd) collResults
-      detectedCollision = length collisions >0 
+      detectedCollision = length collisions >0
+
+  let brickCollFilter = (\(b,cs) ->
+                          case ((kind b),cs) of
+                           (HealthBrick, _) -> False
+                           (SpecialBrick,_) -> False
+                           (_, Collision) -> True
+                           _ -> False)
+                        
+
+  let brickCollisions = filter brickCollFilter  collResults
+      detectedBrickCollision = length brickCollisions >0
+
+  if detectedBrickCollision
+    then c_state state $~! (\_ -> Collision)
+    else c_state state $~! (\_ -> Miss)
+     
       
   --putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
 
@@ -63,6 +79,10 @@ idle state = do
   if detectedCollision
      then postRedisplay Nothing
      else score state $~! (+1)
+
+  -- if detectedCollision
+  --   then c_state state $~! (\_ -> Collision)
+  --   else c_state state $~! (\_ -> Miss)
 
   -- Detect which type of collision
   let collidedBricks = map (kind . fst) collisions

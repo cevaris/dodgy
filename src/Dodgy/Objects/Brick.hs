@@ -123,15 +123,6 @@ plus state brick = do
         blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
         
         color4f (Point4 (204/255) 0 0 0.4)
-        -- case (paint') of        
-        --  ((Just (Point4 px py pz pa))) -> do
-        --    color3f px py pz
-
-        
-        --texture Texture2D $= Enabled
-        --textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-        --textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-        --textureBinding Texture2D $= Just (redBubbles  tex)
   
   -- Center
   preservingMatrix $ do

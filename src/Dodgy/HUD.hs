@@ -44,9 +44,11 @@ updateInfo state = do
     zo <- get (zOffset state)
     bo <- get (boost state)
 
+    c_state' <- get (c_state state)
+
     let seconds = fromIntegral (t - t0') / 1000 :: GLfloat
         fps = fromIntegral f / seconds
-        result = ("Life Points: " ++ show hp ++ " Boost: " ++ show bo ++ "", "Score: " ++ show sc ++ " zOffset: " ++ show zo ++ "[mpPosX " ++ show mpPosX ++ "] [mpPosY " ++ show mpPosY ++ "]")
+        result = ("Life Points: " ++ show hp ++ " Boost: " ++ show bo ++ "", "Score: " ++ show sc ++ " Collision: " ++ show c_state' ++ "" )
         --result = ("[mpPosX " ++ show mpPosX ++ "] [mpPosY " ++ show mpPosY ++ "] [mode "++ show mode ++ "]",
         --         "")
         --result = ("[ph " ++ round2 ph ++ "] [th " ++ round2 th ++ "] [zh " ++ round2 zh ++ "] [zoom " ++ show dim ++ "] [lightStatus " ++ show lightStatus ++  "] [shading " ++ show shadStatus ++  "] ",
