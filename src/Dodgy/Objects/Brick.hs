@@ -3,6 +3,7 @@ module Dodgy.Objects.Brick (drawBrick) where
 import Graphics.UI.GLUT
 import Dodgy.GLUtils
 import Dodgy.Types
+import Dodgy.Textures
 import Dodgy.Objects.Types
 import Dodgy.Objects.Cube
 import Dodgy.Objects.Pyramid
@@ -12,7 +13,7 @@ bindBrickTexture :: Textures -> BrickType -> TextureObject
 bindBrickTexture tex WideBrick = metal3 tex
 bindBrickTexture tex LongBrick = metal3 tex
 bindBrickTexture tex UnitBrick = metal3 tex
-bindBrickTexture tex HealthBrick = redBubbles tex
+bindBrickTexture tex HealthBrick = (redBubbles tex)
 bindBrickTexture tex _         = comb tex
 
 drawBrick :: State -> Brick -> IO ()
@@ -21,7 +22,7 @@ drawBrick state brick@(Brick _ LongBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ WideBrick _ _) = cuboid state brick
 drawBrick state brick@(Brick _ HealthBrick _ _) = plus state brick
 drawBrick state brick@(Brick _ SpecialBrick _ _) = compPyramid state brick
--- drawBrick state _ = postRedisplay Nothing
+
 
 
 compPyramid :: State -> Brick -> IO ()
@@ -114,12 +115,13 @@ plus state brick = do
       (lx, ly, lz) = (loc brick)
       paint' = (paint (attrs brick))
       scaleSize' = (scaleSize (attrs brick))
- 
+  
   let colorCube = do
         drawLightingEffects (attrs brick)
-        case (paint') of        
-         ((Just (Point4 px py pz pa))) -> do
-           color3f px py pz
+        -- case (paint') of        
+        --  ((Just (Point4 px py pz pa))) -> do
+        --    color3f px py pz
+
         
         texture Texture2D $= Enabled
         textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
@@ -147,11 +149,11 @@ plus state brick = do
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
       colorCube
-      translate $ vector3f (lx-sep) ly lz
+      translate $ vector3f lx ly (lz-sep)
       cube w
   -- Right
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
       colorCube
-      translate $ vector3f (lx+sep )ly lz
+      translate $ vector3f lx ly (lz+sep)
       cube w

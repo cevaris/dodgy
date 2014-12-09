@@ -74,7 +74,7 @@ makeState = do
 
   yl <- newIORef 0
   rl <- newIORef 3
-  em <- newIORef 10000
+  em <- newIORef 1
   df <- newIORef 65
   am <- newIORef 30 -- 30
   sp <- newIORef 85
@@ -120,6 +120,7 @@ makeState = do
 
 makeTextures :: IO Textures
 makeTextures = do
+  redTex' <- loadGLTextureFromFile "resources/textures/red.jpg"
   steel' <- loadGLTextureFromFile "resources/textures/future-steel.jpg"
   comb'  <- loadGLTextureFromFile "resources/textures/comb-steel.jpg"
   -- water' <- loadGLTextureFromFile "resources/textures/water.jpg"
@@ -129,11 +130,13 @@ makeTextures = do
   star'  <- loadGLTextureFromFile "resources/textures/star.jpg"
   -- metal1' <- loadGLTextureFromFile "resources/textures/light-metal1.jpg"
   -- metal2' <- loadGLTextureFromFile "resources/textures/light-metal2.jpg"
-  redTex' <- loadGLTextureFromFile "resources/textures/red.jpg"
+  
   metal3' <- loadGLTextureFromFile "resources/textures/hull-steel.jpg"
   
 
+
   return $ Textures {
+    redBubbles = redTex',
     steel = steel',
     comb  = comb',
     -- water = water',
@@ -142,7 +145,7 @@ makeTextures = do
     star  = star',
     -- metal1 = metal1',
     -- metal2 = metal2',
-    redBubbles = redTex',
+    
     metal3 = metal3'
     
   }

@@ -98,7 +98,7 @@ draw state = do
     ambience4  = Just white,
     diffuse4   = Just yellow,
     specular4  = Just yellow,
-    emission4  = Just yellow,
+    emission4  = Nothing,
     shininess  = Just shine,
     collider   = Nothing
   }
