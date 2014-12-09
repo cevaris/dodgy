@@ -39,11 +39,11 @@ compPyramid state brick = do
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
 
-      texture Texture2D $= Enabled
-      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-
       drawLightingEffects (attrs brick)
+      
+      texture Texture2D $= Enabled
+      textureBinding Texture2D $= Just (steel tex)
+      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)      
 
       case (paint', location') of
         ((Just (Point4 px py pz pa)), (Just (lx, ly, lz))) -> do 
@@ -56,10 +56,8 @@ compPyramid state brick = do
     preservingAttrib [AllServerAttributes] $ do
 
       texture Texture2D $= Enabled
-      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
-      textureBinding Texture2D $= Just (bindBrickTexture tex brickKind)
-
-      drawLightingEffects (attrs brick)
+      textureBinding Texture2D $= Just (steel tex)
+      textureFilter Texture2D $= ((Nearest, Nothing), Nearest)      
 
       case (paint', location') of
         ((Just (Point4 px py pz pa)), (Just (lx, ly, lz))) -> do 

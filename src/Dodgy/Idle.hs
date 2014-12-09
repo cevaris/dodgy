@@ -13,7 +13,7 @@ import Dodgy.Collision
 
 idle :: State -> IdleCallback
 idle state = do
-
+  t0' <- get (t0 state)
   ph  <- get (ph' state)
   th  <- get (th' state)
   gr  <- get (gr' state)
@@ -57,7 +57,7 @@ idle state = do
   let collisions = filter ((==Collision) . snd) collResults
       detectedCollision = length collisions >0 
       
-  putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
+  --putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
 
   -- Update score if no colision
   if detectedCollision
@@ -77,9 +77,17 @@ idle state = do
   zOffset state $~! if boost' <= 0 then (\_ -> 1) else (\_ -> 10)
   zOffset' <- get (zOffset state)
 
-  -- -- Update Brick positions
+  let emissVal = 50.0 * cos ( fromIntegral t0')
+      emissUpdater = (\b -> do
+          case (kind b) of
+           SpecialBrick -> updateEmission emissVal b
+           otherwise    -> updateEmission 0 b) :: (Brick -> Brick)
+
+  --putStrLn $ show emissVal
+        
+  -- Update Brick positions
   let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
-      brickMap'' = map (updateIsDrawn zwall') brickMap'
+      brickMap'' = map (\b -> emissUpdater $ updateIsDrawn zwall' b) brickMap'
       level'     = updateBrickMap brickMap'' lv
   level state $~! (\x -> level')
 

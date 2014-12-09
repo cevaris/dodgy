@@ -25,7 +25,7 @@ makeBrickAttributes l k = do
   let ambience      = 30
       diffusion     = 65
       specularizion = 85
-      emission      = 0
+      emission      = 100
       shine         = 5^2
       ambs  = (Point4 (0.01*ambience) (0.01*ambience) (0.01*ambience) 1.0)
       diffs = (Point4 (0.01*diffusion) (0.01*diffusion) (0.01*diffusion) 1.0)
@@ -124,6 +124,12 @@ updateBrickLoc i b = do
   
   b { loc = (loc', y, z) }
 
+updateEmission :: Float -> Brick -> Brick
+updateEmission e b = b { attrs = (updateEmissionObj e (attrs b))} 
+
+updateEmissionObj :: Float -> ObjectAttributes -> ObjectAttributes
+updateEmissionObj e o = o { emission4 = Just (Point4 0.0 0.0 (0.01*e) 1.0) }
+
 updateBrickIsDrawn :: Capability -> Brick -> Brick
 updateBrickIsDrawn c b = b { isDrawn = c }
 
@@ -176,8 +182,6 @@ data Textures = Textures {
   metal3 :: TextureObject,
   redBubbles :: TextureObject
 } deriving (Show, Eq)
-
-
 
 
 

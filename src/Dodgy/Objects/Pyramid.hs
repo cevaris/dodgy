@@ -1,4 +1,4 @@
-module Dodgy.Objects.Pyramid (drawPyramid, octahedronTop, octahedronBottom) where 
+module Dodgy.Objects.Pyramid (drawPyramid, octahedronTop) where 
  
 import Graphics.UI.GLUT
 
@@ -50,32 +50,45 @@ drawPyramid state object@(ObjectAttributes rotation scaleSize paint location nos
 
           drawLightingEffects object
 
+          texture Texture2D $= Enabled
+          textureBinding Texture2D $= Just (steel $ textures state)
+          textureFilter Texture2D $= ((Nearest, Nothing), Nearest)
+
           renderPrimitive Triangles $ do
-            
+
             -- Front
             drawNormal3f 0 0.5 0.5
-            drawVertex3f  0 1 0
+            drawTexCoord2f 0 0.5
+            drawVertex3f 0 1 0
+            drawTexCoord2f 0 0
             drawVertex3f (-1) (-1) 1
+            drawTexCoord2f 1 0
             drawVertex3f 1 (-1) 1
-       
             -- Right
             drawNormal3f 0.5 0.5 0
+            drawTexCoord2f 0 1
             drawVertex3f 0 1 0
+            drawTexCoord2f 1 0
             drawVertex3f 1 (-1) 1
+            drawTexCoord2f 1.5 1
             drawVertex3f 1 (-1) (-1)
-       
             -- Back
             drawNormal3f 0 0.5 (-0.5)
+            drawTexCoord2f 1 0
             drawVertex3f 0 1 0
+            drawTexCoord2f 1 0
             drawVertex3f 1 (-1) (-1)
+            drawTexCoord2f 1.5 1
             drawVertex3f (-1) (-1) (-1)
-       
             -- Left
             drawNormal3f (-0.5) 0.5 0
-            drawVertex3f  0 1 0
+            drawTexCoord2f 0 1
+            drawVertex3f 0 1 0
+            drawTexCoord2f 1 0
             drawVertex3f (-1)(-1)(-1)
+            drawTexCoord2f 1.5 1
             drawVertex3f (-1) (-1) 1
-
+            
           renderPrimitive Quads $ do
 
             color3f 0 0 1
@@ -92,89 +105,105 @@ octahedronTop w = do
   renderPrimitive Triangles $ do
     -- Front
     drawNormal3f 0 (w*0.5) (w*0.5)
+    drawTexCoord2f 0 w
     drawVertex3f 0 w 0
+    drawTexCoord2f 0 0
     drawVertex3f (-w) (-w) w
+    drawTexCoord2f w 0
     drawVertex3f w (-w) w
       
     -- Right
     drawNormal3f (w*0.5) (w*0.5) 0
+    drawTexCoord2f 0 w
     drawVertex3f 0 w 0
+    drawTexCoord2f 0 0
     drawVertex3f w (-w) w
+    drawTexCoord2f w 0
     drawVertex3f w (-w) (-w)
     
     -- Back
     drawNormal3f 0 (w*0.5) (-(w*0.5))
+    drawTexCoord2f 0 w
     drawVertex3f 0 w 0
+    drawTexCoord2f 0 0
     drawVertex3f w (-w) (-w)
+    drawTexCoord2f w 0
     drawVertex3f (-w) (-w) (-w)
     
     -- Left
     drawNormal3f (-(w*0.5)) (w*0.5) 0
+    drawTexCoord2f 0 w
     drawVertex3f  0 w 0
+    drawTexCoord2f 0 0
     drawVertex3f (-w)(-w)(-w)
+    drawTexCoord2f w 0
     drawVertex3f (-w) (-w) w
 
   renderPrimitive Quads $ do
 
     drawNormal3f 0 (-(w*0.5)) 0
+    drawTexCoord2f 0 0
     drawVertex3f w (-w) w
+    drawTexCoord2f 0 1
     drawVertex3f w (-w) (-w)
+    drawTexCoord2f 1 0
     drawVertex3f (-w) (-w) (-w)
+    drawTexCoord2f 1 1
     drawVertex3f (-w) (-w) w
 
 
-octahedronBottom :: Float -> IO ()
-octahedronBottom w = do
-  renderPrimitive Triangles $ do
+-- octahedronBottom :: Float -> IO ()
+-- octahedronBottom w = do
+--   renderPrimitive Triangles $ do
 
-    -- Front
-    drawNormal3f 0 (w*0.5) (w*0.5)
-    drawVertex3f 0 w 0
-    drawVertex3f (-w) (-w) w
-    drawVertex3f w (-w) w
+--     -- Front
+--     drawNormal3f 0 (w*0.5) (w*0.5)
+--     drawVertex3f 0 w 0
+--     drawVertex3f (-w) (-w) w
+--     drawVertex3f w (-w) w
       
-    -- Right
-    drawNormal3f (w*0.5) (w*0.5) 0
-    drawVertex3f 0 w 0
-    drawVertex3f w (-w) w
-    drawVertex3f w (-w) (-w)
+--     -- Right
+--     drawNormal3f (w*0.5) (w*0.5) 0
+--     drawVertex3f 0 w 0
+--     drawVertex3f w (-w) w
+--     drawVertex3f w (-w) (-w)
     
-    -- Back
-    drawNormal3f 0 (w*0.5) (-(w*0.5))
-    drawVertex3f 0 w 0
-    drawVertex3f w (-w) (-w)
-    drawVertex3f (-w) (-w) (-w)
+--     -- Back
+--     drawNormal3f 0 (w*0.5) (-(w*0.5))
+--     drawVertex3f 0 w 0
+--     drawVertex3f w (-w) (-w)
+--     drawVertex3f (-w) (-w) (-w)
     
-    -- Left
-    drawNormal3f (-(w*0.5)) (w*0.5) 0
-    drawVertex3f  0 w 0
-    drawVertex3f (-w)(-w)(-w)
-    drawVertex3f (-w) (-w) w
+--     -- Left
+--     drawNormal3f (-(w*0.5)) (w*0.5) 0
+--     drawVertex3f  0 w 0
+--     drawVertex3f (-w)(-w)(-w)
+--     drawVertex3f (-w) (-w) w
 
-    -- -- Botttom
-    -- -- Front
-    -- drawNormal3f 0 (w*0.5) (w*0.5)
-    -- drawVertex3f 0 w 0
-    -- drawVertex3f (-w) (-w) w
-    -- drawVertex3f w (-w) w
+--     -- -- Botttom
+--     -- -- Front
+--     -- drawNormal3f 0 (w*0.5) (w*0.5)
+--     -- drawVertex3f 0 w 0
+--     -- drawVertex3f (-w) (-w) w
+--     -- drawVertex3f w (-w) w
       
-    -- -- Right
-    -- drawNormal3f (w*0.5) (w*0.5) 0
-    -- drawVertex3f 0 w 0
-    -- drawVertex3f w (-w) w
-    -- drawVertex3f w (-w) (-w)
+--     -- -- Right
+--     -- drawNormal3f (w*0.5) (w*0.5) 0
+--     -- drawVertex3f 0 w 0
+--     -- drawVertex3f w (-w) w
+--     -- drawVertex3f w (-w) (-w)
     
-    -- -- Back
-    -- drawNormal3f 0 (w*0.5) (-(w*0.5))
-    -- drawVertex3f 0 w 0
-    -- drawVertex3f w (-w) (-w)
-    -- drawVertex3f (-w) (-w) (-w)
+--     -- -- Back
+--     -- drawNormal3f 0 (w*0.5) (-(w*0.5))
+--     -- drawVertex3f 0 w 0
+--     -- drawVertex3f w (-w) (-w)
+--     -- drawVertex3f (-w) (-w) (-w)
     
-    -- -- Left
-    -- drawNormal3f (-(w*0.5)) (w*0.5) 0
-    -- drawVertex3f  0 w 0
-    -- drawVertex3f (-w)(-w)(-w)
-    -- drawVertex3f (-w) (-w) w
+--     -- -- Left
+--     -- drawNormal3f (-(w*0.5)) (w*0.5) 0
+--     -- drawVertex3f  0 w 0
+--     -- drawVertex3f (-w)(-w)(-w)
+--     -- drawVertex3f (-w) (-w) w
 
     
 
