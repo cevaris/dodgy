@@ -69,14 +69,14 @@ makeUnitCollider = BoxCollider {
   c_depth  = 1/2
 }
 makeWideCollider = BoxCollider {
-  c_width  = 3,
-  c_height = 1/2,
-  c_depth  = 1/2
-}
-makeLongCollider = BoxCollider {
   c_width  = 1/2,
   c_height = 1/2,
   c_depth  = 3
+}
+makeLongCollider = BoxCollider {
+  c_width  = 3,
+  c_height = 1/2,
+  c_depth  = 1/2
 }
 makeHpCollider = BoxCollider {
   c_width  = 6/10,

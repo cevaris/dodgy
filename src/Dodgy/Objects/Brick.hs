@@ -101,8 +101,8 @@ cuboid state brick = do
 
           case brickKind of
             UnitBrick -> scale3f s s s
-            WideBrick -> scale3f (3*s) s s
-            LongBrick -> scale3f s s (3*s)
+            WideBrick -> scale3f s s (3*s)
+            LongBrick -> scale3f (3*s) s s
             _         -> postRedisplay Nothing
 
       cube w
