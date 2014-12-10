@@ -57,6 +57,7 @@ idle state = do
   let collisions = filter ((==Collision) . snd) collResults
       detectedCollision = length collisions >0
 
+  -- Filter only Colliding Damage Bricks
   let brickCollFilter = (\(b,cs) ->
                           case ((kind b),cs) of
                            (HealthBrick, _) -> False
@@ -72,8 +73,7 @@ idle state = do
     then c_state state $~! (\_ -> Collision)
     else c_state state $~! (\_ -> Miss)
      
-      
-  --putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
+    --putStrLn $ "Collision State: " ++ show detectedCollision ++ ""
 
   -- Update score if no colision
   if detectedCollision
@@ -107,7 +107,8 @@ idle state = do
         
   -- Update Brick positions
   let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
-      brickMap'' = map (\b -> emissUpdater $ updateIsDrawn zwall' b) brickMap'
+      --brickMap'' = map (\b -> emissUpdater $ updateIsDrawn zwall' b) brickMap'
+      brickMap'' = map (\b -> updateIsDrawn zwall' b) brickMap'
       level'     = updateBrickMap brickMap'' lv
   level state $~! (\x -> level')
 

@@ -67,7 +67,7 @@ makeState = do
   zh <- newIORef 90
   fv <- newIORef 65 --65
   as <- newIORef 1
-  di <- newIORef 2 --0.6 --3
+  di <- newIORef 0.6 --0.6 --3
 
   
 
@@ -82,7 +82,7 @@ makeState = do
   sh <- newIORef 5
   mv <- newIORef True
 
-  zw <- newIORef 2
+  zw <- newIORef (-2)
 
   mpPosX' <- newIORef 0
   mpPosY' <- newIORef 0
@@ -130,8 +130,7 @@ makeTextures = do
   -- alien' <- loadGLTextureFromFile "resources/textures/deathstar.png"
   star'  <- loadGLTextureFromFile "resources/textures/star.jpg"
   -- metal1' <- loadGLTextureFromFile "resources/textures/light-metal1.jpg"
-  -- metal2' <- loadGLTextureFromFile "resources/textures/light-metal2.jpg"
-  
+  metal2' <- loadGLTextureFromFile "resources/textures/cross-steel.jpg"
   metal3' <- loadGLTextureFromFile "resources/textures/hull-steel.jpg"
   
 
@@ -145,7 +144,7 @@ makeTextures = do
     -- alien = alien',
     star  = star',
     -- metal1 = metal1',
-    -- metal2 = metal2',
+    metal2 = metal2',
     
     metal3 = metal3'
     

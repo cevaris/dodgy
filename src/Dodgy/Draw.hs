@@ -106,24 +106,24 @@ draw state = do
     diffuse4   = Just yellow,
     specular4  = Just yellow,
     emission4  = Nothing,
-    shininess  = Just shine,
+    shininess  = Just 1,
     collider   = Nothing
   }
 
-  drawStarSphere state $ ObjectAttributes {
-    rotation   = Nothing,
-    scaleSize  = (Just 0.5),
-    paint      = Just $ (Point4 255 255 0 0),
-    location   = (Just loc3),
-    noseVector = Nothing,
-    upVector   = Nothing,
-    ambience4  = Nothing,
-    diffuse4   = Just yellow,
-    specular4  = Just yellow,
-    emission4  = Just yellow,
-    shininess  = Just shine,
-    collider   = Nothing
-  }
+  -- drawStarSphere state $ ObjectAttributes {
+  --   rotation   = Nothing,
+  --   scaleSize  = (Just 0.5),
+  --   paint      = Just $ (Point4 255 255 0 0),
+  --   location   = (Just loc3),
+  --   noseVector = Nothing,
+  --   upVector   = Nothing,
+  --   ambience4  = Nothing,
+  --   diffuse4   = Just yellow,
+  --   specular4  = Just yellow,
+  --   emission4  = Just yellow,
+  --   shininess  = Just shine,
+  --   collider   = Nothing
+  -- }
 
   drawStarCubeMap state $ ObjectAttributes {
     rotation   = Nothing,

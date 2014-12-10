@@ -92,14 +92,14 @@ makeSpCollider = BoxCollider {
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-     makeBrick (3,0,0) SpecialBrick,
-     makeBrick (5,(-1),0) WideBrick,
-     makeBrick (7,0,0) HealthBrick,
-     makeBrick (10,1,0) LongBrick,
-     makeBrick (1,0,0) UnitBrick,
-     makeBrick (16,1,0) WideBrick,     
-     makeBrick (17,1,(-1)) LongBrick,
-     makeBrick (18,2,1) LongBrick
+     -- makeBrick (3,0,0) SpecialBrick,
+     -- makeBrick (5,(-1),0) WideBrick,
+     -- makeBrick (7,0,0) HealthBrick,
+     -- makeBrick (10,1,0) LongBrick,
+     -- makeBrick (1,0,0) UnitBrick,
+     -- makeBrick (16,(-1),0) WideBrick,     
+     -- makeBrick (17,1,(-1)) LongBrick,
+     -- makeBrick (18,2,1) LongBrick
      ]
 }
 
@@ -140,21 +140,8 @@ updateBrickLocations bricks interval = do
 
 updateIsDrawn :: Float -> Brick -> Brick
 updateIsDrawn zw b@(Brick (x, y, z) _ _ _)
-  | z > zw    = b { isDrawn = Disabled }
+  | x < zw    = b { isDrawn = Disabled }
   | otherwise = b
-
--- exeCollision :: (Point3, Collider) -> [Brick] -> CollisionState
--- exeCollision (p1, c1) bricks = do
---   let collisions = (flip map) bricks (\b -> do
---                                          let coll2 = (collider $ attrs b)
-
---                                          case coll2 of
---                                            Nothing   -> Miss
---                                            (Just c2) -> testCollision p1 c1 (loc b) c2)
---   Miss
-
-
-
 
 
 
@@ -178,7 +165,7 @@ data Textures = Textures {
   -- alien :: TextureObject,
   star  :: TextureObject,
   -- metal1 :: TextureObject,
-  -- metal2 :: TextureObject,
+  metal2 :: TextureObject,
   metal3 :: TextureObject,
   redBubbles :: TextureObject
 } deriving (Show, Eq)

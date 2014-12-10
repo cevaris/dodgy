@@ -18,8 +18,8 @@ drawShuttle :: State -> ObjectAttributes -> IO ()
 drawShuttle state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
   
 
-  case (location, noseVector, upVector, scaleSize, paint) of
-    ((Just (lx, ly, lz)), (Just (dx, dy, dz)), (Just (ux, uy, uz)), (Just s), (Just (Point4 cx cy cz ca))) -> do 
+  case (location, scaleSize) of
+    ((Just (lx, ly, lz)), (Just s))-> do 
 
     let wid  = 0.05
         nose = 0.50
@@ -29,33 +29,43 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         tex = textures state
         steel' = steel tex
         comb' = comb tex
-    --     d0 = sqrt(dx*dx+dy*dy+dz*dz)
-    --     x0 = dx/d0
-    --     y0 = dy/d0
-    --     z0 = dz/d0
-    --     --  Unit vector in "up" direction
-    --     d1 = sqrt(ux*ux+uy*uy+uz*uz)
-    --     x1 = ux/d1
-    --     y1 = uy/d1
-    --     z1 = uz/d1
-    --     -- Cross product gives the third vector
-    --     x2 = y0*z1-y1*z0
-    --     y2 = z0*x1-z1*x0
-    --     z2 = x0*y1-x1*y0
+        
 
-    -- mat <- newMatrix RowMajor $ listf [x0, x1,  x2, 0,
-    --                                    y0, y1,  y2, 0,
-    --                                    z0, z1,  z2, 0,
-    --                                    0,  0,   0,  1]
+    let paintColor    = color4f snowGray
+        shine         = 100
+        -- ambs  = (Point4 0 0 0 1.0)
+        -- diffs = (Point4 0.01 0.01 0.01 1.0)
+        -- specs = (Point4 0.5 0.5 0.5 1.0)
+        ambs  = (Point4 0.25 0.25 0.25 1.0)
+        diffs = (Point4 0.4 0.4 0.4 1.0)
+        specs = (Point4 0.775 0.775 0.775 1.0)
+        attrsOverride = ObjectAttributes {
+          rotation   = Nothing,
+          scaleSize  = Nothing,
+          paint      = Nothing,
+          location   = Nothing,
+          noseVector = Nothing,
+          upVector   = Nothing,
+          ambience4  = Just ambs,
+          diffuse4   = Just diffs, 
+          specular4  = Just specs,
+          emission4  = Nothing,
+          shininess  = Just shine,
+          collider   = Nothing
+          }
+    
+    ambient4f ambs
+    specular4f specs
+    diffuse4f diffs
+    drawLightingEffects attrsOverride
 
-    drawLightingEffects object
-
-
+    
     -- Capsule Cylindar
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f lx ly lz
         --multMatrix (mat :: GLmatrix GLfloat)
         let ns = s/14
@@ -72,7 +82,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
       preservingAttrib [AllServerAttributes] $ do
         
         -- Offset, scale and rotate
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f ((lx+tail)*s) ly lz
         --multMatrix (mat :: GLmatrix GLfloat)
         let ns = s/14
@@ -100,7 +111,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
 
-        color3f cx cy cz          
+        --color3f cx cy cz          
         translate $ vector3f ((lx+cone)*s) ((ly+0.03)*s) lz
         --multMatrix (mat :: GLmatrix GLfloat)
         let ns = s/14
@@ -113,7 +124,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
 
         translate $ vector3f ((lx+cone)*s) ((ly+0.025)*s) lz
         --multMatrix (mat :: GLmatrix GLfloat)
@@ -132,7 +143,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         --multMatrix (mat :: GLmatrix GLfloat)
         translate $ vector3f ((lx+cone)*s) ly lz
         
@@ -154,7 +166,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f lx ly lz
         --multMatrix (mat :: GLmatrix GLfloat)
         scale3f s s s
@@ -170,128 +183,185 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         -- Right Top Base Wing
         renderPrimitive Quads $ do
           drawNormal3f 0 1 (-1)
+          drawTexCoord2f 0 1
           drawVertex3f 0 0 0
+          drawTexCoord2f 0 0
           drawVertex3f tail 0 0
+          drawTexCoord2f 1 0
           drawVertex3f tail wy woz
+          drawTexCoord2f 1 1
           drawVertex3f (tail/2) wy woz
 
         -- Right Top Tip Wing
         renderPrimitive Triangles $ do
           drawNormal3f 0 1 1
+          drawTexCoord2f 0 0
           drawVertex3f tail wy woz
+          drawTexCoord2f 0 1
           drawVertex3f (tail/2) wy woz
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 (woz*2)
 
         -- Right Bottom Base Wing
         renderPrimitive Quads $ do
           drawNormal3f 0 (-1) 1
+          drawTexCoord2f 0 1
           drawVertex3f 0 wb 0
+          drawTexCoord2f 0 0
           drawVertex3f tail wb 0
+          drawTexCoord2f 1 0
           drawVertex3f tail (wy+(wb/2)) woz
+          drawTexCoord2f 1 1
           drawVertex3f (tail/2) (wy+(wb/2)) woz
 
         -- Right Bottom Tip Wing
         renderPrimitive Triangles $ do
           drawNormal3f 0 (-1) (-1)
+          drawTexCoord2f 0 0
           drawVertex3f tail (wy+(wb/2)) woz
+          drawTexCoord2f 0 1
           drawVertex3f (tail/2) (wy+(wb/2)) woz
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 (woz*2)
 
         -- Right Back Base Wing Cover
         renderPrimitive Quads $ do
           drawNormal3f (-1) 0 0
+          drawTexCoord2f 0 1
           drawVertex3f tail 0 0
+          drawTexCoord2f 1 0
           drawVertex3f tail wy woz
+          drawTexCoord2f 1 1
           drawVertex3f tail (wy+(wb/2)) woz
+          drawTexCoord2f 0 0
           drawVertex3f tail wb 0
 
-        -- Right Back Base Tip Wing Cover
+        -- Right Back Tip Wing Cover
         renderPrimitive Triangles $ do
           drawNormal3f (-1) 0 0
+          drawTexCoord2f 0 0
           drawVertex3f tail wy woz
+          drawTexCoord2f 0 0.5
           drawVertex3f tail (wy+(wb/2)) woz
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 (woz*2)
 
         -- Right Front Base Wing Cover
         renderPrimitive Quads $ do
           drawNormal3f 1 0 0
+          drawTexCoord2f 0 1
           drawVertex3f 0 0 0
+          drawTexCoord2f 1 0
           drawVertex3f (tail/2) wy woz
+          drawTexCoord2f 1 1
           drawVertex3f (tail/2) (wy+(wb/2)) woz
+          drawTexCoord2f 0 0
           drawVertex3f 0 wb 0
 
         -- Right Front Base Tip Wing Cover
         renderPrimitive Triangles $ do
           drawNormal3f 1 0 1
+          drawTexCoord2f 0 0
           drawVertex3f (tail/2) wy woz
+          drawTexCoord2f 0 0.5
           drawVertex3f (tail/2) (wy+(wb/2)) woz
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 (woz*2)
 
         -- Left Top Base Wing
         renderPrimitive Quads $ do
           drawNormal3f 0 1 1
+          drawTexCoord2f 0 1
           drawVertex3f 0 0 0
+          drawTexCoord2f 0 0
           drawVertex3f tail 0 0
+          drawTexCoord2f 1 0
           drawVertex3f tail wy (-woz)
+          drawTexCoord2f 1 1
           drawVertex3f (tail/2) wy (-woz)
 
         -- Left Top Tip Wing
         renderPrimitive Triangles $ do
           drawNormal3f 0 1 (-1)
+          drawTexCoord2f 0 0
           drawVertex3f tail wy (-woz)
+          drawTexCoord2f 0 1
           drawVertex3f (tail/2) wy (-woz)
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 ((-woz)*2)
 
         -- Left Bottom Base Wing
         renderPrimitive Quads $ do
           drawNormal3f 0 (-1) (-1)
+          drawTexCoord2f 0 1
           drawVertex3f 0 wb 0
+          drawTexCoord2f 0 0
           drawVertex3f tail wb 0
+          drawTexCoord2f 1 0
           drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawTexCoord2f 1 1
           drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
 
         -- Left Bottom Tip Wing
         renderPrimitive Triangles $ do
           drawNormal3f 0 (-1) 1
+          drawTexCoord2f 0 0
           drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawTexCoord2f 0 1
           drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 ((-woz)*2)
 
         -- Left Back Base Wing Cover
         renderPrimitive Quads $ do
           drawNormal3f (-1) 0 0
+          drawTexCoord2f 0 1
           drawVertex3f tail 0 0
+          drawTexCoord2f 1 0
           drawVertex3f tail wy (-woz)
+          drawTexCoord2f 1 1
           drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawTexCoord2f 0 0
           drawVertex3f tail wb 0
 
         -- Left Back Base Tip Wing Cover
         renderPrimitive Triangles $ do
           drawNormal3f (-1) 0 0
+          drawTexCoord2f 0 0
           drawVertex3f tail wy (-woz)
+          drawTexCoord2f 0 0.5
           drawVertex3f tail (wy+(wb/2)) (-woz)
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 ((-woz)*2)
 
         -- Left Front Base Wing Cover
         renderPrimitive Quads $ do
           drawNormal3f 1 0 0
+          drawTexCoord2f 0 1
           drawVertex3f 0 0 0
+          drawTexCoord2f 1 0
           drawVertex3f (tail/2) wy (-woz)
+          drawTexCoord2f 1 1
           drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+          drawTexCoord2f 0 0
           drawVertex3f 0 wb 0
 
         -- Left Front Base Tip Wing Cover
         renderPrimitive Triangles $ do
           drawNormal3f 1 0 1
+          drawTexCoord2f 0 0
           drawVertex3f (tail/2) wy (-woz)
+          drawTexCoord2f 0 0.5
           drawVertex3f (tail/2) (wy+(wb/2)) (-woz)
+          drawTexCoord2f 1 0.5
           drawVertex3f tail 0 ((-woz)*2)
 
     -- Right Booster Cylinder
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f lx ly ((lz+0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/35
@@ -307,7 +377,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f ((lx+(tail/2))*s) ly ((lz+0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/35
@@ -325,7 +396,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz        
         translate $ vector3f ((lx+tail-0.0125)*s) ly ((lz+0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/25
@@ -342,7 +413,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
         translate $ vector3f ((lx+tail)*s) ly ((lz+0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/38
@@ -359,7 +430,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f lx ly ((lz-0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/35
@@ -375,7 +447,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f ((lx+(tail/2))*s) ly ((lz-0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/35
@@ -388,12 +461,12 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
 
         sphere
 
-
     -- Left Booster Cone
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz        
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f ((lx+tail-0.0125)*s) ly ((lz-0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/25
@@ -410,7 +483,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
         translate $ vector3f ((lx+tail)*s) ly ((lz-0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/38
@@ -428,7 +501,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f ((lx+tail-0.07)*s) ly lz
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/10
@@ -445,7 +519,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
         
-        color3f cx cy cz
+        --color3f cx cy cz        
         translate $ vector3f ((lx+tail-0.01)*s) ly lz
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/21
@@ -464,7 +538,8 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
       preservingAttrib [AllServerAttributes] $ do
         
         -- Offset, scale and rotate
-        color3f cx cy cz
+        --color3f cx cy cz
+        paintColor
         translate $ vector3f lx ly lz
         --multMatrix (mat :: GLmatrix GLfloat)
         scale3f s s s

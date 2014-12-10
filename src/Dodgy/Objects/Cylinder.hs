@@ -12,10 +12,10 @@ cylinder f b = do
   renderPrimitive QuadStrip $ do
     forM_ loop360 (\p -> do
                       drawNormal3f f (glSin p) (glCos p)
-                      drawTexCoord2f f (glSin p)
+                      drawTexCoord2f f (glCos p)
                       drawVertex3f f (glSin p) (glCos p)
                        
                         
                       drawNormal3f b (glSin p) (glCos p)
-                      drawTexCoord2f b (glSin p)
+                      drawTexCoord2f b (glCos p)
                       drawVertex3f b (glSin p) (glCos p))

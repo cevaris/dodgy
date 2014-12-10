@@ -11,7 +11,7 @@ import Graphics.UI.GLUT
 type Point3 = (Float, Float, Float)
 data Point4 = Point4 Float Float Float Float deriving (Show, Eq)
 
-defd    = 5
+defd    = 1
 loop360 :: [Float]
 loop360 = [ p | p <- [0..360], (mod' p defd) == 0]
 
