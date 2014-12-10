@@ -36,8 +36,8 @@ idle state = do
   mpPosY' <- get (mpPosY state)
   c1      <- get (p_coll state)
   zwall'   <- get (zwall state)
+  boost' <- get (boost state)
 
-  
   let dispatchCollision = (\k -> case k of
                             HealthBrick -> lifep  state $~! (+1)
                             SpecialBrick -> score state $~! (+10)
@@ -82,8 +82,10 @@ idle state = do
   -- Update score if no colision
   if detectedCollision
      then postRedisplay Nothing
-     else score state $~! (+1)
-
+     else if boost' <= 0
+             then score state $~! (+1)
+             else score state $~! (+5)
+                  
   -- if detectedCollision
   --   then c_state state $~! (\_ -> Collision)
   --   else c_state state $~! (\_ -> Miss)
@@ -91,8 +93,6 @@ idle state = do
   -- Detect which type of collision
   let collidedBricks = map (kind . fst) collisions
   mapM_ dispatchCollision collidedBricks
-
-  boost' <- get (boost state)
 
   if boost' <= 0
      then boost state $~! (\x -> 0)
