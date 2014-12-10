@@ -92,14 +92,42 @@ makeSpCollider = BoxCollider {
 makeMapOne :: Map
 makeMapOne = MapOne {
   brickMap = [
-     -- makeBrick (3,0,0) SpecialBrick,
-     -- makeBrick (5,(-1),0) WideBrick,
-     -- makeBrick (7,0,0) HealthBrick,
-     -- makeBrick (10,1,0) LongBrick,
-     -- makeBrick (1,0,0) UnitBrick,
-     -- makeBrick (16,(-1),0) WideBrick,     
-     -- makeBrick (17,1,(-1)) LongBrick,
-     -- makeBrick (18,2,1) LongBrick
+     makeBrick (3,0,0) SpecialBrick,
+     makeBrick (5,(-1),0) WideBrick,
+     makeBrick (7,0,0) HealthBrick,
+     makeBrick (10,1,0) LongBrick,
+     makeBrick (1,0,0) UnitBrick,
+     makeBrick (16,(-1),0) WideBrick,     
+     makeBrick (17,1,(-1)) LongBrick,
+     makeBrick (18,2,1) LongBrick,
+     makeBrick (18,(-1),1) WideBrick,
+     makeBrick (19,0,0) UnitBrick,
+     makeBrick (22,0,1) LongBrick,
+     makeBrick (22,2,2) WideBrick,
+     makeBrick (23,(-1),1) UnitBrick
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) HealthBrick,
+     -- makeBrick (,,) SpecialBrick,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+     -- makeBrick (,,) ,
+
+     
      ]
 }
 

@@ -67,7 +67,7 @@ makeState = do
   zh <- newIORef 90
   fv <- newIORef 65 --65
   as <- newIORef 1
-  di <- newIORef 0.6 --0.6 --3
+  di <- newIORef 2 --0.6 --2
 
   
 

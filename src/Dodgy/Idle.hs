@@ -46,9 +46,13 @@ idle state = do
   let p1 = (0, mpPosY', mpPosX')
       tcoll = (\b -> do
          let p2 = (loc b)
-         case (collider $ attrs b) of
-          Nothing   -> (b, Miss)
-          (Just c2) -> (b, testCollision p1 c1 p2 c2)) 
+             (p2x, p2y, p2z) = p2
+         -- Only check collisions within a specific window    
+         if p2x > 2 && p2x < zwall'
+            then (b, Miss)
+            else case (collider $ attrs b) of
+                  Nothing   -> (b, Miss)
+                  (Just c2) -> (b, testCollision p1 c1 p2 c2))
 
   -- Calculate brick collision
   let collResults = map tcoll (brickMap lv)
