@@ -18,6 +18,8 @@ drawShuttle :: State -> ObjectAttributes -> IO ()
 drawShuttle state object@(ObjectAttributes rotation scaleSize paint location noseVector upVector _ _ _ _ _ _) = do
   
 
+  boost' <- get (boost state)
+  
   case (location, scaleSize) of
     ((Just (lx, ly, lz)), (Just s))-> do 
 
@@ -29,6 +31,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
         tex = textures state
         steel' = steel tex
         comb' = comb tex
+        boostOn = boost' > 0
         
 
     let paintColor    = color4f snowGray
@@ -359,7 +362,7 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     -- Right Booster Cylinder
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
-        
+
         --color3f cx cy cz
         paintColor
         translate $ vector3f lx ly ((lz+0.2)*s)
@@ -412,13 +415,17 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     -- Right Booster Thrust
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
+
+        let boostMod = if boostOn
+                       then 1.5
+                       else 1
         
         --color3f cx cy cz
         translate $ vector3f ((lx+tail)*s) ly ((lz+0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/38
             xs = s/10
-        scale3f xs ns ns
+        scale3f (xs*boostMod) ns ns
 
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just (star tex)
@@ -482,13 +489,17 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     -- Left Booster Thrust
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
+
+        let boostMod = if boostOn
+                       then 1.5
+                       else 1
         
         --color3f cx cy cz
         translate $ vector3f ((lx+tail)*s) ly ((lz-0.2)*s)
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/38
             xs = s/10
-        scale3f xs ns ns
+        scale3f (xs*boostMod) ns ns
 
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just (star tex)
@@ -518,13 +529,17 @@ drawShuttle state object@(ObjectAttributes rotation scaleSize paint location nos
     -- Center Booster Thrust
     preservingMatrix $ do
       preservingAttrib [AllServerAttributes] $ do
+
+        let boostMod = if boostOn
+                       then 2.5
+                       else 1
         
         --color3f cx cy cz        
         translate $ vector3f ((lx+tail-0.01)*s) ly lz
         --multMatrix (mat :: GLmatrix GLfloat)    
         let ns = s/21
             xs = s/5
-        scale3f xs ns ns
+        scale3f (xs*boostMod) ns ns
 
         texture Texture2D $= Enabled
         textureBinding Texture2D $= Just (star tex)

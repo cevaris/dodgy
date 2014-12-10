@@ -101,7 +101,7 @@ idle state = do
   zOffset state $~! if boost' <= 0 then (\_ -> 1) else (\_ -> 10)
   zOffset' <- get (zOffset state)
 
-  let emissVal = 50.0 * cos ( fromIntegral t0')
+  let emissVal = 10.0 * cos ( fromIntegral t0')
       emissUpdater = (\b -> do
           case (kind b) of
            SpecialBrick -> updateEmission emissVal b
@@ -111,8 +111,8 @@ idle state = do
         
   -- Update Brick positions
   let brickMap'  = updateBrickLocations (brickMap lv) zOffset'
-      --brickMap'' = map (\b -> emissUpdater $ updateIsDrawn zwall' b) brickMap'
-      brickMap'' = map (\b -> updateIsDrawn zwall' b) brickMap'
+      brickMap'' = map (\b -> emissUpdater $ updateIsDrawn zwall' b) brickMap'
+      --brickMap'' = map (\b -> updateIsDrawn zwall' b) brickMap'
       level'     = updateBrickMap brickMap'' lv
   level state $~! (\x -> level')
 

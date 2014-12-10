@@ -56,6 +56,8 @@ compPyramid state brick = do
   preservingMatrix $ do
     preservingAttrib [AllServerAttributes] $ do
 
+      drawLightingEffects (attrs brick)
+      
       texture Texture2D $= Enabled
       textureBinding Texture2D $= Just (steel tex)
       textureFilter Texture2D $= ((Nearest, Nothing), Nearest)      
