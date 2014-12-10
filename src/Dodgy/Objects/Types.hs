@@ -115,19 +115,18 @@ makeMapOne = MapOne {
      makeBrick (31,1,0) WideBrick,
      makeBrick (31,0,0) WideBrick,
      makeBrick (32,(-1),0) WideBrick,
-     makeBrick (33,0,0) UnitBrick
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) HealthBrick,
-     -- makeBrick (,,) SpecialBrick,
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) ,
-     -- makeBrick (,,) ,
-
-     
+     makeBrick (33,0,0) UnitBrick,
+     makeBrick (38,1,0) SpecialBrick,
+     makeBrick (38,0,0) HealthBrick,
+     makeBrick (38,(-1),1) SpecialBrick,
+     makeBrick (38,(-1),(-1)) SpecialBrick,
+     makeBrick (41,0,0) LongBrick ,
+     makeBrick (41,1,1) LongBrick,
+     makeBrick (45,0,0) UnitBrick,
+     makeBrick (45,1,1) UnitBrick,
+     makeBrick (45,1,(-1)) UnitBrick,
+     makeBrick (45,(-1),(-1)) UnitBrick,
+     makeBrick (45,(-1),1) UnitBrick     
      ]
 }
 
@@ -193,7 +192,7 @@ data Textures = Textures {
   -- alien :: TextureObject,
   star  :: TextureObject,
   -- metal1 :: TextureObject,
-  metal2 :: TextureObject,
+  -- metal2 :: TextureObject,
   metal3 :: TextureObject,
   redBubbles :: TextureObject
 } deriving (Show, Eq)

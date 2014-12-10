@@ -124,28 +124,14 @@ makeTextures = do
   redTex' <- loadGLTextureFromFile "resources/textures/red2.jpg"
   steel' <- loadGLTextureFromFile "resources/textures/future-steel.jpg"
   comb'  <- loadGLTextureFromFile "resources/textures/comb-steel.jpg"
-  -- water' <- loadGLTextureFromFile "resources/textures/water.jpg"
-  -- borg'  <- loadGLTextureFromFile "resources/textures/borg.jpg"
-  -- --alien' <- loadGLTextureFromFile "resources/textures/terran.jpg"
-  -- alien' <- loadGLTextureFromFile "resources/textures/deathstar.png"
   star'  <- loadGLTextureFromFile "resources/textures/star.jpg"
-  -- metal1' <- loadGLTextureFromFile "resources/textures/light-metal1.jpg"
-  metal2' <- loadGLTextureFromFile "resources/textures/cross-steel.jpg"
   metal3' <- loadGLTextureFromFile "resources/textures/hull-steel.jpg"
-  
-
 
   return $ Textures {
     redBubbles = redTex',
     steel = steel',
     comb  = comb',
-    -- water = water',
-    -- borg  = borg',
-    -- alien = alien',
-    star  = star',
-    -- metal1 = metal1',
-    metal2 = metal2',
-    
+    star  = star',  
     metal3 = metal3'
     
   }
